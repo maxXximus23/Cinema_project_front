@@ -8,6 +8,7 @@ function App() {
   return (
     <div className="App container">
       <Route path="/movies/:movieId" component={Movie} />
+      <Route path="/book/:sessionId" component={Booking} />
     </div>
   );
 }
