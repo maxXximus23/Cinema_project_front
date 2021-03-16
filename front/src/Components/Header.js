@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import './Header.css'
 import {
     Navbar,
     Nav,
@@ -20,7 +21,7 @@ export default class Header extends Component {
     render (){
         return (
             <>
-            <Navbar collapseOnSelect /*fixed="top"*/ expand="md" bg="dark" variant="dark">
+            <Navbar className="navbar-custom" collapseOnSelect /*fixed="top"*/ expand="md" variant="dark">
                 <Container>
                     <Navbar.Brand href="/">
                         <img
@@ -34,18 +35,22 @@ export default class Header extends Component {
                     <Navbar.Toggle aria-controls="responsive-navbar-nav"/>
                     <Navbar.Collapse id="responsive-navbar-nav">
                         <Nav className="mr-auto">
+                            <div className="custom-nav">
                             <Nav.Link href="/"> Home </Nav.Link>
+                            </div>
+                            <div className="custom-nav">
                             <Nav.Link href="/booking"> Booking </Nav.Link>
+                            </div>
+                            <div className="custom-nav">
                             <Nav.Link href="/contacts"> Contacts </Nav.Link>
+                            </div>
                         </Nav>
                         <Form inline >
-                            <div>
-                            <Button href="/registr" style={{marginRight: 10}} variant="outline-info">Sign up</Button>
-                            <Button href="/login" style={{marginRight: 10}} variant="outline-info">Sign in</Button>
-                            </div>
+                            <Button href="/registr" style={{marginRight: 10, backgroundColor: "#A64D4D"}} variant="secondary">Sign up</Button>
+                            <Button href="/login" style={{marginRight: 10, backgroundColor: "#ABB4B4"}} variant="secondary">Sign in</Button>
                         </Form>
                         <Navbar>
-                            <a a href = "/account">
+                            <a href = "/account">
                                 <img
                                 src={avatar}
                                 height="30"

@@ -1,0 +1,12 @@
+.navbar-custom {
+    background-color: #499C9C;
+}
+
+
+.navbar-custom .mr-auto .custom-nav .nav-link {
+    color: #EBF8F8;
+}
+
+.navbar-custom .mr-auto .custom-nav :hover {
+    color: #ABB4B4;
+}
