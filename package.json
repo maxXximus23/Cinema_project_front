@@ -1,14 +1,18 @@
 {
-  "name": "cinema-project-frontend",
-  "version": "0.1.0",
+  "name": "-y",
+  "version": "1",
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^5.11.9",
     "@testing-library/react": "^11.2.5",
     "@testing-library/user-event": "^12.8.3",
+    "bootstrap": "^4.6.0",
     "react": "^17.0.1",
+    "react-bootstrap": "^1.5.2",
     "react-dom": "^17.0.1",
+    "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.3",
+    "react-slideshow-image": "^3.4.3",
     "web-vitals": "^1.1.0"
   },
   "scripts": {
@@ -34,5 +38,10 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  }
+  },
+  "description": "qwerty",
+  "main": "index.js",
+  "repository": "https://github.com/maxXximus23/Cinema_project_front.git",
+  "author": "Vitaliy821 <46032498+Vitaliy821@users.noreply.github.com>",
+  "license": "MIT"
 }
