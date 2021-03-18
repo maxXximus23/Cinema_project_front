@@ -48,16 +48,22 @@ import './MainPage.css'
     }
     render(){
         const {error, isLoaded, sessions}=this.state
-        return(
-            <div>
+        if (error) {
+            return <div>Error: {error.message}</div>;
+        } else if (!isLoaded) {
+            return <div>Loading...</div>;
+        }else{
+            return(
                 <div>
-                    <MovieSlider movies ={sessions.slice(0,4)}/>
+                    <div>
+                        <MovieSlider movies ={sessions}/>
+                    </div>
+                    <div className="movie_list__item">
+                        <MovieList movies ={sessions}/>
+                    </div>
                 </div>
-                <div className="movie_list__item">
-                    <MovieList movies ={sessions.slice(5)}/>
-                </div>
-            </div>
-        )
+            )
+        }
     }
 }
 
