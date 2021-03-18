@@ -10,7 +10,11 @@ class LoginForm extends React.Component{
             passwordDirty: false,
             emailError: 'This field is required',
             passwordError: 'This field is required',
-            loginFailed: false
+            loginFailed: false,
+            borderColorEmail:"",
+            borderColorPassword:"",
+            borderColorRed: "2px solid red",
+            borderColorGreen: "2px solid green"
         }
     }
 
@@ -31,7 +35,7 @@ class LoginForm extends React.Component{
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(login)
             };
-            const response = await fetch(`http://localhost:8081/auth/login`, requestOptions);
+            const response = await fetch(`http://localhost:8081/users/login`, requestOptions);
 
             if(response.status===200){
                 this.props.history.push('/')
@@ -50,9 +54,13 @@ class LoginForm extends React.Component{
         switch (e.target.name){
             case 'email':
                 this.setState({emailDirty:true})
+                if(this.state.borderColorEmail==="")
+                    this.setState({borderColorEmail:this.state.borderColorRed})
                 break
             case 'password':
                 this.setState({passwordDirty:true})
+                if(this.state.borderColorPassword==="")
+                    this.setState({borderColorPassword:this.state.borderColorRed})
                 break
         }
     };
@@ -72,19 +80,31 @@ class LoginForm extends React.Component{
         }
     };
     correctPassword = () => {
-        if ((this.state.password) === '')
-            this.setState({passwordError:'This field is required'})
-        else
-            this.setState({passwordError:''})
+        this.setState({passwordDirty:true})
+        if ((this.state.password) === '') {
+            this.setState({passwordError: 'This field is required'})
+            this.setState({borderColorPassword:this.state.borderColorRed})
+        }
+        else {
+            this.setState({passwordError: ''})
+            this.setState({borderColorPassword:this.state.borderColorGreen})
+        }
     };
     correctEmail=()=>{
+        this.setState({emailDirty:true})
         const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-        if(!this.state.email)
-            this.setState({emailError:'This field is required'})
-        else if(!re.test(String(this.state.email).toLowerCase()))
-            this.setState({emailError:'Incorrect email'})
-        else
-            this.setState({emailError:''})
+        if(!this.state.email) {
+            this.setState({emailError: 'This field is required'})
+            this.setState({borderColorEmail:this.state.borderColorRed})
+        }
+        else if(!re.test(String(this.state.email).toLowerCase())) {
+            this.setState({emailError: 'Incorrect email'})
+            this.setState({borderColorEmail:this.state.borderColorRed})
+        }
+        else {
+            this.setState({emailError: ''})
+            this.setState({borderColorEmail:this.state.borderColorGreen})
+        }
     };
 
     render() {
@@ -101,12 +121,12 @@ class LoginForm extends React.Component{
                     <h1  className="h3 mb-3 fw-normal">Please sign in</h1>
                     <div>
                         <input onChange={e => this.changeHandler(e)} value={this.email} onBlur={e => this.blurHandler(e)} type="text" name="email" className="form-control" placeholder="Email address"
-                               required="" autoFocus=""/>
+                               required="" autoFocus="" style={{border: this.state.borderColorEmail}}/>
                         {(this.state.emailDirty && this.state.emailError) && <div style={{color: 'red'}}>{this.state.emailError}</div>}
                     </div>
                     <div>
                         <input onChange={e => this.changeHandler(e)} value={this.password} onBlur={e => this.blurHandler(e)}  type="password" name="password" className="form-control"
-                               placeholder="Password" required=""/>
+                               placeholder="Password" required="" style={{border: this.state.borderColorPassword}}/>
                         {(this.state.passwordDirty && this.state.passwordError) && <div style={{color: 'red'}}>{this.state.passwordError}</div>}
                     </div>
                     <div className="checkbox mb-3">

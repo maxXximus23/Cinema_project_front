@@ -10,11 +10,10 @@ function App() {
         <div className="App">
             <BrowserRouter>
                 <div >
-                    <Route path='/login' component={LoginForm}></Route>
-                    <Route path='/registration' component={RegistrationForm}></Route>
+                    <Route path='/login' component={LoginForm}/>
+                    <Route path='/registration' component={RegistrationForm}/>
                 </div>
             </BrowserRouter>
-
         </div>
     );
 }
