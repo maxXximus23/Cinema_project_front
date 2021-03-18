@@ -1,0 +1,181 @@
+.mrg20px{
+    margin: 20px;
+}
+
+:root {
+    --backgroundColor: rgba(246, 241, 209);
+    --colorShadeA: #499C9C;
+    --colorShadeB: #499C9C;
+    --colorShadeC: #EBF8F8;
+    --colorShadeD: #EEF8F8;
+    --colorShadeE: white;
+  }
+  
+  @import url("https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700");
+  * {
+    box-sizing: border-box;
+  }
+  *::before, *::after {
+    box-sizing: border-box;
+  }
+
+  .buttonBook {
+    position: relative;
+    display: block;
+    cursor: pointer;
+    outline: none;
+    border: 0;
+    text-decoration: none;
+    color: var(--colorShadeA);
+    font-weight: 700;
+    text-transform: uppercase;
+    font-family: inherit;
+    margin-top: 30px;
+  }
+  
+  .buttonBook.big-button {
+     padding: 0.5em 1em;
+     border: 2px solid var(--colorShadeA);
+    border-radius: 1em;
+    background: var(--colorShadeE);
+     transform-style: preserve-3d;
+     transition: all 175ms cubic-bezier(0, 0, 1, 1);
+  }
+  .buttonBook.big-button::before {
+    position: absolute;
+    content: '';
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: var(--colorShadeC);
+    border-radius: inherit;
+    box-shadow: 0 0 0 2px var(--colorShadeB), 0 0.75em 0 0 var(--colorShadeA);
+    transform: translate3d(0, 0.75em, -1em);
+    transition: all 175ms cubic-bezier(0, 0, 1, 1);
+  }
+  
+  
+  .buttonBook.big-button:hover {
+    background: var(--colorShadeD);
+    transform: translate(0, 0.375em);
+    text-decoration: none;
+    color: var(--colorShadeA);
+  }
+  
+  .buttonBook.big-button:hover::before {
+    transform: translate3d(0, 0.75em, -1em);
+  }
+  
+  .buttonBook.big-button:active {
+              transform: translate(0em, 0.75em);
+  }
+  
+  .buttonBook.big-button:active::before {
+    transform: translate3d(0, 0, -1em);
+    
+        box-shadow: 0 0 0 2px var(--colorShadeB), 0 0.25em 0 0 var(--colorShadeB);
+  
+  }
+
+.reviews {
+  padding-left: 0;
+  margin-top: 30px;
+}
+
+.review {
+  border-radius: 25px;
+  padding: 20px;
+  margin-top: 25px;
+  box-shadow: 
+    -2px -2px 1px rgba(0,0,0,0.5) inset,
+    10px 4px 10px rgba(0,0,0,0.15), 
+    0px 8px 10px rgba(0,0,0,0.15);
+}
+
+.review__header {
+  border-bottom: solid #ABB4B4 2px;
+}
+
+.review__text {
+  padding-top: 20px;
+}
+
+.newReview {
+  padding: 30px 1px;
+  margin-bottom: 100px;
+}
+
+.newReview h5 {
+  margin-left: 10px;
+}
+
+.newReview__text {
+  margin-top: 10px;
+  padding: 20px;
+  border-color: rgb(69, 126, 126);
+  border-radius: 25px;
+}
+
+.newReview__text:focus {
+  box-shadow: 0 0 0 0.2rem rgb(73, 201, 190);
+}
+
+.newReview__submit {
+  float: right;
+}
+
+.trailer {
+  padding: 0;
+  margin-left: 15px;
+}
+
+.trailer iframe {
+  border: 0;
+  margin: 0;
+  padding: 0;
+}
+
+.buttonPost {
+  margin-top: 25px;
+  padding: 10px 25px;
+  border-radius: 20px;
+  background-color: white;
+  border: solid var(--colorShadeA) 2px;
+}
+
+.buttonPost:hover {
+  transition: 0.5s;
+  background-color: #d0fdfd;
+}
+
+.buttonPost:focus {
+  outline: none;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,300;1,400&display=swap');
+.moviePage {
+  width: 100%;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.movieData {
+  margin-top: 50px;
+}
+
+.img_frame__item{
+  display: block;
+  background-color: rgb(174, 235, 235);
+  padding: 10px;
+  border-radius: 15px;
+  box-shadow: 
+    -2px -2px 1px rgba(0,0,0,0.5) inset,
+    10px 4px 10px rgba(0,0,0,0.15), 
+    0px 8px 10px rgba(0,0,0,0.15);
+}
+
+.movieText {
+  padding: 15px 25px;
+}
