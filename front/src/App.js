@@ -6,7 +6,7 @@ import Booking from './components/booking/Booking';
 
 function App() {
   return (
-    <div className="App container">
+    <div className="App">
       <Route path="/movies/:movieId" component={Movie} />
       <Route path="/book/:sessionId" component={Booking} />
     </div>

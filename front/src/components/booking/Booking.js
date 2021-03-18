@@ -59,7 +59,7 @@ class Booking extends React.Component {
         } else {
             const seats = [,]
         
-            for (let i = 0; i < places.rowsAmount; i++){
+            for (let i = places.rowsAmount - 1; i >= 0; i--){
                 let item = {key: Number, values: []}
                 item.key = i
                 for (let j = 0; j < places.place; j++){
@@ -71,31 +71,37 @@ class Booking extends React.Component {
                         <div key={j}>
                             <label>
                                 <input type="checkbox" onChange={this.onValueChange} name={(i+1) + "_" + (j+1)} disabled={enabled}/>
-                                <img src="https://img.icons8.com/windows/50/000000/armchair.png" alt="" className="seat"/>
+                                <img src="https://img.icons8.com/windows/50/000000/armchair.png" title={"Row: " + (i+1) + "\nPlace: " + (j+1)} className="seat"/>
                             </label>
                         </div>
                     )
                 }
                 seats.push(item)
             }
+            console.log(seats)
         
             return (
-                <div>
-                   <div className="screen">
-                        <h2>SCREEN</h2>
-                   </div>
-                       <form onSubmit={this.book}>
-                           <div className="row justify-content-center">
+                <div className="container hallDemo">
+                    <form onSubmit={this.book}>
+                       <div className="row justify-content-center">
+
                             {
                                 seats.map(el =>{
-                                    return <div key={el.key} className="d-flex justify-content-around col-md-11">{el.values}</div>
+                                    return  <div key={el.key} className="d-flex justify-content-around col-md-12">
+                                                <div className="row-number text-center">{el.key + 1}</div>
+                                                {el.values}
+                                                <div className="row-number text-center">{el.key + 1}</div>
+                                            </div>
                                 })
                             }
-                            </div>
-                            <button className="btn btn-default" type="submit">
-                                Book tickets
-                            </button>
-                        </form>
+                        </div>
+                        <div className="screen">
+                            <h2>SCREEN</h2>
+                        </div>
+                        <button className="bookTicketsBtn" type="submit">
+                            Book tickets
+                        </button>
+                    </form>
                 </div>
             );
         }
@@ -110,6 +116,8 @@ class Booking extends React.Component {
             places: this.state.selectedTickets
         }
         
+        console.log(data)
+
         fetch('http://localhost:8081/tickets/purchaselist',
             {
                 method: 'POST', 

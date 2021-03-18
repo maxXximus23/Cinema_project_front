@@ -53,28 +53,31 @@ class Movie extends React.Component {
             return <div>Loading...</div>;
         } else {
             return (
-                <div className="row mrg20px">
-                    <div className="row">
-                        <div className="col-md-9 row">
-                            <img className="col-md-5" alt="" src={movie.posterPath}></img>
-                            <div className="col-md-7">
-                                <h1>{movie.title}</h1>
-                                <p>{this.parseDuration(movie.duration)}</p>
-                                <p>{movie.description}</p>
-                            </div>
-                            <div className="col-md-12 trailer mrg20px">
-                                <iframe className="col-md-12" height="380px" width="10%"
-                                    src={movie.trailerPath}
-                                    allowFullScreen>
-                                </iframe>
-                            </div>
-                        </div>
-                        <div className="col-md-3 sessions">
-                            <MovieSessions id={this.state.id} />
-                        </div>
+                <div className="row moviePage">
+                    <div className="col-md-12 trailer">
+                         <iframe className="col-md-12"
+                            height="500px"
+                            src={movie.trailerPath}
+                            allowFullScreen>
+                        </iframe>
                     </div>
-                    <div className="col-md-12 reviews">
-                        <Reviews id={this.state.id} />
+                    <div className="container movieData">
+                        <div className="d-flex justify-content-between">
+                            <div className="col-md-9 row">
+                                <img className="col-md-5 img_frame__item" alt="" src={movie.posterPath}></img>
+                                <div className="col-md-7 movieText">
+                                    <h1>{movie.title}</h1>
+                                    <p>{this.parseDuration(movie.duration)}</p>
+                                    <p>{movie.description}</p>
+                                </div>
+                            </div>
+                            <div className="col-md-3 sessions">
+                                <MovieSessions id={this.state.id} />
+                            </div>
+                        </div>
+                        <div className="col-md-12 reviews">
+                            <Reviews id={this.state.id} />
+                        </div>
                     </div>
                 </div>
             );

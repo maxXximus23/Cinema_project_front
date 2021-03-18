@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom';
 import './style.css'
 
 class MovieSessions extends React.Component {
@@ -57,16 +58,15 @@ class MovieSessions extends React.Component {
                     <h3 className="mrg20px">Upcoming sessions:</h3>
                     {
                         sessions.map(el =>{
-                            return <div key={el.id} className="sessionData row">
-                                    <div className="col-md-6">
-                                        <span>{el.hallName}</span><br/>
-                                        <span>{el.date.substr(0, 5)}</span><br/>
-                                        <span>{el.date.substr(6)}</span>
-                                    </div>
-                                        <div className="col-md-6">
-                                            <a className="big-button buttonBook" href={"/book/" + el.id} type="button">Book</a>
-                                    </div>
-                                </div>
+                            return <Link to={"/book/" + el.id}
+                                        key={el.id} 
+                                        className="buttonBook big-button d-flex justify-content-between">
+                                        <div className="col-md-4 text-left">{el.hallName}</div>
+                                        <div className="col-md-8 text-right">
+                                            <span>{el.date.substr(0, 5)}</span><br/>
+                                            <span>{el.date.substr(6)}</span>
+                                        </div>
+                                </Link>
                         })
                     }
                 </div>

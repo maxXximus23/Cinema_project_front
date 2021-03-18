@@ -1,17 +1,14 @@
 .mrg20px{
     margin: 20px;
 }
-.sessionData{
-    margin-top: 10px;
-}
 
 :root {
     --backgroundColor: rgba(246, 241, 209);
-    --colorShadeA: rgb(12, 77, 48);
-    --colorShadeB: rgb(69, 126, 126);
-    --colorShadeC: rgb(174, 235, 235);
-    --colorShadeD: rgb(147, 240, 240);
-    --colorShadeE: rgb(139, 230, 222);
+    --colorShadeA: #499C9C;
+    --colorShadeB: #499C9C;
+    --colorShadeC: #EBF8F8;
+    --colorShadeD: #EEF8F8;
+    --colorShadeE: white;
   }
   
   @import url("https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700");
@@ -24,16 +21,16 @@
 
   .buttonBook {
     position: relative;
-    display: inline-block;
+    display: block;
     cursor: pointer;
     outline: none;
     border: 0;
-    vertical-align: middle;
     text-decoration: none;
     color: var(--colorShadeA);
     font-weight: 700;
     text-transform: uppercase;
     font-family: inherit;
+    margin-top: 30px;
   }
   
   .buttonBook.big-button {
@@ -85,17 +82,21 @@
 
 .reviews {
   padding-left: 0;
+  margin-top: 30px;
 }
 
 .review {
-  border: solid rgb(69, 126, 126) 3px;
   border-radius: 25px;
   padding: 20px;
   margin-top: 25px;
+  box-shadow: 
+    -2px -2px 1px rgba(0,0,0,0.5) inset,
+    10px 4px 10px rgba(0,0,0,0.15), 
+    0px 8px 10px rgba(0,0,0,0.15);
 }
 
 .review__header {
-  border-bottom: solid rgb(69, 126, 126) 2px;
+  border-bottom: solid #ABB4B4 2px;
 }
 
 .review__text {
@@ -129,18 +130,52 @@
 .trailer {
   padding: 0;
   margin-left: 15px;
-  max-width: 98%;
+}
+
+.trailer iframe {
+  border: 0;
+  margin: 0;
+  padding: 0;
 }
 
 .buttonPost {
   margin-top: 25px;
   padding: 10px 25px;
   border-radius: 20px;
-  background-color: rgb(73, 201, 190);
-  border: solid rgb(139, 230, 222) 3px;
+  background-color: white;
+  border: solid var(--colorShadeA) 2px;
 }
 
 .buttonPost:hover {
   transition: 0.5s;
-  background-color: white;
+  background-color: #d0fdfd;
+}
+
+.buttonPost:focus {
+  outline: none;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,300;1,400&display=swap');
+.moviePage {
+  width: 100%;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.movieData {
+  margin-top: 50px;
+}
+
+.img_frame__item{
+  display: block;
+  background-color: rgb(174, 235, 235);
+  padding: 10px;
+  border-radius: 15px;
+  box-shadow: 
+    -2px -2px 1px rgba(0,0,0,0.5) inset,
+    10px 4px 10px rgba(0,0,0,0.15), 
+    0px 8px 10px rgba(0,0,0,0.15);
+}
+
+.movieText {
+  padding: 15px 25px;
 }

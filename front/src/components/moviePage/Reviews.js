@@ -28,7 +28,7 @@ class Reviews extends React.Component {
     }
   
     componentDidMount() {
-        fetch('http://localhost:8081/review/movie/' + this.state.id)
+        fetch('http://localhost:8081/reviews/movie/' + this.state.id)
             .then(this.errorHandler)
             .then((result) => {
                     this.setState({
@@ -75,7 +75,7 @@ class Reviews extends React.Component {
                         <h5>Already watched? Share your impressions with others!</h5>
                         <form onSubmit={this.postReview}>
                             <textarea className="col-md-12 newReview__text form-control" 
-                                placeholder="Write your review" 
+                                placeholder="Write your review (minimum 20 characters)" 
                                 rows="5"
                                 onChange={this.handleTextChange}
                                 value={this.state.newReviewText}/>
@@ -96,13 +96,16 @@ class Reviews extends React.Component {
     postReview(event){ //TODO: Add real user data in request
         event.preventDefault();
 
+        if (this.state.newReviewText.length < 20)
+            return;
+
         let data = {
             movieId: this.state.id,
             authorId: -1,
             text: this.state.newReviewText
         }
 
-        fetch('http://localhost:8081/review/add',
+        fetch('http://localhost:8081/reviews/add',
             {
                 method: 'POST', 
                 mode: 'cors',

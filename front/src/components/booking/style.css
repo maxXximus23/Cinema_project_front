@@ -1,9 +1,9 @@
-.screen{
+.screen {
     text-align: center;
-    border-top: solid 10px black;
-    border-radius: 150px 150px 0px 0px / 40px 40px 0px 0px;
-    margin: 20px 0 70px 0;
-    padding-top: 15px;
+    border-bottom: solid 10px black;
+    border-radius: 0px 0px 200px 200px / 0px 0px 50px 50px;
+    margin: 70px 0 30px 0;
+    padding-bottom: 15px;
 }
 
 [type="checkbox"] {
@@ -11,7 +11,7 @@
 }
 
 [type="checkbox"]:checked ~ img {
-    background-color: rgb(0, 252, 218);
+    background-color: #499C9C;
 }
 
 [type="checkbox"]:disabled ~ img {
@@ -31,3 +31,43 @@
 a h6 {
     margin-left: -15px;
 }
+
+.row-number {
+    font-size: 24px;
+    font-weight: bold;
+    width: 30px;
+    line-height: 50px;
+    height: 50px;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,300;1,400&display=swap');
+.hallDemo {
+    margin-top: 100px;
+    font-family: 'Montserrat', sans-serif; 
+}
+
+.bookTicketsBtn {
+    margin-top: 30px;
+    background-color: white;
+    padding: 15px 100px;
+    border: solid #6be7e7 1px;
+    border-radius: 15px;
+    box-shadow: 
+    -2px -2px 1px rgba(0,0,0,0.5) inset,
+    10px 4px 10px rgba(0,0,0,0.15), 
+    0px 8px 10px rgba(0,0,0,0.15);
+}
+
+.bookTicketsBtn:hover {
+    transition: 0.5s;
+    background-color: #6be7e7;
+}
+
+.bookTicketsBtn:focus {
+    box-shadow: 
+    -2px -2px 1px rgba(0,0,0,0.5) inset,
+    10px 4px 10px rgba(0,0,0,0.15), 
+    0px 8px 10px rgba(0,0,0,0.15);
+    outline: none;
+}
+
