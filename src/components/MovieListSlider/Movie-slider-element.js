@@ -16,7 +16,7 @@ class Movie extends Component{
                         <div className="movie_body col-lg-6">
                             <div className="movie_title">{movie.movieTitle}</div>
                             <div className="movie_info">{movie.date}</div>
-                            <div class="floating-button">Buy now</div>
+                            <div className="floating-button">Buy now</div>
                         </div>
                         <div className="col-lg-6">
                             <img className="img_frame__item" src={movie.moviePoster} alt='img'></img>
