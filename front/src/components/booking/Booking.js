@@ -78,8 +78,7 @@ class Booking extends React.Component {
                 }
                 seats.push(item)
             }
-            console.log(seats)
-        
+                    
             return (
                 <div className="container hallDemo">
                     <form onSubmit={this.book}>
@@ -115,8 +114,6 @@ class Booking extends React.Component {
             userId: -1,
             places: this.state.selectedTickets
         }
-        
-        console.log(data)
 
         fetch('http://localhost:8081/tickets/purchaselist',
             {
@@ -134,7 +131,7 @@ class Booking extends React.Component {
         )
         .then(this.errorHandler)
         .then(result => {
-                console.log(result)
+                console.log(result) //TODO: redirect to tickets
         })
         .catch(err => {
             this.setState({

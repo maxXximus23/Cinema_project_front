@@ -133,7 +133,6 @@ class Reviews extends React.Component {
                     newReviewText: ""
                 })
                 event.target.value = ""
-                console.log(result.id)
         })
         .catch(err => {
             this.setState({

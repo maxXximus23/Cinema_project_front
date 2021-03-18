@@ -3,8 +3,8 @@ import React from "react";
 import {Route, Link, BrowserRouter} from 'react-router-dom';
 import Movie from './components/moviePage/Movie';
 import Booking from './components/booking/Booking'
-import RegistrationForm from "./components/RegistrationForm";
-import LoginForm from "./components/LoginForm";
+import RegistrationForm from "./components/accountLogs/RegistrationForm";
+import LoginForm from "./components/accountLogs/LoginForm";
 
 function App() {
   return (
