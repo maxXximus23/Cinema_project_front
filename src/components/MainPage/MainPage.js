@@ -1,7 +1,6 @@
 import React, {Component} from 'react'
 import MovieSlider from '../MovieListSlider/movie-slider'
 import MovieList from '../MovieList/MovieList'
-//import movies from '../../fixtures'
 import './MainPage.css'
 
  class MainPage extends Component{
