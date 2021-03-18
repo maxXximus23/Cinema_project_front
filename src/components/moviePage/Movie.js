@@ -2,6 +2,7 @@ import React from 'react'
 import MovieSessions from './MovieSessions';
 import Reviews from './Reviews';
 import './style.css'
+import YouTube from 'react-youtube'
 
 class Movie extends React.Component {
     constructor(props) {
@@ -11,7 +12,8 @@ class Movie extends React.Component {
             isLoaded: false,
             movie: {},
             id: props.match.params.movieId,
-            reviews: []
+            reviews: [],
+            trailer: {}
         };
     }
 
@@ -47,6 +49,7 @@ class Movie extends React.Component {
   
     render() {
         const { error, isLoaded, movie } = this.state;
+        const trailer = <YouTube videoId={movie.trailerPath} opts={{'height': '500px','width': '100%'}}/>
         if (error) {
             return <div>Error: {error.message}</div>;
         } else if (!isLoaded) {
@@ -55,11 +58,7 @@ class Movie extends React.Component {
             return (
                 <div className="row moviePage">
                     <div className="col-md-12 trailer">
-                         <iframe className="col-md-12"
-                            height="500px"
-                            src={movie.trailerPath}
-                            allowFullScreen>
-                        </iframe>
+                        {movie.trailerPath != 'none' && trailer}
                     </div>
                     <div className="container movieData">
                         <div className="d-flex justify-content-between">

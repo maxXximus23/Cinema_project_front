@@ -1,5 +1,6 @@
 .navbar-custom {
     background-color: #499C9C;
+    font-family: 'Montserrat', sans-serif;
 }
 
 
@@ -10,4 +11,5 @@
 .navbar-custom .mr-auto .custom-nav :hover {
     color: #ABB4B4;
 }
+
 

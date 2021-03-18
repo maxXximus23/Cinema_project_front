@@ -17,38 +17,38 @@ function Footer() {
           {/* Column1 */}
           <div className="col">
             <h4>About Us</h4>
-            <ui className="list-unstyled">
+            <ul className="list-unstyled">
               <a href=""><li>Story</li></a>
               <a href=""><li>Clients</li></a>
               <a href=""><li>Testimonials</li></a>
-            </ui>
+            </ul>
           </div>
           {/* Column2 */}
           <div className="col">
             <h4>Service</h4>
-            <ui className="list-unstyled">
+            <ul className="list-unstyled">
             <a href=""><li>Development</li></a>
             <a href=""><li>Consulting</li></a>
             <a href=""><li>Help</li></a>
-            </ui>
+            </ul>
           </div>
           {/* Column3 */}
           <div className="col">
             <h4>Contact Us</h4>
-            <ui className="list-unstyled">
+            <ul className="list-unstyled">
             <a href=""> <li>Ukraine</li></a>
             <a href=""><li>United State</li></a>
             <a href=""> <li>Australia</li></a>
-            </ui>
+            </ul>
           </div>
           {/* Column4 */}
           <div className="col">
             <h4>Social</h4>
-            <ui className="list-unstyled">
+            <ul className="list-unstyled">
             <a href=""> <li>Facebook</li></a>
             <a href=""> <li>Instagram</li></a>
             <a href=""> <li>Youtube</li></a>
-            </ui>
+            </ul>
           </div>
         </div>
         <hr />
