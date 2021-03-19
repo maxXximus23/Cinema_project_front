@@ -3,6 +3,7 @@ import MovieSessions from './MovieSessions';
 import Reviews from './Reviews';
 import './style.css'
 import YouTube from 'react-youtube'
+import ErrorComponent from '../error/ErrorComponent';
 
 class Movie extends React.Component {
     constructor(props) {
@@ -21,7 +22,7 @@ class Movie extends React.Component {
         if (!response.ok){
             await response.json()
                     .then(res => {
-                        throw Error(res.message)
+                        throw res
                     })
         }
 
@@ -51,7 +52,8 @@ class Movie extends React.Component {
         const { error, isLoaded, movie } = this.state;
         const trailer = <YouTube videoId={movie.trailerPath} opts={{'height': '500px','width': '100%'}}/>
         if (error) {
-            return <div>Error: {error.message}</div>;
+            console.log(error)
+            return <ErrorComponent error={error} />;
         } else if (!isLoaded) {
             return <div>Loading...</div>;
         } else {
