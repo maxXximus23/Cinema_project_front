@@ -65,7 +65,7 @@ class Movie extends React.Component {
                     <div className="container movieData">
                         <div className="d-flex justify-content-between">
                             <div className="col-md-9 row">
-                                <img className="col-md-5 img_frame__item" alt="" src={movie.posterPath}></img>
+                                <img className="col-md-5 img_poster" alt="" src={movie.posterPath}></img>
                                 <div className="col-md-7 movieText">
                                     <h1>{movie.title}</h1>
                                     <p>{this.parseDuration(movie.duration)}</p>
