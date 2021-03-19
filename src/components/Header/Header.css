@@ -1,15 +1,64 @@
+@import url("https://fonts.gstatic.com");
+@import url("https://fonts.googleapis.com/css2?family=Changa+One&display=swap");
 .navbar-custom {
     background-color: #499C9C;
     font-family: 'Montserrat', sans-serif;
 }
 
-
+.nav-link{
+    padding: 0;
+}
 .navbar-custom .mr-auto .custom-nav .nav-link {
+    font-weight: 900;
     color: #EBF8F8;
+    transition: .3s;
+
 }
 
 .navbar-custom .mr-auto .custom-nav :hover {
-    color: #ABB4B4;
+    background-color:rgb(174, 235, 235) ;
+    padding-bottom: 3px;
+    border-radius: 20px;
+    color: #4A639E;
+    box-shadow: 0 15px 20px rgba(46, 229, 157, .4);
+    transform: translateY(-3px);
 }
 
 
+.cinema_name__item{
+    padding-top: 0;
+    font-size: 35px;
+    font-family: 'Changa One', cursive;
+    color:white;
+}
+
+.navbar-brand{
+    padding: 0;
+    border-radius: 50px;
+    box-shadow: 0 15px 20px rgba(46, 229, 157, .4);
+}
+
+#SignUp__item{
+    margin-right: 10;
+     background-color: #A64D4D;
+     transition: .3s;
+}
+
+#SignIn__item{
+    margin-right: 10;
+     background-color: #ABB4B4;
+     transition: .3s;
+}
+
+#SignUp__item:hover, #SignIn__item:hover{
+    background-color: white;
+    font-weight: 900;
+    color: #4A639E;
+    transform: translateY(-3px);
+    box-shadow: 0 15px 20px rgba(46, 229, 157, .4);
+}
+
+#user_ava_item{
+    box-shadow: 0 15px 20px rgba(46, 229, 157, .4);
+    border-radius: 50px;
+}

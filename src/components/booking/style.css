@@ -6,15 +6,15 @@
     padding-bottom: 15px;
 }
 
-[type="checkbox"] {
+.booking_checkbox__item {
     visibility:hidden;
 }
 
-[type="checkbox"]:checked ~ img {
+.booking_checkbox__item:checked ~ img {
     background-color: #499C9C;
 }
 
-[type="checkbox"]:disabled ~ img {
+.booking_checkbox__item:disabled ~ img {
     background-color: grey;
 }
 

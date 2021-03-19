@@ -15,27 +15,30 @@ export default class Header extends Component {
             <>
             <Navbar className="navbar-custom" collapseOnSelect /*fixed="top"*/ expand="md" variant="dark">
                 <Container>
-                    <Navbar.Brand href="/">
-                        <img
-                        src="https://icons.iconarchive.com/icons/seanau/fresh-web/256/Popcorn-icon.png"
-                        height="70"
-                        className="d-inline-block align-top"
-                        alt="Logo"
-                        />
-                    </Navbar.Brand>
+                    <Nav.Link href="/">
+                        <Navbar.Brand href="/">
+                            
+                            <img
+                            src="https://icons.iconarchive.com/icons/seanau/fresh-web/256/Popcorn-icon.png"
+                            height="70"
+                            className="d-inline-block align-top"
+                            alt="Logo"
+                            />
+
+                        </Navbar.Brand>
+                    </Nav.Link>
+                    <Nav.Link href="/"><Navbar className="cinema_name__item">DutCinema</Navbar></Nav.Link>
+                   
                     <Navbar.Toggle aria-controls="responsive-navbar-nav"/>
                     <Navbar.Collapse id="responsive-navbar-nav">
                         <Nav className="mr-auto">
-                            <div className="custom-nav">
-                            <Nav.Link href="/"> Home </Nav.Link>
-                            </div>
                             <div className="custom-nav">
                             <Nav.Link href="/contacts"> Contacts </Nav.Link>
                             </div>
                         </Nav>
                         <Form inline >
-                            <Button href="/registration" style={{marginRight: 10, backgroundColor: "#A64D4D"}} variant="secondary">Sign up</Button>
-                            <Button href="/login" style={{marginRight: 10, backgroundColor: "#ABB4B4"}} variant="secondary">Sign in</Button>
+                            <Button href="/registration" id="SignUp__item" variant="secondary">Sign up</Button>
+                            <Button href="/login" id="SignIn__item" variant="secondary">Sign in</Button>
                         </Form>
                         <Navbar>
                             <a href = "/account">
@@ -44,6 +47,7 @@ export default class Header extends Component {
                                 height="50"
                                 className="d-inline-block align-top"
                                 alt="Avatar"
+                                id="user_ava_item"
                                 />
                                 </a>
                                 </Navbar>

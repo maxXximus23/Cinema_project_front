@@ -60,7 +60,7 @@ class Movie extends React.Component {
             return (
                 <div className="row moviePage">
                     <div className="col-md-12 trailer">
-                        {movie.trailerPath != 'none' && trailer}
+                        {movie.trailerPath !== 'none' && trailer}
                     </div>
                     <div className="container movieData">
                         <div className="d-flex justify-content-between">
