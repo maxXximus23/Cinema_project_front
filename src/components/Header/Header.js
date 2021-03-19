@@ -7,7 +7,6 @@ import {
     Form,
     Button
 } from "react-bootstrap";
-import logo from "./logo192.png";
 import avatar from "./user128.png";
 
 export default class Header extends Component {
@@ -18,9 +17,8 @@ export default class Header extends Component {
                 <Container>
                     <Navbar.Brand href="/">
                         <img
-                        src={logo}
-                        height="30"
-                        width="30"
+                        src="https://icons.iconarchive.com/icons/seanau/fresh-web/256/Popcorn-icon.png"
+                        height="70"
                         className="d-inline-block align-top"
                         alt="Logo"
                         />
@@ -43,8 +41,7 @@ export default class Header extends Component {
                             <a href = "/account">
                                 <img
                                 src={avatar}
-                                height="30"
-                                width="30"
+                                height="50"
                                 className="d-inline-block align-top"
                                 alt="Avatar"
                                 />

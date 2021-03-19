@@ -13,7 +13,7 @@ class Movie extends Component{
             return(
                 <div className="each-fade movie container">
                     <Link className="floating-button" to={"/movies/" + session.movieId}>
-                        <div className="row">
+                        <div className="row d-flex justify-content-between">
                             <div className="movie_body col-lg-6">
                                 <div className="movie_title">{session.movieTitle}</div>
                                 <div className="movie_info">{session.date}</div>

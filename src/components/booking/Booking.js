@@ -1,5 +1,6 @@
 import React from 'react'
 import './style.css'
+import ErrorComponent from '../error/ErrorComponent';
 
 class Booking extends React.Component {
     constructor(props) {
@@ -53,7 +54,7 @@ class Booking extends React.Component {
     render() {
         const { error, isLoaded, places } = this.state;
         if (error) {
-            return <div>Error: {error.message}</div>;
+            return <ErrorComponent error={error} />;
         } else if (!isLoaded) {
             return <div>Loading...</div>;
         } else {

@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import MovieSlider from '../MovieListSlider/movie-slider'
 import MovieList from '../MovieList/MovieList'
 import './Home.css'
+import ErrorComponent from '../error/ErrorComponent';
 
  class Home extends Component{
      constructor(props){
@@ -47,7 +48,7 @@ import './Home.css'
     render(){
         const {error, isLoaded, sessions}=this.state
         if (error) {
-            return <div>Error: {error.message}</div>;
+            return <ErrorComponent error={error} />;
         } else if (!isLoaded) {
             return <div>Loading...</div>;
         } else {

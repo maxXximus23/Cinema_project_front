@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
 import './style.css'
+import ErrorComponent from '../error/ErrorComponent';
 
 class Reviews extends React.Component {
     constructor(props) {
@@ -49,7 +50,7 @@ class Reviews extends React.Component {
     render() {
         const { error, isLoaded, reviews } = this.state;
         if (error) {
-            return <div>Error: {error.message}</div>;
+            return <ErrorComponent error={error} />;
         } else if (!isLoaded) {
             return <div>Loading...</div>;
         } else {

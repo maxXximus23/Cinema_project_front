@@ -20,8 +20,8 @@
  }
  .post-item img {
     display: block;
-    width: 100%;
     height: 400px;
+    margin: 0 auto;
  }
  .text-wrapper {
     position: absolute;
@@ -81,3 +81,7 @@
        flex-basis: 33.333333333%;
     }
  }
+
+.movie-element__item {
+   margin: 30px auto;
+}
