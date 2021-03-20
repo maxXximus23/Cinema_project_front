@@ -39,6 +39,7 @@ class LoginForm extends React.Component{
             const response = await fetch(`http://localhost:8081/users/login`, requestOptions);
 
             if(response.status===200){
+                //localStorage.setItem
                 this.props.history.push('/')
             }
             else{
