@@ -9,7 +9,7 @@ export default function MovieList({movies}){
     )
     return(
         <div className="list_container">
-            <ul className = "movies_table row">
+            <ul className="movies_table row">
                 {movieElements}
             </ul>
         </div>

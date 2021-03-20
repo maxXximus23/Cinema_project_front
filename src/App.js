@@ -12,6 +12,7 @@ import Contacts from "./components/contacts/Contacts"
 
 import Home from './components/Home/Home'
 import Error from './components/error/ErrorComponent'
+import MoviesListPage from './components/movies/MoviesListPage';
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
             <Route path='/login' component={LoginForm}/>
             <Route path='/registration' component={RegistrationForm}/>
             <Route exact path="/movies/:movieId" component={Movie} />
+            <Route exact path="/movies" component={MoviesListPage} />
             <Route path="/book/:sessionId" component={Booking} />
             <Route component={Error} exact/>
         </Switch>

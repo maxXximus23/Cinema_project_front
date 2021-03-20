@@ -4,6 +4,7 @@ import Reviews from './Reviews';
 import './style.css'
 import YouTube from 'react-youtube'
 import ErrorComponent from '../error/ErrorComponent';
+import { Link } from 'react-router-dom';
 
 class Movie extends React.Component {
     constructor(props) {
@@ -50,13 +51,18 @@ class Movie extends React.Component {
   
     render() {
         const { error, isLoaded, movie } = this.state;
-        const trailer = <YouTube videoId={movie.trailerPath} opts={{'height': '500px','width': '100%'}}/>
+
         if (error) {
-            console.log(error)
             return <ErrorComponent error={error} />;
         } else if (!isLoaded) {
             return <div>Loading...</div>;
         } else {
+            const trailer = <YouTube videoId={movie.trailerPath} opts={{'height': '500px','width': '100%'}}/>
+            let genresList = movie.genres.split(", ")
+            let genres = []
+            for (let i = 0; i < genresList.length; i++){
+                genres.push(<span key={i}><Link to={{pathname: '/movies', query: genresList[i]}}>{genresList[i]}</Link>{(i === genresList.length - 1) ? "" : ", "}</span>)
+            }
             return (
                 <div className="row moviePage">
                     <div className="col-md-12 trailer">
@@ -69,6 +75,9 @@ class Movie extends React.Component {
                                 <div className="col-md-7 movieText">
                                     <h1>{movie.title}</h1>
                                     <p>{this.parseDuration(movie.duration)}</p>
+                                    <p><strong>{genres}</strong></p>
+                                    <p><strong>Actors: </strong>{movie.actors}</p>
+                                    <p><strong>Country: </strong>{movie.country}</p>
                                     <p>{movie.description}</p>
                                 </div>
                             </div>
