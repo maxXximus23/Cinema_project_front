@@ -3,6 +3,7 @@ import MovieSlider from '../MovieListSlider/movie-slider'
 import MovieList from '../MovieList/MovieList'
 import './Home.css'
 import ErrorComponent from '../error/ErrorComponent';
+import Loading from '../Loading/Loading'
 
  class Home extends Component{
      constructor(props){
@@ -50,10 +51,11 @@ import ErrorComponent from '../error/ErrorComponent';
         if (error) {
             return <ErrorComponent error={error} />;
         } else if (!isLoaded) {
-            return <div>Loading...</div>;
+            return <Loading/>;
         } else {
             return(
                 <div>
+                    
                     <div>
                         <MovieSlider movies ={sessions.slice(0,4)}/>
                     </div>

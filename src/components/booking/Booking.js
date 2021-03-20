@@ -1,6 +1,7 @@
 import React from 'react'
 import './style.css'
 import ErrorComponent from '../error/ErrorComponent';
+import Loading from '../Loading/Loading'
 
 class Booking extends React.Component {
     constructor(props) {
@@ -56,7 +57,7 @@ class Booking extends React.Component {
         if (error) {
             return <ErrorComponent error={error} />;
         } else if (!isLoaded) {
-            return <div>Loading...</div>;
+            return <div><Loading/></div>;
         } else {
             const seats = [,]
         
@@ -71,7 +72,7 @@ class Booking extends React.Component {
                     item.values.push(
                         <div key={j}>
                             <label>
-                                <input type="checkbox" onChange={this.onValueChange} name={(i+1) + "_" + (j+1)} disabled={enabled}/>
+                                <input className="booking_checkbox__item"type="checkbox" onChange={this.onValueChange} name={(i+1) + "_" + (j+1)} disabled={enabled}/>
                                 <img src="https://img.icons8.com/windows/50/000000/armchair.png" title={"Row: " + (i+1) + "\nPlace: " + (j+1)} className="seat"/>
                             </label>
                         </div>

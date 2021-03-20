@@ -1,4 +1,5 @@
 import React from "react";
+import './RegistrationForm.css'
 
 class RegistrationForm extends React.Component{
 
@@ -192,45 +193,45 @@ class RegistrationForm extends React.Component{
     render() {
         return(
             <div className="login_block">
-                <form  onSubmit={this.addNewUser} >
+                <form className="registration_form__item"  onSubmit={this.addNewUser} >
                     <div>
                         {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
                         {(this.state.registrationFailed) && <a style={{color: 'red'}}>An unknown error occurred
                             <button onClick={this.#closeButton} className="btn-close" aria-label="Close"/>
                         </a>}
                     </div>
-                    <h1  className="h3 mb-3 fw-normal">Register</h1>
+                    <h1  id="registr_text__item" className="h3 mb-3 fw-normal">Registration</h1>
                     <div>
                         <input type="text" name="firstName" value={this.firstName} onChange={e =>this.changeHandler(e)} onBlur={e => this.blurHandler(e)} className="form-control" placeholder="First name"
                                required="" style={{border: this.state.borderColorFirstName}}/>
-                        {(this.state.firstNameDirty && this.state.firstNameError) && <div style={{color: 'red'}}>{this.state.firstNameError}</div>}
+                        {(this.state.firstNameDirty && this.state.firstNameError) && <div className="error__item" style={{color: 'red'}}>{this.state.firstNameError}</div>}
                     </div>
                     <div>
                         <input type="text" name="lastName" value={this.lastName} onChange={e =>this.changeHandler(e)} onBlur={e => this.blurHandler(e)} className="form-control" placeholder="Last name"
                                required="" style={{border: this.state.borderColorLastName}} />
-                        {(this.state.lastNameDirty && this.state.lastNameError) && <div style={{color: 'red'}}>{this.state.lastNameError}</div>}
+                        {(this.state.lastNameDirty && this.state.lastNameError) && <div className="error__item" style={{color: 'red'}}>{this.state.lastNameError}</div>}
                     </div>
                     <div>
                         <input onChange={e => this.changeHandler(e)} value={this.email} onBlur={e => this.blurHandler(e)} type="text" name="email" className="form-control" placeholder="Email address"
                                required="" style={{border: this.state.borderColorEmail}} />
-                        {(this.state.emailDirty && this.state.emailError) && <div style={{color: 'red'}}>{this.state.emailError}</div>}
+                        {(this.state.emailDirty && this.state.emailError) && <div className="error__item" style={{color: 'red'}}>{this.state.emailError}</div>}
                     </div>
                     <div>
                         <input onChange={e => this.changeHandler(e)} value={this.password} onBlur={e => this.blurHandler(e)}  type="password" name="password" className="form-control"
                                placeholder="Password" required="" style={{border: this.state.borderColorPassword}} />
-                        {(this.state.passwordDirty && this.state.passwordError) && <div style={{color: 'red'}}>{this.state.passwordError}</div>}
+                        {(this.state.passwordDirty && this.state.passwordError) && <div className="error__item" style={{color: 'red'}}>{this.state.passwordError}</div>}
                     </div>
                     <div className="checkbox mb-3">
                         <label>
-                            <input type="checkbox" value="remember-me"/>
+                            <input type="checkbox" value="remember-me" />
                             Remember me
                         </label>
                     </div>
                     <div>
-                        <a href="/">Forgot your password?</a>
+                        <a className="forgot_pass__item" href="/">Forgot your password?</a>
                     </div>
                     <div>
-                        <button className="w-100 btn btn-lg btn-primary" type="submit">Register</button>
+                        <button id="btn_singup__item" className="w-100 btn btn-lg btn-primary" type="submit">Sign up</button>
                     </div>
                 </form>
             </div>
