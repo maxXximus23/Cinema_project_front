@@ -24,7 +24,7 @@ export default class PageResult extends React.Component {
         if (error) {
             return <ErrorComponent error={error} />;
         } else if (movies.length === 0) {
-            return <h3>Sorry, no movies found for genre: {genre}</h3>
+            return <h3>Sorry, no movies found</h3>
         } else {
             return  <div className="col-md-12">
                         <ul className="col-md-12 d-flex">
