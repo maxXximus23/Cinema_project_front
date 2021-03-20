@@ -1,4 +1,5 @@
 import React from "react";
+import AccountService from "../../services/AccountService";
 import './RegistrationForm.css'
 
 class LoginForm extends React.Component{
@@ -31,12 +32,8 @@ class LoginForm extends React.Component{
                 email: this.state.email,
                 password: this.state.password
             }
-            const requestOptions = {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(login)
-            };
-            const response = await fetch(`http://localhost:8081/users/login`, requestOptions);
+            const response = await AccountService.login(login);
+            console.log(response);
 
             if(response.status===200){
                 //localStorage.setItem
