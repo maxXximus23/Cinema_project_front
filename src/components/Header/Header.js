@@ -41,16 +41,16 @@ export default class Header extends Component {
                             <Button href="/login" id="SignIn__item" variant="secondary">Sign in</Button>
                         </Form>
                         <Navbar>
-                            <a href = "/account">
+                            <Nav.Link href = "/account">
                                 <img
-                                src={avatar}
-                                height="50"
-                                className="d-inline-block align-top"
-                                alt="Avatar"
-                                id="user_ava_item"
+                                    src={avatar}
+                                    height="50"
+                                    className="d-inline-block align-top"
+                                    alt="Avatar"
+                                    id="user_ava_item"
                                 />
-                                </a>
-                                </Navbar>
+                            </Nav.Link>
+                        </Navbar>
                     </Navbar.Collapse>
                 </Container>
             </Navbar>
