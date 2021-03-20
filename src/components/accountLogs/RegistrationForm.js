@@ -1,4 +1,5 @@
 import React from "react";
+import AccountService from "../../services/AccountService";
 
 class RegistrationForm extends React.Component{
 
@@ -43,12 +44,8 @@ class RegistrationForm extends React.Component{
                 email: this.state.email,
                 password: this.state.password
             };
-            const requestOptions = {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(newUser)
-            };
-            const response = await fetch('http://localhost:8081/users/register', requestOptions);
+            const response = await AccountService.register(newUser);
+            console.log(response);
             if(response.status===200)
                 this.props.history.push('/')
             else
@@ -160,7 +157,7 @@ class RegistrationForm extends React.Component{
             this.setState({borderColorPassword:this.state.borderColorGreen})
         }
     };
-    correctEmail=()=>{
+    correctEmail=async()=>{
         this.setState({emailDirty:true})
         const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         if(!this.state.email) {
@@ -172,17 +169,16 @@ class RegistrationForm extends React.Component{
             this.setState({borderColorEmail:this.state.borderColorRed})
         }
         else {
-            fetch('http://localhost:8081/users/check-' + this.state.email)
-                .then((response) => {
-                    if(response.status===200){
-                        this.setState({emailError: ''})
-                        this.setState({borderColorEmail:this.state.borderColorGreen})
-                    }
-                    else{
-                        this.setState({emailError: 'This email is already taken'})
-                        this.setState({borderColorEmail:this.state.borderColorRed})
-                    }
-                })
+            const response = await AccountService.isEmailFree(this.state.email);
+            console.log("d")
+            if(response.status===200){
+                this.setState({emailError: ''})
+                this.setState({borderColorEmail:this.state.borderColorGreen})
+            }
+            else{
+                this.setState({emailError: 'This email is already taken'})
+                this.setState({borderColorEmail:this.state.borderColorRed})
+            }
         }
     };
     closeButton = () =>{
