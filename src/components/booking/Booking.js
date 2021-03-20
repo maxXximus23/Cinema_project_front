@@ -57,7 +57,7 @@ class Booking extends React.Component {
         if (error) {
             return <ErrorComponent error={error} />;
         } else if (!isLoaded) {
-            return <div><Loading/></div>;
+            return <Loading/>;
         } else {
             const seats = [,]
         
