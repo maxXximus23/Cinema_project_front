@@ -2,6 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom';
 import './style.css'
 import ErrorComponent from '../error/ErrorComponent';
+import Loading from '../Loading/Loading';
 
 class MovieSessions extends React.Component {
     constructor(props) {
@@ -50,7 +51,7 @@ class MovieSessions extends React.Component {
         if (error) {
             return <ErrorComponent error={error} />;
         } else if (!isLoaded) {
-            return <div>Loading...</div>;
+            return <Loading />;
         } else if (sessions.length === 0) {
             return <div><h3>There are no upcoming sessions for now</h3></div>;
         } else {

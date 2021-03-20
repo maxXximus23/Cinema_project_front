@@ -2,6 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom';
 import './style.css'
 import ErrorComponent from '../error/ErrorComponent';
+import Loading from '../Loading/Loading';
 
 class Reviews extends React.Component {
     constructor(props) {
@@ -52,7 +53,7 @@ class Reviews extends React.Component {
         if (error) {
             return <ErrorComponent error={error} />;
         } else if (!isLoaded) {
-            return <div>Loading...</div>;
+            return <Loading />;
         } else {
             return (
                 <div>

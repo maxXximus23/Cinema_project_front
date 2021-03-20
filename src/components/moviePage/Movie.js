@@ -4,6 +4,7 @@ import Reviews from './Reviews';
 import './style.css'
 import YouTube from 'react-youtube'
 import ErrorComponent from '../error/ErrorComponent';
+import Loading from '../Loading/Loading';
 
 class Movie extends React.Component {
     constructor(props) {
@@ -55,12 +56,12 @@ class Movie extends React.Component {
             console.log(error)
             return <ErrorComponent error={error} />;
         } else if (!isLoaded) {
-            return <div>Loading...</div>;
+            return <Loading />;
         } else {
             return (
                 <div className="row moviePage">
                     <div className="col-md-12 trailer">
-                        {movie.trailerPath != 'none' && trailer}
+                        {movie.trailerPath !== 'none' && trailer}
                     </div>
                     <div className="container movieData">
                         <div className="d-flex justify-content-between">
