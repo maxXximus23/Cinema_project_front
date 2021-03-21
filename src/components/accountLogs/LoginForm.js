@@ -1,4 +1,6 @@
 import React from "react";
+import AccountService from "../../services/AccountService";
+import './RegistrationForm.css'
 
 class LoginForm extends React.Component{
     constructor(props) {
@@ -30,14 +32,11 @@ class LoginForm extends React.Component{
                 email: this.state.email,
                 password: this.state.password
             }
-            const requestOptions = {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(login)
-            };
-            const response = await fetch(`http://localhost:8081/users/login`, requestOptions);
+            const response = await AccountService.login(login);
+            console.log(response);
 
             if(response.status===200){
+                //localStorage.setItem
                 this.props.history.push('/')
             }
             else{
@@ -110,7 +109,7 @@ class LoginForm extends React.Component{
     render() {
         return(
             <div className="login_block">
-                <form  onSubmit={this.loginCheck} >
+                <form className="signin_form__item" onSubmit={this.loginCheck} >
 
                     <div>
                         {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
@@ -118,16 +117,16 @@ class LoginForm extends React.Component{
                             <button onClick={this.closeButton} className="btn-close" aria-label="Close"/>
                         </a>}
                     </div>
-                    <h1  className="h3 mb-3 fw-normal">Please sign in</h1>
+                    <h1  id="signin_text__item" className="h3 mb-3 fw-normal">Please sign in</h1>
                     <div>
                         <input onChange={e => this.changeHandler(e)} value={this.email} onBlur={e => this.blurHandler(e)} type="text" name="email" className="form-control" placeholder="Email address"
                                required="" autoFocus="" style={{border: this.state.borderColorEmail}}/>
-                        {(this.state.emailDirty && this.state.emailError) && <div style={{color: 'red'}}>{this.state.emailError}</div>}
+                        {(this.state.emailDirty && this.state.emailError) && <div className="error__item" style={{color: 'red'}}>{this.state.emailError}</div>}
                     </div>
                     <div>
                         <input onChange={e => this.changeHandler(e)} value={this.password} onBlur={e => this.blurHandler(e)}  type="password" name="password" className="form-control"
                                placeholder="Password" required="" style={{border: this.state.borderColorPassword}}/>
-                        {(this.state.passwordDirty && this.state.passwordError) && <div style={{color: 'red'}}>{this.state.passwordError}</div>}
+                        {(this.state.passwordDirty && this.state.passwordError) && <div className="error__item" style={{color: 'red'}}>{this.state.passwordError}</div>}
                     </div>
                     <div className="checkbox mb-3">
                         <label>
@@ -136,10 +135,10 @@ class LoginForm extends React.Component{
                         </label>
                     </div>
                     <div>
-                        <a href="/">Forgot your password?</a>
+                        <a className="forgot_pass__item" href="/">Forgot your password?</a>
                     </div>
                     <div>
-                        <button className="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
+                        <button id="btn_singin__item" className="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
                     </div>
                 </form>
             </div>

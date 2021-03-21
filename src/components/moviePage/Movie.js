@@ -6,6 +6,7 @@ import YouTube from 'react-youtube'
 import ErrorComponent from '../error/ErrorComponent';
 import { Link } from 'react-router-dom';
 import BackButton from '../backButton/BackButton';
+import Loading from '../Loading/Loading';
 
 class Movie extends React.Component {
     constructor(props) {
@@ -56,7 +57,7 @@ class Movie extends React.Component {
         if (error) {
             return <ErrorComponent error={error} />;
         } else if (!isLoaded) {
-            return <div>Loading...</div>;
+            return <Loading />;
         } else {
             const trailer = <YouTube videoId={movie.trailerPath} opts={{'height': '500px','width': '100%'}}/>
 
@@ -70,7 +71,7 @@ class Movie extends React.Component {
             return (
                 <div className="row moviePage">
                     <div className="col-md-12 trailer">
-                        {movie.trailerPath != 'none' && trailer}
+                        {movie.trailerPath !== 'none' && trailer}
                     </div>
                     <div className="container movieData">
                         <div className="d-flex justify-content-between">

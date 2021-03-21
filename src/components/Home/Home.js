@@ -4,6 +4,7 @@ import MovieList from '../MovieList/MovieList'
 import './Home.css'
 import ErrorComponent from '../error/ErrorComponent';
 import { Link } from 'react-router-dom';
+import Loading from '../Loading/Loading'
 
  class Home extends Component{
      constructor(props){
@@ -51,10 +52,11 @@ import { Link } from 'react-router-dom';
         if (error) {
             return <ErrorComponent error={error} />;
         } else if (!isLoaded) {
-            return <div>Loading...</div>;
+            return <Loading/>;
         } else {
             return(
                 <div>
+                    
                     <div>
                         <MovieSlider movies ={sessions.slice(0,4)}/>
                     </div>
