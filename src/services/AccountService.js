@@ -12,14 +12,19 @@ class AccountService {
             .then(response => {
                 if (!response.ok) {
                     BaseService.handleResponseError(response);
-                    return response.json();
+                    throw response;
                 }
-                return response;
+                return response.json();
+            })
+            .then(res => {
+                localStorage.setItem("userCredentials", res)
+                return res
             })
             .catch(error => {
                 BaseService.handleError(error);
             });
-    };
+    }
+
     static register = async (user) => {
         console.log("UserService.register(user):");
         const requestOptions = {

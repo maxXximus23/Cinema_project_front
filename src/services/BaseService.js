@@ -5,6 +5,7 @@ class BaseService{
     };
     static handleError(error) {
         console.log(error.message);
+        //TODO: Redirect to error component with error body
     };
 }
 export default BaseService;
