@@ -12,6 +12,35 @@ class MovieService {
             .then(BaseService.handleError);
     }
 
+    static async getSessions(id) {
+        return fetch(BaseService._baseUrl+'/movies/' + id + '/sessions',
+            {
+                headers: {
+                    "Authorization": "Bearer_" + JSON.parse(localStorage.getItem("userCredentials")).token
+                }
+            })
+            .then(BaseService.handleError);
+    }
+
+    static async getPageAmountForQuery(perPage, genre, title) {
+        return fetch(BaseService._baseUrl + '/movies/pages/' + perPage + '?genre=' + genre + '&title=' + title,
+            {
+                headers: {
+                    "Authorization": "Bearer_" + JSON.parse(localStorage.getItem("userCredentials")).token
+                }
+            })
+            .then(BaseService.handleError);
+    }
+
+    static async getMoviesForQuery(page, perPage, genre, title) {
+        return fetch(BaseService._baseUrl + '/movies?page=' + page + '&perPage=' + perPage + '&genre=' + genre + '&title=' + title,
+            {
+                headers: {
+                    "Authorization": "Bearer_" + JSON.parse(localStorage.getItem("userCredentials")).token
+                }
+            })
+            .then(BaseService.handleError);
+    };
 
     static addMovie= async (movie) =>{
         console.log("MovieService.addMovie(movie):");
@@ -58,20 +87,6 @@ class MovieService {
             body: JSON.stringify(movie)
         };
         return fetch(BaseService._baseUrl+'/movies/' + id, requestOptions)
-            .then(response => {
-                if (!response.ok) {
-                    BaseService.handleResponseError(response);
-                }
-                return response.json();
-            })
-            .catch(error => {
-                BaseService.handleError(error);
-            });
-    };
-    static getSessions= async (id) =>{
-        console.log("MovieService.getSessions(id):");
-        console.log("id: " + id);
-        return fetch(BaseService._baseUrl+'/movies/' + id + '/sessions')
             .then(response => {
                 if (!response.ok) {
                     BaseService.handleResponseError(response);

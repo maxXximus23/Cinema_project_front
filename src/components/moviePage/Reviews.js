@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import './style.css'
 import ErrorComponent from '../error/ErrorComponent';
 import Loading from '../Loading/Loading';
+import ReviewService from '../../services/ReviewService';
 
 class Reviews extends React.Component {
     constructor(props) {
@@ -30,8 +31,7 @@ class Reviews extends React.Component {
     }
   
     componentDidMount() {
-        fetch('http://localhost:8081/reviews/movie/' + this.state.id)
-            .then(this.errorHandler)
+        ReviewService.getListOfMovieReviews(this.state.id)
             .then((result) => {
                     this.setState({
                         isLoaded: true,

@@ -51,19 +51,14 @@ class ReviewService{
                 BaseService.handleError(error);
             });
     };
-    static getListOfMovieReviews= async (id) =>{
-        console.log("ReviewService.getListOfMovieReviews(id):");
-        console.log("id: " + id);
-        return fetch(BaseService._baseUrl+'/reviews/movie/'+id)
-            .then(response => {
-                if (!response.ok) {
-                    BaseService.handleResponseError(response);
+    static async getListOfMovieReviews(id) {
+        return fetch(BaseService._baseUrl + '/reviews/movie/' + id,
+            {
+                headers: {
+                    "Authorization": "Bearer_" + JSON.parse(localStorage.getItem("userCredentials")).token
                 }
-                return response.json();
             })
-            .catch(error => {
-                BaseService.handleError(error);
-            });
-    };
+            .then(BaseService.handleError);
+    }
 }
 export default ReviewService;

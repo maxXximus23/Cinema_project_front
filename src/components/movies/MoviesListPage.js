@@ -1,4 +1,5 @@
 import React from 'react'
+import MovieService from '../../services/MovieService';
 import ErrorComponent from '../error/ErrorComponent';
 import PageResult from './PageResult';
 
@@ -42,8 +43,7 @@ class MoviesListPage extends React.Component {
     }
 
     updateData(page){
-        fetch('http://localhost:8081/movies/pages/' + this.state.perPage + '?genre=' + this.state.genre + '&title=' + this.state.title)
-        .then(this.errorHandler)
+        MovieService.getPageAmountForQuery(this.state.perPage, this.state.genre, this.state.title)
         .then((result) => {
             this.state.pageAmount = result
             this.setPageData(page)
@@ -57,8 +57,7 @@ class MoviesListPage extends React.Component {
     }
 
     setPageData(page){
-        fetch('http://localhost:8081/movies?page=' + page + '&perPage=' + this.state.perPage + '&genre=' + this.state.genre + '&title=' + this.state.title)
-                .then(this.errorHandler)
+        MovieService.getMoviesForQuery(page, this.state.perPage, this.state.genre, this.state.title)
                 .then((result) => {
                         this.setState({
                             isLoaded: true,

@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import './style.css'
 import ErrorComponent from '../error/ErrorComponent';
 import Loading from '../Loading/Loading';
+import MovieService from '../../services/MovieService';
 
 class MovieSessions extends React.Component {
     constructor(props) {
@@ -28,8 +29,7 @@ class MovieSessions extends React.Component {
     }
   
     componentDidMount() {
-        fetch('http://localhost:8081/movies/' + this.state.id + '/sessions')
-            .then(this.errorHandler)
+        MovieService.getSessions(this.state.id)
             .then((result) => {
                     this.setState({
                         isLoaded: true,
