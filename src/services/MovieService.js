@@ -1,20 +1,18 @@
 import BaseService from "./BaseService"
 
 class MovieService {
-    static getById= async (id) =>{
-        console.log("MovieService.getById(id):");
-        console.log("id: " + id);
-        return fetch(BaseService._baseUrl+'/movies/'+id)
-            .then(response => {
-                if (!response.ok) {
-                    BaseService.handleResponseError(response);
+
+    static async getById(id) {
+        return fetch('http://localhost:8081/movies/' + id,
+            {
+                headers: {
+                    "Authorization": "Bearer_" + JSON.parse(localStorage.getItem("userCredentials")).token
                 }
-                return response.json();
             })
-            .catch(error => {
-                BaseService.handleError(error);
-            });
-    };
+            .then(BaseService.handleError);
+    }
+
+
     static addMovie= async (movie) =>{
         console.log("MovieService.addMovie(movie):");
         const requestOptions = {

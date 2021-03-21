@@ -17,7 +17,7 @@ class AccountService {
                 return response.json();
             })
             .then(res => {
-                localStorage.setItem("userCredentials", res)
+                localStorage.setItem("userCredentials", JSON.stringify(res))
                 return res
             })
             .catch(error => {

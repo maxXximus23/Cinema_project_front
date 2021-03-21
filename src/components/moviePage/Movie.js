@@ -7,6 +7,7 @@ import ErrorComponent from '../error/ErrorComponent';
 import { Link } from 'react-router-dom';
 import BackButton from '../backButton/BackButton';
 import Loading from '../Loading/Loading';
+import MovieService from '../../services/MovieService';
 
 class Movie extends React.Component {
     constructor(props) {
@@ -33,23 +34,21 @@ class Movie extends React.Component {
     }
   
     componentDidMount() {
-        fetch('http://localhost:8081/movies/' + this.state.id)
-            .then(this.errorHandler)
+        MovieService.getById(this.state.id)
             .then((result) => {
-                    this.setState({
-                        isLoaded: true,
-                        movie: result
-                    }
-                );
-            })
-            .catch(err => {
                 this.setState({
                     isLoaded: true,
-                    error: err
+                    movie: result
                 })
-            }
-        );
+            })
+            .catch(error =>{
+                this.setState({
+                    isLoaded: true,
+                    error: error
+                })
+            });
     }
+    
   
     render() {
         const { error, isLoaded, movie } = this.state;
