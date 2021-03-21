@@ -50,10 +50,29 @@ class Reviews extends React.Component {
   
     render() {
         const { error, isLoaded, reviews } = this.state;
+        let newReviwForm = (
+            <div className="text-left newReview col-md-9">
+                <h5>Already watched? Share your impressions with others!</h5>
+                <form onSubmit={this.postReview}>
+                    <textarea className="col-md-12 newReview__text form-control" 
+                        placeholder="Write your review (minimum 20 characters)" 
+                        rows="5"
+                        onChange={this.handleTextChange}
+                        value={this.state.newReviewText}/>
+                    <input type="submit" value="Post Review" className="newReview__submit buttonPost"/>
+                </form>
+            </div>
+        )
+
         if (error) {
             return <ErrorComponent error={error} />;
         } else if (!isLoaded) {
             return <Loading />;
+        } else if (reviews.length === 0){
+            return <div>
+                        <h3 className="text-left">No reviews for now</h3>
+                        {newReviwForm}
+                    </div>
         } else {
             return (
                 <div>
@@ -73,17 +92,7 @@ class Reviews extends React.Component {
                                 </div>
                         })
                     }
-                    <div className="text-left newReview col-md-9">
-                        <h5>Already watched? Share your impressions with others!</h5>
-                        <form onSubmit={this.postReview}>
-                            <textarea className="col-md-12 newReview__text form-control" 
-                                placeholder="Write your review (minimum 20 characters)" 
-                                rows="5"
-                                onChange={this.handleTextChange}
-                                value={this.state.newReviewText}/>
-                            <input type="submit" value="Post Review" className="newReview__submit buttonPost"/>
-                        </form>
-                    </div>
+                    {newReviwForm}
                 </div>
             );
         }

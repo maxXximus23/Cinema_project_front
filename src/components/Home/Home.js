@@ -3,6 +3,7 @@ import MovieSlider from '../MovieListSlider/movie-slider'
 import MovieList from '../MovieList/MovieList'
 import './Home.css'
 import ErrorComponent from '../error/ErrorComponent';
+import { Link } from 'react-router-dom';
 import Loading from '../Loading/Loading'
 
  class Home extends Component{
@@ -59,8 +60,12 @@ import Loading from '../Loading/Loading'
                     <div>
                         <MovieSlider movies ={sessions.slice(0,4)}/>
                     </div>
+
+                    <div className="col-md-12 d-flex flex-row-reverse allMovies">
+                        <Link to={"/movies"} className="text-right allMovies-text">See full list of movies &#8641;</Link>
+                    </div>
                     <div className="movie_list__item">
-                        <MovieList movies={sessions}/>
+                        <MovieList movies={sessions.slice()}/>
                     </div>
                 </div>
             )

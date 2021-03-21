@@ -8,6 +8,7 @@ import {
     Button
 } from "react-bootstrap";
 import avatar from "./user128.png";
+import { useHistory } from "react-router-dom";
 
 export default class Header extends Component {
     render (){
