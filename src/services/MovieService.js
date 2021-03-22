@@ -1,20 +1,48 @@
+import AccountService from "./AccountService";
 import BaseService from "./BaseService"
 
 class MovieService {
-    static getById= async (id) =>{
-        console.log("MovieService.getById(id):");
-        console.log("id: " + id);
-        return fetch(BaseService._baseUrl+'/movies/'+id)
-            .then(response => {
-                if (!response.ok) {
-                    BaseService.handleResponseError(response);
+
+    static async getById(id) {
+        return fetch('http://localhost:8081/movies/' + id,
+            {
+                headers: {
+                    Authorization: AccountService.getToken()
                 }
-                return response.json();
             })
-            .catch(error => {
-                BaseService.handleError(error);
-            });
+            .then(BaseService.handleError);
+    }
+
+    static async getSessions(id) {
+        return fetch(BaseService._baseUrl+'/movies/' + id + '/sessions',
+            {
+                headers: {
+                    Authorization: AccountService.getToken()
+                }
+            })
+            .then(BaseService.handleError);
+    }
+
+    static async getPageAmountForQuery(perPage, genre, title) {
+        return fetch(BaseService._baseUrl + '/movies/pages/' + perPage + '?genre=' + genre + '&title=' + title,
+            {
+                headers: {
+                    Authorization: AccountService.getToken()
+                }
+            })
+            .then(BaseService.handleError);
+    }
+
+    static async getMoviesForQuery(page, perPage, genre, title) {
+        return fetch(BaseService._baseUrl + '/movies?page=' + page + '&perPage=' + perPage + '&genre=' + genre + '&title=' + title,
+            {
+                headers: {
+                    Authorization: AccountService.getToken()
+                }
+            })
+            .then(BaseService.handleError);
     };
+
     static addMovie= async (movie) =>{
         console.log("MovieService.addMovie(movie):");
         const requestOptions = {
@@ -60,20 +88,6 @@ class MovieService {
             body: JSON.stringify(movie)
         };
         return fetch(BaseService._baseUrl+'/movies/' + id, requestOptions)
-            .then(response => {
-                if (!response.ok) {
-                    BaseService.handleResponseError(response);
-                }
-                return response.json();
-            })
-            .catch(error => {
-                BaseService.handleError(error);
-            });
-    };
-    static getSessions= async (id) =>{
-        console.log("MovieService.getSessions(id):");
-        console.log("id: " + id);
-        return fetch(BaseService._baseUrl+'/movies/' + id + '/sessions')
             .then(response => {
                 if (!response.ok) {
                     BaseService.handleResponseError(response);

@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import Ticket from '../Ticket/Ticket'
+import AccountService from '../../services/AccountService'
 import './Account.css'
 import moment from 'moment';
 //import BookedList from '../BookedList/BookedList'
@@ -11,9 +12,9 @@ class UserPage extends Component{
         this.state = {
             isLoaded: false,
             error: null,
-            id: 2,
-            user: {},
-            tickets: []
+            tickets: [],
+            id: AccountService.getId(),
+            user: {}
         }
 
 

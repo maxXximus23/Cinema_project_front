@@ -9,9 +9,11 @@ import {
 } from "react-bootstrap";
 import avatar from "./user128.png";
 import { useHistory } from "react-router-dom";
+import AccountService from "../../services/AccountService";
 
 export default class Header extends Component {
     render (){
+        console.log(AccountService.isLogged())
         return (
             <>
             <Navbar className="navbar-custom" collapseOnSelect /*fixed="top"*/ expand="md" variant="dark">
@@ -37,21 +39,25 @@ export default class Header extends Component {
                             <Nav.Link href="/contacts"> Contacts </Nav.Link>
                             </div>
                         </Nav>
-                        <Form inline >
-                            <Button href="/registration" id="SignUp__item" variant="secondary">Sign up</Button>
-                            <Button href="/login" id="SignIn__item" variant="secondary">Sign in</Button>
-                        </Form>
-                        <Navbar>
-                            <Nav.Link href = "/account">
-                                <img
-                                    src={avatar}
-                                    height="50"
-                                    className="d-inline-block align-top"
-                                    alt="Avatar"
-                                    id="user_ava_item"
-                                />
-                            </Nav.Link>
-                        </Navbar>
+                        {!AccountService.isLogged() && (
+                                <Form inline >
+                                    <Button href="/registration" id="SignUp__item" variant="secondary">Sign up</Button>
+                                    <Button href="/login" id="SignIn__item" variant="secondary">Sign in</Button>
+                                </Form>
+                        )}
+                        {AccountService.isLogged() &&
+                            <Navbar>
+                                <Button variant="secondary" id="SignOut__item" onClick={()=>{AccountService.logout();}}>Sign Out</Button>
+                                <Nav.Link href = "/account">
+                                    <img
+                                        src={avatar}
+                                        height="50"
+                                        className="d-inline-block align-top"
+                                        alt="Avatar"
+                                        id="user_ava_item"
+                                    />
+                                </Nav.Link>
+                         </Navbar>}
                     </Navbar.Collapse>
                 </Container>
             </Navbar>

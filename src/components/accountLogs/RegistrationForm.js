@@ -28,6 +28,8 @@ class RegistrationForm extends React.Component{
             borderColorGreen: "2px solid green"
         }
 
+        if (AccountService.isLogged())
+            this.props.history.push("/")
     }
     addNewUser = async (event) => {
         event.preventDefault();
@@ -45,12 +47,14 @@ class RegistrationForm extends React.Component{
                 email: this.state.email,
                 password: this.state.password
             };
-            const response = await AccountService.register(newUser);
-            console.log(response);
-            if(response.status===200)
-                this.props.history.push('/')
-            else
-                this.setState({registrationFailed: true});
+            
+            await AccountService.register(newUser)
+                .then(()=>{
+                    window.location.replace("/")
+                })
+                .catch(()=>{
+                    this.setState({registrationFailed: true});
+                })
         }
     }
     #closeButton = () =>{
@@ -160,7 +164,7 @@ class RegistrationForm extends React.Component{
     };
     correctEmail=async()=>{
         this.setState({emailDirty:true})
-        const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        const re = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
         if(!this.state.email) {
             this.setState({emailError: 'This field is required'})
             this.setState({borderColorEmail:this.state.borderColorRed})

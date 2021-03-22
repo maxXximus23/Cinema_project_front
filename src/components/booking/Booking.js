@@ -2,6 +2,7 @@ import React from 'react'
 import './style.css'
 import ErrorComponent from '../error/ErrorComponent';
 import Loading from '../Loading/Loading'
+import TicketService from '../../services/TicketService';
 
 class Booking extends React.Component {
     constructor(props) {
@@ -34,8 +35,7 @@ class Booking extends React.Component {
     }
   
     componentDidMount() {
-        fetch('http://localhost:8081/sessions/' + this.state.id + "/tickets")
-            .then(this.errorHandler)
+        TicketService.getBySession(this.state.id)
             .then((result) => {
                     this.setState({
                         isLoaded: true,
@@ -111,36 +111,16 @@ class Booking extends React.Component {
     book(event) { //TODO: Add real user data in request
         event.preventDefault();
 
-        let data = {
-            sessionId: this.state.id,
-            userId: -1,
-            places: this.state.selectedTickets
-        }
-
-        fetch('http://localhost:8081/tickets/purchaselist',
-            {
-                method: 'POST', 
-                mode: 'cors',
-                cache: 'no-cache', 
-                credentials: 'same-origin', 
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                redirect: 'follow', 
-                referrerPolicy: 'no-referrer',
-                body: JSON.stringify(data) 
-            }
-        )
-        .then(this.errorHandler)
-        .then(result => {
-                console.log(result) //TODO: redirect to tickets
-        })
-        .catch(err => {
-            this.setState({
-                isLoaded: true,
-                error: err
+        TicketService.purchaseTickets(this.state.id, this.state.selectedTickets)
+            .then(result => {
+                this.props.history.push('/account')
             })
-        })
+            .catch(err => {
+                this.setState({
+                    isLoaded: true,
+                    error: err
+                })
+            })
     }
 
     onValueChange(event) {

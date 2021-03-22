@@ -1,4 +1,5 @@
 import React from 'react'
+import MovieService from '../../services/MovieService';
 import ErrorComponent from '../error/ErrorComponent';
 import PageResult from './PageResult';
 
@@ -42,37 +43,33 @@ class MoviesListPage extends React.Component {
     }
 
     updateData(page){
-        fetch('http://localhost:8081/movies/pages/' + this.state.perPage + '?genre=' + this.state.genre + '&title=' + this.state.title)
-        .then(this.errorHandler)
-        .then((result) => {
-            this.state.pageAmount = result
-            this.setPageData(page)
-        })
-        .catch(err => {
-            this.setState({
-                isLoaded: true,
-                error: err
+        MovieService.getPageAmountForQuery(this.state.perPage, this.state.genre, this.state.title)
+            .then((result) => {
+                this.state.pageAmount = result
+                this.setPageData(page)
             })
-        });
+            .catch(err => {
+                this.setState({
+                    isLoaded: true,
+                    error: err
+                })
+            });
     }
 
     setPageData(page){
-        fetch('http://localhost:8081/movies?page=' + page + '&perPage=' + this.state.perPage + '&genre=' + this.state.genre + '&title=' + this.state.title)
-                .then(this.errorHandler)
-                .then((result) => {
-                        this.setState({
-                            isLoaded: true,
-                            movies: result
-                        }
-                    );
+        MovieService.getMoviesForQuery(page, this.state.perPage, this.state.genre, this.state.title)
+            .then((result) => {
+                this.setState({
+                    isLoaded: true,
+                    movies: result                        
                 })
-                .catch(err => {
-                    this.setState({
-                        isLoaded: true,
-                        error: err
-                    })
-                }
-            );
+            })
+            .catch(err => {
+                this.setState({
+                    isLoaded: true,
+                    error: err
+                })
+            });
     }
 
     updatePage(event){

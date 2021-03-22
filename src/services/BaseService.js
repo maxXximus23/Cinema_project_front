@@ -3,9 +3,15 @@ class BaseService{
     static handleResponseError(response) {
         console.log("HTTP error, status = " + response.status);
     };
-    static handleError(error) {
-        console.log(error.message);
-        //TODO: Redirect to error component with error body
+    static async handleError(response) { 
+        if (!response.ok){
+            await response.json()
+                    .then(res => {
+                        throw res
+                    })
+        }
+        if (response.status != 204)
+            return response.json();
     };
 }
 export default BaseService;

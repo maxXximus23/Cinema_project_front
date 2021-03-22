@@ -18,6 +18,9 @@ class LoginForm extends React.Component{
             borderColorRed: "2px solid red",
             borderColorGreen: "2px solid green"
         }
+
+        if (AccountService.isLogged())
+            this.props.history.push("/")
     }
 
     loginCheck = async (event) => {
@@ -32,16 +35,13 @@ class LoginForm extends React.Component{
                 email: this.state.email,
                 password: this.state.password
             }
-            const response = await AccountService.login(login);
-            console.log(response);
-
-            if(response.status===200){
-                //localStorage.setItem
-                this.props.history.push('/')
-            }
-            else{
-                this.setState({loginFailed: true});
-            }
+            await AccountService.login(login)
+                .then(()=>{
+                    window.location.replace("/")
+                })
+                .catch(()=>{
+                    this.setState({loginFailed: true});
+                })
         }
 
     }

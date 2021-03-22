@@ -1,10 +1,42 @@
+import AccountService from "./AccountService";
 import BaseService from "./BaseService"
 
 class TicketService extends BaseService{
-    static getByUser= async (id) =>{
-        console.log("TicketService.getByUser(id):");
-        console.log("id: " + id);
-        return fetch(BaseService._baseUrl+'/tickets/user/'+id)
+    static async getBySession(id) {
+        return fetch(BaseService._baseUrl + '/sessions/' + id + '/tickets',
+        {
+            headers: {
+                Authorization: AccountService.getToken()
+            }
+        })
+            .then(BaseService.handleError)
+    }
+
+    static async getByUser(id) {
+        return fetch(BaseService._baseUrl + '/tickets/user/' + id,
+        {
+            headers: {
+                Authorization: AccountService.getToken()
+            }
+        })
+            .then(BaseService.handleError)
+    }
+
+    static async purchaseTickets(id, ticketsData) {
+        const requestOptions = {
+            method: 'POST',
+            headers: { 
+                'Content-Type': 'application/json',
+                Authorization: AccountService.getToken()
+            },
+            body: JSON.stringify({
+                sessionId: id,
+                userId: AccountService.getId(),
+                places: ticketsData
+            })
+        };
+        console.log(requestOptions)
+        return fetch(BaseService._baseUrl+'/tickets/purchaselist', requestOptions)
             .then(response => {
                 if (!response.ok) {
                     BaseService.handleResponseError(response);
@@ -14,7 +46,8 @@ class TicketService extends BaseService{
             .catch(error => {
                 BaseService.handleError(error);
             });
-    };
+    }
+
     static purchaseTicket= async (purchaseTicket) =>{
         console.log("TicketService.purchaseTicket(purchase):");
         const requestOptions = {
@@ -51,23 +84,6 @@ class TicketService extends BaseService{
                 BaseService.handleError(error);
             });
     };
-    static purchaseTickets= async (ticketsData) =>{
-        console.log("TicketService.purchaseTickets(hall):");
-        const requestOptions = {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(ticketsData)
-        };
-        return fetch(BaseService._baseUrl+'/tickets/purchaselist', requestOptions)
-            .then(response => {
-                if (!response.ok) {
-                    BaseService.handleResponseError(response);
-                }
-                return response.json();
-            })
-            .catch(error => {
-                BaseService.handleError(error);
-            });
-    };
+
 }
 export default TicketService;

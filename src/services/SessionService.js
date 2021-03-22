@@ -70,19 +70,16 @@ class SessionService{
                 BaseService.handleError(error);
             });
     };
-    static getActual= async () =>{
-        console.log("SessionService.getActual():");
-        return fetch(BaseService._baseUrl+'/sessions/actual')
-            .then(response => {
-                if (!response.ok) {
-                    BaseService.handleResponseError(response);
+    static async getActual() {
+        return fetch(BaseService._baseUrl+'/sessions/actual',
+            {
+                headers: {
+                    "Authorization": "Bearer_" + JSON.parse(localStorage.getItem("userCredentials"))?.token
                 }
-                return response.json();
             })
-            .catch(error => {
-                BaseService.handleError(error);
-            });
-    };
+            .then(BaseService.handleError);
+    }
+
     static getTicketsList= async (id) =>{
         console.log("SessionService.getTicketsList(id):");
         console.log("id: " + id);

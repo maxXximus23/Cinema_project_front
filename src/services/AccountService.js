@@ -17,7 +17,7 @@ class AccountService {
                 return response.json();
             })
             .then(res => {
-                localStorage.setItem("userCredentials", res)
+                localStorage.setItem("userCredentials", JSON.stringify(res))
                 return res
             })
             .catch(error => {
@@ -59,6 +59,44 @@ class AccountService {
             .catch(error => {
                 BaseService.handleError(error);
             });
+    }
+    static logout(){
+        const requestOptions = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                id: AccountService.getId(),
+                token: AccountService.getToken()
+            })
+        };
+        fetch(BaseService._baseUrl + '/users/logout', requestOptions)
+            .then(BaseService.handleError)
+            .then(() => {
+                localStorage.setItem('userCredentials', "null")
+                window.location.replace("/")
+            })
+            .catch(error => {
+                console.log(error)
+            });
+    }
+
+    static isLogged() {
+        return !(localStorage.getItem("userCredentials") == "null")
+    } 
+
+    static getToken(){
+        if (AccountService.isLogged())
+            return "Bearer_" + JSON.parse(localStorage.getItem("userCredentials"))?.token
+        else
+            return "none"
+    }
+
+    static getId(){
+        console.log(JSON.parse(localStorage.userCredentials)?.id)
+        if (AccountService.isLogged())
+            return JSON.parse(localStorage.userCredentials)?.id
+        else
+            return -1
     }
 }
 export default AccountService;

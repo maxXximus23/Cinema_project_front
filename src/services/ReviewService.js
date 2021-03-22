@@ -1,3 +1,4 @@
+import AccountService from "./AccountService";
 import BaseService from "./BaseService"
 
 class ReviewService{
@@ -15,24 +16,24 @@ class ReviewService{
                 BaseService.handleError(error);
             });
     };
-    static addReview= async (review) =>{
-        console.log("ReviewService.addReview(review):");
+
+    static async addReview(movieId, text) {
         const requestOptions = {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(review)
-        };
-        return fetch(BaseService._baseUrl+'/reviews', requestOptions)
-            .then(response => {
-                if (!response.ok) {
-                    BaseService.handleResponseError(response);
-                }
-                return response.json();
+            method: 'POST', 
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: AccountService.getToken()
+            },
+            body: JSON.stringify({
+                movieId: (Number)(movieId),
+                text: text,
+                authorId: AccountService.getId()
             })
-            .catch(error => {
-                BaseService.handleError(error);
-            });
-    };
+        }
+        return fetch(BaseService._baseUrl+'/reviews', requestOptions)
+            .then(BaseService.handleError);
+    }
+    
     static deleteComment= async (id) =>{
         console.log("ReviewService.deleteComment(id):");
         console.log("id: " + id);
@@ -51,19 +52,14 @@ class ReviewService{
                 BaseService.handleError(error);
             });
     };
-    static getListOfMovieReviews= async (id) =>{
-        console.log("ReviewService.getListOfMovieReviews(id):");
-        console.log("id: " + id);
-        return fetch(BaseService._baseUrl+'/reviews/movie/'+id)
-            .then(response => {
-                if (!response.ok) {
-                    BaseService.handleResponseError(response);
+    static async getListOfMovieReviews(id) {
+        return fetch(BaseService._baseUrl + '/reviews/movie/' + id,
+            {
+                headers: {
+                    "Authorization": AccountService.getToken()
                 }
-                return response.json();
             })
-            .catch(error => {
-                BaseService.handleError(error);
-            });
-    };
+            .then(BaseService.handleError);
+    }
 }
 export default ReviewService;

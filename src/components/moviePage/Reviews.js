@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import './style.css'
 import ErrorComponent from '../error/ErrorComponent';
 import Loading from '../Loading/Loading';
+import ReviewService from '../../services/ReviewService';
 
 class Reviews extends React.Component {
     constructor(props) {
@@ -30,8 +31,7 @@ class Reviews extends React.Component {
     }
   
     componentDidMount() {
-        fetch('http://localhost:8081/reviews/movie/' + this.state.id)
-            .then(this.errorHandler)
+        ReviewService.getListOfMovieReviews(this.state.id)
             .then((result) => {
                     this.setState({
                         isLoaded: true,
@@ -81,9 +81,7 @@ class Reviews extends React.Component {
                         reviews.map(el =>{
                             return <div key={el.id} className="col-md-9 review">
                                     <div className="d-flex justify-content-between col-md-12 review__header">
-                                        <Link to={"/users/" + el.authorId}>
-                                            <h6 className="col-md-5 text-left">{el.authorName}</h6>
-                                        </Link>
+                                        <h6 className="col-md-5 text-left">{el.firstName + " " + el.lastName}</h6>
                                         <span className="col-md-5 text-right">{el.creationDate}</span>
                                     </div>
                                     <div>
@@ -110,47 +108,27 @@ class Reviews extends React.Component {
         if (this.state.newReviewText.length < 20)
             return;
 
-        let data = {
-            movieId: this.state.id,
-            authorId: -1,
-            text: this.state.newReviewText
-        }
-
-        fetch('http://localhost:8081/reviews/add',
-            {
-                method: 'POST', 
-                mode: 'cors',
-                cache: 'no-cache', 
-                credentials: 'same-origin', 
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                redirect: 'follow', 
-                referrerPolicy: 'no-referrer',
-                body: JSON.stringify(data) 
-            }
-        )
-        .then(this.errorHandler)
-        .then(result => {
-                this.state.reviews.push({
-                    id: result.id,
-                    text: result.text,
-                    creationDate: result.creationDate,
-                    movieId: result.movieId,
-                    authorId: result.authorId,
-                    authorName: result.authorName,                    
-                })
-                this.setState({
-                    newReviewText: ""
-                })
-                event.target.value = ""
-        })
-        .catch(err => {
-            this.setState({
-                isLoaded: true,
-                error: err
+        ReviewService.addReview(this.state.id, this.state.newReviewText)
+            .then(result => {
+                    this.state.reviews.push({
+                        id: result.id,
+                        text: result.text,
+                        creationDate: result.creationDate,
+                        movieId: result.movieId,
+                        authorId: result.authorId,
+                        authorName: result.authorName,                    
+                    })
+                    this.setState({
+                        newReviewText: ""
+                    })
+                    event.target.value = ""
             })
-        })
+            .catch(err => {
+                this.setState({
+                    isLoaded: true,
+                    error: err
+                })
+            })
     }
 }
 
