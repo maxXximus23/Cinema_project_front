@@ -24,10 +24,8 @@
 
 .lists_wrapper__item{
     padding: 10px;
-    background-color: white;
     width: 80%;
     margin: 0 auto;
-    border: 1px solid #c7c7c7;
 }
 
 #booked_list__item, #history_list__item{
