@@ -11,14 +11,14 @@ class ErrorComponent extends React.Component {
     }
 
     componentDidMount(){
-        if(this.state.error.status == 403)
+        if(this.state.error?.status == 403)
             window.location.replace("/login")
     }
 
     render() {
         const { error } = this.state;
 
-        if(error.status == 403)
+        if(error?.status == 403)
             return <div></div>
 
         let body

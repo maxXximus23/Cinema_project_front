@@ -81,9 +81,7 @@ class Reviews extends React.Component {
                         reviews.map(el =>{
                             return <div key={el.id} className="col-md-9 review">
                                     <div className="d-flex justify-content-between col-md-12 review__header">
-                                        <Link to={"/users/" + el.authorId}>
-                                            <h6 className="col-md-5 text-left">{el.authorName}</h6>
-                                        </Link>
+                                        <h6 className="col-md-5 text-left">{el.firstName + " " + el.lastName}</h6>
                                         <span className="col-md-5 text-right">{el.creationDate}</span>
                                     </div>
                                     <div>
