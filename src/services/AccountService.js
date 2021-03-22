@@ -64,7 +64,10 @@ class AccountService {
         const requestOptions = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: localStorage.getItem("userCredentials")
+            body: JSON.stringify({
+                id: AccountService.getId(),
+                token: AccountService.getToken()
+            })
         };
         fetch(BaseService._baseUrl + '/users/logout', requestOptions)
             .then(BaseService.handleError)
@@ -86,6 +89,14 @@ class AccountService {
             return "Bearer_" + JSON.parse(localStorage.getItem("userCredentials"))?.token
         else
             return "none"
+    }
+
+    static getId(){
+        console.log(JSON.parse(localStorage.userCredentials)?.id)
+        if (AccountService.isLogged())
+            return JSON.parse(localStorage.userCredentials)?.id
+        else
+            return -1
     }
 }
 export default AccountService;

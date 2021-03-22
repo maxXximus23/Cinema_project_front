@@ -1,4 +1,5 @@
 import React, {Component} from 'react'
+import AccountService from '../../services/AccountService'
 import './Account.css'
 
 //import BookedList from '../BookedList/BookedList'
@@ -10,7 +11,7 @@ class UserPage extends Component{
         this.state = {
             isLoaded: false,
             error: null,
-            id: 31,
+            id: AccountService.getId(),
             user: {}
         }
 

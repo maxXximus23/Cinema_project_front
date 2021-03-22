@@ -110,47 +110,27 @@ class Reviews extends React.Component {
         if (this.state.newReviewText.length < 20)
             return;
 
-        let data = {
-            movieId: this.state.id,
-            authorId: -1,
-            text: this.state.newReviewText
-        }
-
-        fetch('http://localhost:8081/reviews/add',
-            {
-                method: 'POST', 
-                mode: 'cors',
-                cache: 'no-cache', 
-                credentials: 'same-origin', 
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                redirect: 'follow', 
-                referrerPolicy: 'no-referrer',
-                body: JSON.stringify(data) 
-            }
-        )
-        .then(this.errorHandler)
-        .then(result => {
-                this.state.reviews.push({
-                    id: result.id,
-                    text: result.text,
-                    creationDate: result.creationDate,
-                    movieId: result.movieId,
-                    authorId: result.authorId,
-                    authorName: result.authorName,                    
-                })
-                this.setState({
-                    newReviewText: ""
-                })
-                event.target.value = ""
-        })
-        .catch(err => {
-            this.setState({
-                isLoaded: true,
-                error: err
+        ReviewService.addReview(this.state.id, this.state.newReviewText)
+            .then(result => {
+                    this.state.reviews.push({
+                        id: result.id,
+                        text: result.text,
+                        creationDate: result.creationDate,
+                        movieId: result.movieId,
+                        authorId: result.authorId,
+                        authorName: result.authorName,                    
+                    })
+                    this.setState({
+                        newReviewText: ""
+                    })
+                    event.target.value = ""
             })
-        })
+            .catch(err => {
+                this.setState({
+                    isLoaded: true,
+                    error: err
+                })
+            })
     }
 }
 

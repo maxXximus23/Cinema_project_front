@@ -10,7 +10,6 @@ class BaseService{
                         throw res
                     })
         }
-        console.log(response)
         if (response.status != 204)
             return response.json();
     };
