@@ -72,7 +72,7 @@ class AccountService {
         fetch(BaseService._baseUrl + '/users/logout', requestOptions)
             .then(BaseService.handleError)
             .then(() => {
-                localStorage.setItem('userCredentials', "null")
+                localStorage.removeItem('userCredentials')
                 window.location.replace("/")
             })
             .catch(error => {
@@ -81,7 +81,7 @@ class AccountService {
     }
 
     static isLogged() {
-        return !(localStorage.getItem("userCredentials") == "null")
+        return !(localStorage.getItem("userCredentials") == null)
     } 
 
     static getToken(){
