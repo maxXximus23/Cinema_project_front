@@ -15,7 +15,8 @@ class MoviesListPage extends React.Component {
             perPage: 20,
             pageAmount: 0,
             genre: (this.props.location.query===undefined) ? '' : this.props.location.query,
-            title: ''
+            title: '',
+            perPageWaiter: 20
         };
         this.updatePage = this.updatePage.bind(this);
 
@@ -26,6 +27,9 @@ class MoviesListPage extends React.Component {
         this.updateTitle = this.updateTitle.bind(this);
         this.handleTitleTextChange = this.handleTitleTextChange.bind(this);
         this.resetTitle = this.resetTitle.bind(this);
+
+        this.onPerPageApply = this.onPerPageApply.bind(this);
+        this.handlePerPageChange = this.handlePerPageChange.bind(this);
     }
 
     async errorHandler(response){
@@ -66,10 +70,20 @@ class MoviesListPage extends React.Component {
                 })
             })
             .catch(err => {
-                this.setState({
-                    isLoaded: true,
-                    error: err
-                })
+                MovieService.getMoviesForQuery(1, this.state.perPage, this.state.genre, this.state.title)
+                    .then((result) => {
+                        this.setState({
+                            isLoaded: true,
+                            movies: result,
+                            page: 1                     
+                        })
+                    })
+                    .catch(err => {
+                        this.setState({
+                            isLoaded: true,
+                            error: err
+                        })
+                    });
             });
     }
 
@@ -120,25 +134,39 @@ class MoviesListPage extends React.Component {
             this.updateData(1)
         }
     }
+
+    onPerPageApply(event){
+        if (this.state.perPageWaiter > 0 && this.state.perPageWaiter <= 100)
+        {
+            this.state.perPage = this.state.perPageWaiter
+            this.updateData(this.state.page)
+        }
+    }
+
+    handlePerPageChange(event){
+        if (event.target.value > 0 && event.target.value <= 100)
+            this.state.perPageWaiter = event.target.value
+    }
   
     render() {
         const { error, isLoaded, movies } = this.state;
-        let pagebuttons = []
         
-        for (let i = 1; i <= this.state.pageAmount; i++){
-            pagebuttons.push(
-                <label className="page_button__item">
-                    
-                    <input type="radio" name="page" className="page_input__item" key={i} onClick={this.updatePage} checked={i==this.state.page} value={i}/>
-                    <div className="page_label">{i}</div>
-                </label>
-            )
-        }
         if (error) {
             return <ErrorComponent error={error} />;
         } else if (!isLoaded) {
             return <div>Loading...</div>;
         } else {
+            let pagebuttons = []
+        
+            for (let i = 1; i <= this.state.pageAmount; i++){
+                pagebuttons.push(
+                    <label className="page_button__item">
+                        
+                        <input type="radio" name="page" className="page_input__item" key={i} onClick={this.updatePage} checked={i==this.state.page} value={i}/>
+                        <div className="page_label">{i}</div>
+                    </label>
+                )
+            }
             return (
                 <div>
                     <div className="search_wrap__item">
@@ -158,6 +186,11 @@ class MoviesListPage extends React.Component {
                         />
                         <button className="serch_button__item" onClick={this.updateGenre}>Search</button>
                         <button className="reset_button__item" onClick={this.resetGenre}>Reset</button>
+                    </div>
+                    <div className="perPageForm col-md-12">
+                        <span>Items per page: </span>
+                        <input type="number" min="1" max="100" onChange={this.handlePerPageChange} placeholder="20"/>
+                        <button className="serch_button__item" onClick={this.onPerPageApply}>Apply</button>
                     </div>
                         <PageResult movies={movies} className="row"/>
                     <div>
