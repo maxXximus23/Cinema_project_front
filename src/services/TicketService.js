@@ -35,17 +35,9 @@ class TicketService extends BaseService{
                 places: ticketsData
             })
         };
-        console.log(requestOptions)
+        
         return fetch(BaseService._baseUrl+'/tickets/purchaselist', requestOptions)
-            .then(response => {
-                if (!response.ok) {
-                    BaseService.handleResponseError(response);
-                }
-                return response.json();
-            })
-            .catch(error => {
-                BaseService.handleError(error);
-            });
+            .then(BaseService.handleError);
     }
 
     static purchaseTicket= async (purchaseTicket) =>{

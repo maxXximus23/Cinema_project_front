@@ -54,9 +54,8 @@ class Booking extends React.Component {
   
     render() {
         const { error, isLoaded, places } = this.state;
-        if (error) {
-            return <ErrorComponent error={error} />;
-        } else if (!isLoaded) {
+        
+        if (!isLoaded) {
             return <Loading/>;
         } else {
             const seats = [,]
@@ -86,7 +85,7 @@ class Booking extends React.Component {
                     <form onSubmit={this.book}>
                        <div className="row justify-content-center">
 
-                            {
+                            {seats.length != 0 &&
                                 seats.map(el =>{
                                     return  <div key={el.key} className="d-flex justify-content-around col-md-12">
                                                 <div className="row-number text-center">{el.key + 1}</div>
@@ -97,8 +96,17 @@ class Booking extends React.Component {
                             }
                         </div>
                         <div className="screen">
-                            <h2>SCREEN</h2>
+                            <p>SCREEN</p>
                         </div>
+                        {this.state.selectedTickets.length > 0 &&
+                            <div>
+                                <p className="alertBook">You are booking: </p>
+                                {this.state.selectedTickets.map(el => {
+                                    return <p className="bookPlaces">Row : {el.row} Place: {el.place}</p>
+                                })}
+                            </div>
+                        }
+                        <p className="errorMessage">{error && error.message}</p>
                         <button className="bookTicketsBtn" type="submit">
                             Book tickets
                         </button>
@@ -114,6 +122,7 @@ class Booking extends React.Component {
         TicketService.purchaseTickets(this.state.id, this.state.selectedTickets)
             .then(result => {
                 this.props.history.push('/account')
+                console.log(result)
             })
             .catch(err => {
                 this.setState({
@@ -133,11 +142,13 @@ class Booking extends React.Component {
                 return el.row == place[0] && el.place == place[1]
             });
 
-            if (index == -1)
+            if (index == -1){
                 selectedTickets.push({
                     row: place[0],
                     place: place[1]
                 })
+                this.setState({})
+            }
         }
         else
         {
@@ -146,6 +157,7 @@ class Booking extends React.Component {
             });
             if (index > -1) {
                 selectedTickets.splice(index, 1);
+                this.setState({})
             }
         }
 
