@@ -1,5 +1,6 @@
 import React from "react";
 import './Ticket.css'
+import moment from 'moment';
 
 class Ticket extends React.Component {
     constructor(props) {
@@ -27,11 +28,11 @@ class Ticket extends React.Component {
                                  height="275" alt=""/>
                             <div className="text">
                                 <h3>Title: {this.state.tickets[i].movieTitle}</h3>
-                                <p>Date: {this.state.tickets[i].date}</p>
+                                <p>Date: {moment(this.state.tickets[i].date).format('hh:mm DD.MM.YY')}</p>
                                 <p>Hall name: {this.state.tickets[i].hallName}</p>
                                 <p>Row: {this.state.tickets[i].row}</p>
                                 <p>Place: {this.state.tickets[i].place}</p>
-                                <p>Order number: {this.state.tickets[i].id}</p>
+                               
                             </div>
                         </div>
                     </div>

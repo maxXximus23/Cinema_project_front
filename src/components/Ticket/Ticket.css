@@ -1,5 +1,7 @@
 .img_ticket__item{
     margin: 30px;
+    width: 200px;
+    height: fit-content;
 }
 
 .text{

@@ -38,7 +38,7 @@
 
 
 
-input[type="radio"]{
+#sizeWeight, #sizeDimensions{
     display: none;
 }
 

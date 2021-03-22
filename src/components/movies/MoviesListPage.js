@@ -2,6 +2,7 @@ import React from 'react'
 import MovieService from '../../services/MovieService';
 import ErrorComponent from '../error/ErrorComponent';
 import PageResult from './PageResult';
+import './MovieListPage.css'
 
 class MoviesListPage extends React.Component {
     constructor(props) {
@@ -126,7 +127,11 @@ class MoviesListPage extends React.Component {
         
         for (let i = 1; i <= this.state.pageAmount; i++){
             pagebuttons.push(
-                <button key={i} onClick={this.updatePage} value={i}>{i}</button>
+                <label className="page_button__item">
+                    
+                    <input type="radio" name="page" className="page_input__item" key={i} onClick={this.updatePage} checked={i==this.state.page} value={i}/>
+                    <div className="page_label">{i}</div>
+                </label>
             )
         }
         if (error) {
@@ -136,25 +141,25 @@ class MoviesListPage extends React.Component {
         } else {
             return (
                 <div>
-                    <div>
-                        <input type="text" 
+                    <div className="search_wrap__item">
+                        <input className="movies_input__item" type="text" 
                             placeholder="Title..." 
                             id="titleField"
                             onChange={this.handleTitleTextChange}
                         />
-                        <button onClick={this.updateTitle}>Search</button>
-                        <button onClick={this.resetTitle}>Reset</button>
+                        <button className="serch_button__item" onClick={this.updateTitle}>Search</button>
+                        <button className="reset_button__item" onClick={this.resetTitle}>Reset</button>
                     </div>
-                    <div>
-                        <input type="text" 
+                    <div className="search_wrap__item">
+                        <input className="movies_input__item" type="text" 
                             placeholder="Genre..." 
                             id="genreField"
                             onChange={this.handleGenreTextChange}
                         />
-                        <button onClick={this.updateGenre}>Search</button>
-                        <button onClick={this.resetGenre}>Reset</button>
+                        <button className="serch_button__item" onClick={this.updateGenre}>Search</button>
+                        <button className="reset_button__item" onClick={this.resetGenre}>Reset</button>
                     </div>
-                    <PageResult movies={movies} className="col-md-12"/>
+                        <PageResult movies={movies} className="row"/>
                     <div>
                         {pagebuttons}
                     </div>

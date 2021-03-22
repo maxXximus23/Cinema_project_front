@@ -60,10 +60,10 @@ class Movie extends React.Component {
         } else {
             const trailer = <YouTube videoId={movie.trailerPath} opts={{'height': '500px','width': '100%'}}/>
 
-            let genresList = movie.genres.split(", ")
+            let genresList = movie.genres?.split(", ")
             let genres = []
 
-            for (let i = 0; i < genresList.length; i++){
+            for (let i = 0; i < genresList?.length; i++){
                 genres.push(<span key={i}><Link to={{pathname: '/movies', query: genresList[i]}}>{genresList[i]}</Link>{(i === genresList.length - 1) ? "" : ", "}</span>)
             }
 

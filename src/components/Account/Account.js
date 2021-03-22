@@ -34,9 +34,20 @@ class UserPage extends Component{
    }
  
    componentDidMount() {
-    this.setState({
-        user: AccountService.geUser()
-    })
+    AccountService.geUser()
+        .then(res => {
+            this.setState({
+                isLoaded: true,
+                user: res
+            })
+        })
+        .catch(err => {
+            this.setState({
+                isLoaded: true,
+                error: err
+            })
+        })
+    
     TicketService.getUsersTickets()
                 .then(res=>{
                     console.log(res)
@@ -54,11 +65,9 @@ class UserPage extends Component{
     
     render() {
         const {isLoaded, error, user} = this.state
-        const bookedTickets = this.state.tickets.filter(e =>(moment(e.date).format('hh:mm DD.MM.YY') > moment().format('hh:mm DD.MM.YY')))
-        //console.log(moment().format('hh:mm DD.MM.YY'))
-        const historyTickets = this.state.tickets.filter(e => moment(e.date).format('hh:mm DD.MM.YY') < moment().format('hh:mm DD.MM.YY'))
-        console.log(historyTickets)
-        console.log(bookedTickets)
+        const bookedTickets = this.state.tickets.filter(e =>(moment(e.date) > moment()))
+        const historyTickets = this.state.tickets.filter(e => moment(e.date) < moment())
+        
         return(
             <div className="wrapper">
                 <div className="user_info__item">
