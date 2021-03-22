@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import Ticket from '../Ticket/Ticket'
 import AccountService from '../../services/AccountService'
+import TicketService from '../../services/TicketService'
 import './Account.css'
 import moment from 'moment';
 //import BookedList from '../BookedList/BookedList'
@@ -13,7 +14,6 @@ class UserPage extends Component{
             isLoaded: false,
             error: null,
             tickets: [],
-            id: AccountService.getId(),
             user: {}
         }
 
@@ -34,16 +34,10 @@ class UserPage extends Component{
    }
  
    componentDidMount() {
-    fetch('http://localhost:8081/users/'+this.state.id)
-        .then(this.errorHandler)
-        .then((result) => {
-                this.setState({
-                    isLoaded: true,
-                    user: result
-                }
-            );
-            fetch('http://localhost:8081/tickets/user/'+this.state.id)
-                .then(this.errorHandler)
+    this.setState({
+        user: AccountService.geUser()
+    })
+    TicketService.getUsersTickets()
                 .then(res=>{
                     console.log(res)
                     this.setState({
@@ -56,14 +50,6 @@ class UserPage extends Component{
                     })
                 
             })
-        })
-        .catch(err => {
-            this.setState({
-                isLoaded: true,
-                error: err
-            })
-        }
-    );
 }
     
     render() {

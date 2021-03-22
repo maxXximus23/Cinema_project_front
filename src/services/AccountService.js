@@ -84,6 +84,16 @@ class AccountService {
         return !(localStorage.getItem("userCredentials") == null)
     } 
 
+    static geUser(){
+        return fetch('http://localhost:8081/users/' + AccountService.getId(),
+            {
+                headers: {
+                    Authorization: AccountService.getToken()
+                }
+            })
+            .then(BaseService.handleError);
+    }
+
     static getToken(){
         if (AccountService.isLogged())
             return "Bearer_" + JSON.parse(localStorage.getItem("userCredentials"))?.token

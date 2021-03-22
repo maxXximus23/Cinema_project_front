@@ -12,8 +12,8 @@ class TicketService extends BaseService{
             .then(BaseService.handleError)
     }
 
-    static async getByUser(id) {
-        return fetch(BaseService._baseUrl + '/tickets/user/' + id,
+    static async getUsersTickets() {
+        return fetch(BaseService._baseUrl + '/tickets/user/' + AccountService.getId(),
         {
             headers: {
                 Authorization: AccountService.getToken()
