@@ -60,5 +60,32 @@ class AccountService {
                 BaseService.handleError(error);
             });
     }
+    static logout(){
+        const requestOptions = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: localStorage.getItem("userCredentials")
+        };
+        fetch(BaseService._baseUrl + '/users/logout', requestOptions)
+            .then(BaseService.handleError)
+            .then(() => {
+                localStorage.setItem('userCredentials', "null")
+                window.location.replace("/")
+            })
+            .catch(error => {
+                console.log(error)
+            });
+    }
+
+    static isLogged() {
+        return !(localStorage.getItem("userCredentials") == "null")
+    } 
+
+    static getToken(){
+        if (AccountService.isLogged())
+            return "Bearer_" + JSON.parse(localStorage.getItem("userCredentials"))?.token
+        else
+            return "none"
+    }
 }
 export default AccountService;

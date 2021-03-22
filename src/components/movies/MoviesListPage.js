@@ -44,34 +44,32 @@ class MoviesListPage extends React.Component {
 
     updateData(page){
         MovieService.getPageAmountForQuery(this.state.perPage, this.state.genre, this.state.title)
-        .then((result) => {
-            this.state.pageAmount = result
-            this.setPageData(page)
-        })
-        .catch(err => {
-            this.setState({
-                isLoaded: true,
-                error: err
+            .then((result) => {
+                this.state.pageAmount = result
+                this.setPageData(page)
             })
-        });
+            .catch(err => {
+                this.setState({
+                    isLoaded: true,
+                    error: err
+                })
+            });
     }
 
     setPageData(page){
         MovieService.getMoviesForQuery(page, this.state.perPage, this.state.genre, this.state.title)
-                .then((result) => {
-                        this.setState({
-                            isLoaded: true,
-                            movies: result
-                        }
-                    );
+            .then((result) => {
+                this.setState({
+                    isLoaded: true,
+                    movies: result                        
                 })
-                .catch(err => {
-                    this.setState({
-                        isLoaded: true,
-                        error: err
-                    })
-                }
-            );
+            })
+            .catch(err => {
+                this.setState({
+                    isLoaded: true,
+                    error: err
+                })
+            });
     }
 
     updatePage(event){

@@ -5,6 +5,7 @@ import './Home.css'
 import ErrorComponent from '../error/ErrorComponent';
 import { Link } from 'react-router-dom';
 import Loading from '../Loading/Loading'
+import SessionService from '../../services/SessionService';
 
  class Home extends Component{
      constructor(props){
@@ -30,8 +31,7 @@ import Loading from '../Loading/Loading'
     }
   
     componentDidMount() {
-        fetch('http://localhost:8081/sessions/actual')
-            .then(this.errorHandler)
+        SessionService.getActual()
             .then((result) => {
                     this.setState({
                         isLoaded: true,

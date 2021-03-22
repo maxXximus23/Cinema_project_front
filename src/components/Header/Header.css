@@ -60,7 +60,14 @@ transition: .3s;
      transition: .3s;
 }
 
-#SignUp__item:hover, #SignIn__item:hover{
+#SignOut__item {
+    margin-right: 10;
+     background-color: #A64D4D;
+     transition: .3s;
+     margin-right: 15px;
+}
+
+#SignUp__item:hover, #SignIn__item:hover, #SignOut__item:hover {
     background-color: white;
     font-weight: 900;
     color: #4A639E;

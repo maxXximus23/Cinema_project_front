@@ -1,3 +1,4 @@
+import AccountService from "./AccountService";
 import BaseService from "./BaseService"
 
 class MovieService {
@@ -6,7 +7,7 @@ class MovieService {
         return fetch('http://localhost:8081/movies/' + id,
             {
                 headers: {
-                    "Authorization": "Bearer_" + JSON.parse(localStorage.getItem("userCredentials")).token
+                    Authorization: AccountService.getToken()
                 }
             })
             .then(BaseService.handleError);
@@ -16,7 +17,7 @@ class MovieService {
         return fetch(BaseService._baseUrl+'/movies/' + id + '/sessions',
             {
                 headers: {
-                    "Authorization": "Bearer_" + JSON.parse(localStorage.getItem("userCredentials")).token
+                    Authorization: AccountService.getToken()
                 }
             })
             .then(BaseService.handleError);
@@ -26,7 +27,7 @@ class MovieService {
         return fetch(BaseService._baseUrl + '/movies/pages/' + perPage + '?genre=' + genre + '&title=' + title,
             {
                 headers: {
-                    "Authorization": "Bearer_" + JSON.parse(localStorage.getItem("userCredentials")).token
+                    Authorization: AccountService.getToken()
                 }
             })
             .then(BaseService.handleError);
@@ -36,7 +37,7 @@ class MovieService {
         return fetch(BaseService._baseUrl + '/movies?page=' + page + '&perPage=' + perPage + '&genre=' + genre + '&title=' + title,
             {
                 headers: {
-                    "Authorization": "Bearer_" + JSON.parse(localStorage.getItem("userCredentials")).token
+                    Authorization: AccountService.getToken()
                 }
             })
             .then(BaseService.handleError);
