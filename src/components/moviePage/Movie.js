@@ -64,7 +64,7 @@ class Movie extends React.Component {
             let genres = []
 
             for (let i = 0; i < genresList?.length; i++){
-                genres.push(<span key={i}><Link to={{pathname: '/movies', query: genresList[i]}}>{genresList[i]}</Link>{(i === genresList.length - 1) ? "" : ", "}</span>)
+                genres.push(<span key={i}><Link to={{pathname: '/movies', genre: genresList[i]}}>{genresList[i]}</Link>{(i === genresList.length - 1) ? "" : ", "}</span>)
             }
 
             return (

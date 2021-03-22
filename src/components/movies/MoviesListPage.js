@@ -14,7 +14,7 @@ class MoviesListPage extends React.Component {
             page: 1,
             perPage: 20,
             pageAmount: 0,
-            genre: (this.props.location.query===undefined) ? '' : this.props.location.query,
+            genre: (this.props.location.genre===undefined) ? '' : this.props.location.genre,
             title: '',
             perPageWaiter: 20
         };
@@ -32,17 +32,6 @@ class MoviesListPage extends React.Component {
         this.handlePerPageChange = this.handlePerPageChange.bind(this);
     }
 
-    async errorHandler(response){
-        if (!response.ok){
-            await response.json()
-                    .then(res => {
-                        throw res
-                    })
-        }
-
-        return response.json()
-    }
-  
     componentDidMount() {
        this.updateData(1)
     }
@@ -161,7 +150,6 @@ class MoviesListPage extends React.Component {
             for (let i = 1; i <= this.state.pageAmount; i++){
                 pagebuttons.push(
                     <label className="page_button__item">
-                        
                         <input type="radio" name="page" className="page_input__item" key={i} onClick={this.updatePage} checked={i==this.state.page} value={i}/>
                         <div className="page_label">{i}</div>
                     </label>
