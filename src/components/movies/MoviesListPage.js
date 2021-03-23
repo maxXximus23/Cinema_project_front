@@ -177,7 +177,7 @@ class MoviesListPage extends React.Component {
                     </div>
                     <div className="perPageForm col-md-12">
                         <span>Items per page: </span>
-                        <input className="movies_input__item" type="number" min="1" max="100" onChange={this.handlePerPageChange} placeholder="20"/>
+                        <input className="movies_input__item" type="number" min="1" max="100" onChange={this.handlePerPageChange} defaultValue="20"/>
                         <button className="serch_button__item" onClick={this.onPerPageApply}>Apply</button>
                     </div>
                         <PageResult movies={movies} className="row"/>
