@@ -15,6 +15,10 @@ import Home from './components/Home/Home'
 import Error from './components/error/ErrorComponent'
 import MoviesListPage from './components/movies/MoviesListPage';
 
+import AllMovies from "./components/admin/movie/AllMovies";
+import CreateMovie from "./components/admin/movie/CreateMovie";
+import UpdateMovie from "./components/admin/movie/UpdateMovie";
+
 import './style.scss'
 
 function App() {
@@ -30,6 +34,11 @@ function App() {
             <Route exact path="/movies" component={MoviesListPage} />
             <Route path="/book/:sessionId" component={Booking} />
             <Route path="/account" component={Account} />
+
+            <Route path="/movie" component={AllMovies} />
+            <Route path="/create-movie/" component={CreateMovie} />
+            <Route path="/update-movie/:movieId" component={UpdateMovie} />
+
             <Route component={Error} exact/>
         </Switch>
         <Footer />

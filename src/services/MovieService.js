@@ -3,14 +3,31 @@ import BaseService from "./BaseService"
 
 class MovieService {
 
-    static async getById(id) {
-        return fetch('http://localhost:8081/movies/' + id,
-            {
-                headers: {
-                    Authorization: AccountService.getToken()
+    static async getAll() {
+        console.log("MovieService.getAll():");
+        return fetch(BaseService._baseUrl+'/movies/all')
+            .then(response => {
+                if (!response.ok) {
+                    BaseService.handleResponseError(response);
                 }
+                return response.json();
             })
-            .then(BaseService.handleError);
+            .catch(error => {
+                BaseService.handleError(error);
+            });
+    }
+
+    static async getById(id) {
+        return fetch('http://localhost:8081/movies/' + id)
+            .then(response => {
+                if (!response.ok) {
+                    BaseService.handleResponseError(response);
+                }
+                return response.json();
+            })
+            .catch(error => {
+                BaseService.handleError(error);
+            });
     }
 
     static async getSessions(id) {
@@ -89,9 +106,6 @@ class MovieService {
         };
         return fetch(BaseService._baseUrl+'/movies/' + id, requestOptions)
             .then(response => {
-                if (!response.ok) {
-                    BaseService.handleResponseError(response);
-                }
                 return response.json();
             })
             .catch(error => {
