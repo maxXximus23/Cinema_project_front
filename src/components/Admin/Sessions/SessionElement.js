@@ -1,33 +1,53 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
 import SessionService from '../../../services/SessionService';
+import moment from 'moment'
+import ErrorComponent from '../../error/ErrorComponent';
 
 class SessionElement extends React.Component {
     constructor(props){
         super(props)
         this.state = {
-            session: props.session
+            error: null,
+            session: props.session,
+            reqiureSure: false
         }
         
         this.removeSession = this.removeSession.bind(this);
+        this.markToDelete = this.markToDelete.bind(this);
     }
 
-    removeSession(event){
-        //TODO: Add 'Are you sure' window
-        SessionService.removeSession(this.state.session.id)
+    markToDelete(event){
         this.setState({
-            session: null
-        })
+            reqiureSure: true
+        })        
+    }
+
+    removeSession(){
+        SessionService.removeSession(this.state.session.id)
+            .then(() => {
+                this.setState({
+                    session: null
+                })
+            })
+            .catch(err => {
+                this.setState({
+                    error: err
+                })
+            })
     }
 
     render() {
-        const session = this.state.session
+        const { session, error, reqiureSure } = this.state
 
-        if (session===null)
+        if (error)
+            return <ErrorComponent error={error} />
+
+        if (session==null)
             return <div></div>
 
         return  <div className="session__item row">
-                    <div className="session__id col-md-1">{session.id}</div>
+                    <label className="session__id col-md-1">{session.id}</label>
                     <div className="session__poster col-md-2">
                         <img alt="" src={session.moviePoster}></img>
                     </div>
@@ -37,7 +57,7 @@ class SessionElement extends React.Component {
                         </Link>
                     </div>
                     <div className="session__hall col-md-2">{session.hallName}</div>
-                    <div className="session__date col-md-2">{session.date}</div>
+                    <div className="session__date col-md-2">{moment(session.date).format("HH:mm DD-MM-YYYY")}</div>
                     <div className="col-md-1 session__edit">
                         <Link to={{pathname: "/admin/sessions/edit", session: session}}
                             className="session__edit__btn"
@@ -46,11 +66,16 @@ class SessionElement extends React.Component {
                         </Link>
                     </div>
                     <div className="col-md-1 session__remove">
-                        <button 
-                            className="session__remove__btn"
-                            onClick={this.removeSession}>
-                            <i className="fa fa-remove"></i>
-                        </button>
+                        {!reqiureSure &&
+                            <button 
+                                className="session__remove__btn"
+                                onClick={this.markToDelete}>
+                                <i className="fa fa-remove"></i>
+                            </button>
+                        }
+                        {reqiureSure && 
+                            <button className="session__remove__sure" onClick={this.removeSession}>DELETE</button>
+                        }
                     </div>
                 </div>
     }

@@ -1,48 +1,58 @@
 import React from 'react'
+import { Link } from 'react-router-dom';
 import SessionService from '../../../services/SessionService';
 import BackButton from '../../backButton/BackButton';
+import ErrorComponent from '../../error/ErrorComponent';
 import Loading from '../../Loading/Loading';
 import MovieService from '../../../services/MovieService'
 import HallService from '../../../services/HallService'
 
-class EditSession extends React.Component {
+class CreateSession extends React.Component {
     constructor(props){
         super(props)
         this.state = {
             isLoaded: false,
             error: null,
-            session: props.location.session,
-            halls: [],
+            halls: [{
+                id: Number,
+                name: String,
+                rowsAmount: Number,
+                places: Number
+            }],
             titles: [{
                 id: Number,
                 title: String
             }],
-            newSession: {
+            session: {
                 movieId: Number,
                 hallId: Number,
                 date: Date
-            }
+            },
+            requireSure: false
         }
 
         this.changeDate = this.changeDate.bind(this)
         this.changeHall = this.changeHall.bind(this)
         this.changeMovie = this.changeMovie.bind(this)
-        
-        this.confirmEdit = this.confirmEdit.bind(this);
+
+        this.confirmCreation = this.confirmCreation.bind(this);
     }
 
-    componentDidMount(){        
-        this.state.newSession = this.state.session
+    componentDidMount(){
         HallService.getAll()
             .then(result => {
                 this.state.halls = result
                 MovieService.getTitles()
-                    .then(result => {
+                    .then(res => {
                         this.setState({
                             isLoaded: true,
-                            titles: result
+                            titles: res
                         })
-                        
+                        this.state.session = {
+                            movieId: this.state.titles[0].id,
+                            hallId: this.state.halls[0].id,
+                            date: new Date()
+                        }
                     })
                     .catch(err => {
                         this.setState({
@@ -61,9 +71,21 @@ class EditSession extends React.Component {
         
     }
 
-    confirmEdit(event){
+    changeMovie(event){
+        this.state.session.movieId = event.target.value
+    }
+
+    changeHall(event){
+        this.state.session.hallId = event.target.value
+    }
+
+    changeDate(event){
+        this.state.session.date = event.target.value
+    }
+
+    confirmCreation(event){
         event.preventDefault();
-        SessionService.updateSession(this.state.session.id, this.state.newSession)
+        SessionService.createSession(this.state.session)
             .then(() => {
                 this.props.history.push("/admin/sessions")
             })
@@ -75,47 +97,32 @@ class EditSession extends React.Component {
             })
     }
 
-    changeMovie(event){
-        this.state.newSession.movieId = event.target.value
-    }
-
-    changeHall(event){
-        this.state.newSession.hallId = event.target.value
-    }
-
-    changeDate(event){
-        this.state.newSession.date = event.target.value
-    }
-
     render() {
-        const {error, isLoaded, session, titles, halls} = this.state
+        const {error, isLoaded, titles, halls} = this.state
         if (!isLoaded){
             return <Loading />
         } else {
-            if (session==null)
-                return <div><BackButton backPath={() => this.props.history.goBack()} /></div>
-
             return  (<div className="container">
                         <BackButton backPath={() => this.props.history.goBack()} />
                         {error && error.message}
-                        <form onSubmit={this.confirmEdit}>
+                        <form onSubmit={this.confirmCreation}>
                             <label>
-                                <span>Hall: </span> 
-                                <select onChange={this.changeHall} defaultValue={session.hallId}>
+                                <span>Hall: </span>
+                                <select onChange={this.changeHall}>
                                     {halls.map(el => {
                                         return <option key={el.id} value={el.id}>{el.name} (Places: {el.rowsAmount}x{el.places})</option>
                                     })}
-                                </select><br />
+                                </select>
                             </label><br/>
                             <label>
                                 <span>Movie: </span> 
-                                <select onChange={this.changeMovie} defaultValue={session.movieId}>
+                                <select onChange={this.changeMovie}>
                                     {titles.map(el => {
                                         return <option key={el.id} value={el.id}>{el.title}</option>
                                     })}
-                                </select><br />
+                                </select>
                             </label><br/>
-                            <input type="datetime-local" defaultValue={session.date}  onChange={this.changeDate}/><br />
+                            <input type="datetime-local" defaultValue={Date.now()}  onChange={this.changeDate}/>
                             <input type="submit" value="Apply" />
                         </form>
                     </div>)
@@ -123,4 +130,4 @@ class EditSession extends React.Component {
     }
 }
 
-export default EditSession
+export default CreateSession

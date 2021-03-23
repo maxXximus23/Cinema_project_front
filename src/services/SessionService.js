@@ -33,6 +33,32 @@ class SessionService {
             .then(BaseService.handleError);
     }
 
+    static async updateSession(id, sessionData){
+        const requestOptions = {
+            method: 'PUT',
+            headers: { 
+                'Content-Type': 'application/json',
+                "Authorization": "Bearer_" + JSON.parse(localStorage.getItem("userCredentials"))?.token
+            },
+            body: JSON.stringify(sessionData)
+        };
+        return fetch(BaseService._baseUrl+'/sessions/' + id, requestOptions)
+            .then(BaseService.handleError);
+    }
+
+    static async createSession(session) {
+        const requestOptions = {
+            method: 'POST',
+            headers: { 
+                'Content-Type': 'application/json',
+                "Authorization": "Bearer_" + JSON.parse(localStorage.getItem("userCredentials"))?.token
+            },
+            body: JSON.stringify(session)
+        };
+        return fetch(BaseService._baseUrl+'/sessions', requestOptions)
+            .then(BaseService.handleError);
+    }
+
     static getSession= async (id) =>{
         console.log("SessionService.getSession(id):");
         console.log("id: " + id);
@@ -47,49 +73,14 @@ class SessionService {
                 BaseService.handleError(error);
             });
     };
-    static addSession= async (session) =>{
-        console.log("SessionService.addSession(session):");
-        const requestOptions = {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(session)
-        };
-        return fetch(BaseService._baseUrl+'/sessions', requestOptions)
-            .then(response => {
-                if (!response.ok) {
-                    BaseService.handleResponseError(response);
-                }
-                return response.json();
-            })
-            .catch(error => {
-                BaseService.handleError(error);
-            });
-    };
+
+
     static deleteSession= async (id) =>{
         console.log("SessionService.deleteSession(id):");
         console.log("id: " + id);
         const requestOptions = {
             method: 'DELETE',
             headers: { 'Content-Type': 'application/json' }
-        };
-        return fetch(BaseService._baseUrl+'/sessions/' + id, requestOptions)
-            .then(response => {
-                if (!response.ok) {
-                    BaseService.handleResponseError(response);
-                }
-                return response.json();
-            })
-            .catch(error => {
-                BaseService.handleError(error);
-            });
-    };
-    static updateSession= async (id, session) =>{
-        console.log("SessionService.updateSession(id, session):");
-        console.log("id: " + id);
-        const requestOptions = {
-            method: 'PUT',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(session)
         };
         return fetch(BaseService._baseUrl+'/sessions/' + id, requestOptions)
             .then(response => {

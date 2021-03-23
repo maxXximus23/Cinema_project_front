@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import './MovieList-element.css'
 import { Link } from 'react-router-dom';
+import moment from 'moment';
 
 
 class Movie extends Component{
@@ -17,7 +18,7 @@ class Movie extends Component{
                                 </div>
                                 <div className="text-wrapper">
                                     <div className="post-title">{movie.movieTitle}</div>
-                                    <h3 className="post-date">{movie.date}</h3>
+                                    <h3 className="post-date">{moment(movie.date).format("HH:mm DD-MM-YYYY")}</h3>
                                 </div>
                                 <div className="overlay"></div>
                             </Link>
