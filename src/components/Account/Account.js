@@ -14,11 +14,9 @@ class UserPage extends Component{
             isLoaded: false,
             error: null,
             tickets: [],
-            user: {}
+            user: {},
+            sort: 0
         }
-
-
-        
     }
 
 
@@ -37,21 +35,12 @@ class UserPage extends Component{
     AccountService.geUser()
         .then(res => {
             this.setState({
-                isLoaded: true,
                 user: res
             })
-        })
-        .catch(err => {
-            this.setState({
-                isLoaded: true,
-                error: err
-            })
-        })
-    
-    TicketService.getUsersTickets()
+            TicketService.getUsersTickets()
                 .then(res=>{
-                    console.log(res)
                     this.setState({
+                        isLoaded: true,
                         tickets: res
                     })
                 })
@@ -61,12 +50,29 @@ class UserPage extends Component{
                     })
                 
             })
-}
+        })
+        .catch(err => {
+            this.setState({
+                isLoaded: true,
+                error: err
+            })
+        })
+    
+    
+    }
     
     render() {
         const {isLoaded, error, user} = this.state
         const bookedTickets = this.state.tickets.filter(e =>(moment(e.date) > moment()))
         const historyTickets = this.state.tickets.filter(e => moment(e.date) < moment())
+        
+        const groupBy = (arr, fn) =>
+            arr
+                .map(typeof fn === 'function' ? fn : val => val[fn])
+                .reduce((acc, val, i) => {
+                acc[val] = (acc[val] || []).concat(arr[i]); 
+                return acc
+        }, {});
         
         return(
             <div className="wrapper">
@@ -76,14 +82,14 @@ class UserPage extends Component{
                 </div>
                 <div className="user_list__item"> 
                                 <fieldset className="lists_wrapper__item">
-                                    <input  type="radio" name="sizeBy" value="weight" id="sizeWeight" checked="checked" />
+                                    <input  type="radio" name="sizeBy" value="weight" id="sizeWeight" defaultChecked/>
                                     <label id="bookedlist_controller__item" className="radio_button__item" for="sizeWeight">Booked tickets</label>
                                    
                                     <input type="radio" name="sizeBy" value="dimensions" id="sizeDimensions" />
                                     <label id="historylist_controller__item"className="radio_button__item" for="sizeDimensions">History</label>
                                
-                                    <div id="booked_list__item" className="container"><div className="row"><Ticket tickets={bookedTickets} /></div></div>
-                                    <div id="history_list__item"className="container"><div className="row"><Ticket tickets={historyTickets} /></div></div>
+                                    <div id="booked_list__item" className="container"><div className="row"><Ticket tickets={groupBy(bookedTickets,'sessionId')} /></div></div>
+                                    <div id="history_list__item"className="container"><div className="row"><Ticket tickets={groupBy(historyTickets,'sessionId')} /></div></div>
                                 </fieldset>
                 </div>
                 
