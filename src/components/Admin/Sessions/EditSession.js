@@ -98,7 +98,7 @@ class EditSession extends React.Component {
                 return <div><BackButton backPath={() => this.props.history.goBack()} /></div>
 
             return  (<div className="container">
-                        <BackButton backPath={() => this.props.history.goBack()} />
+                        <BackButton backPath={() => this.props.history.goBack()} /><br/>
                         {error && error.message}
                         <form onSubmit={this.confirmEdit}>
                             <label>

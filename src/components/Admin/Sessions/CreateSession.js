@@ -103,7 +103,7 @@ class CreateSession extends React.Component {
             return <Loading />
         } else {
             return  (<div className="container">
-                        <BackButton backPath={() => this.props.history.goBack()} />
+                        <BackButton backPath={() => this.props.history.goBack()} /><br/>
                         {error && error.message}
                         <form onSubmit={this.confirmCreation}>
                             <label>
