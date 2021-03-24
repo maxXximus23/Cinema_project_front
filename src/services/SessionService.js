@@ -1,3 +1,4 @@
+import AccountService from "./AccountService";
 import BaseService from "./BaseService"
 
 class SessionService {
@@ -45,7 +46,17 @@ class SessionService {
         return fetch(BaseService._baseUrl+'/sessions/' + id, requestOptions)
             .then(BaseService.handleError);
     }
-
+                  
+    static async getSession(id) {
+        return fetch(BaseService._baseUrl + '/sessions/' + id,
+        {
+            headers: {
+                Authorization: AccountService.getToken()
+            }
+        })
+            .then(BaseService.handleError);
+    }
+                     
     static async createSession(session) {
         const requestOptions = {
             method: 'POST',
@@ -58,22 +69,6 @@ class SessionService {
         return fetch(BaseService._baseUrl+'/sessions', requestOptions)
             .then(BaseService.handleError);
     }
-
-    static getSession= async (id) =>{
-        console.log("SessionService.getSession(id):");
-        console.log("id: " + id);
-        return fetch(BaseService._baseUrl+'/sessions/'+id)
-            .then(response => {
-                if (!response.ok) {
-                    BaseService.handleResponseError(response);
-                }
-                return response.json();
-            })
-            .catch(error => {
-                BaseService.handleError(error);
-            });
-    };
-
 
     static deleteSession= async (id) =>{
         console.log("SessionService.deleteSession(id):");

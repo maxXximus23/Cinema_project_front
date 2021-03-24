@@ -1,5 +1,4 @@
 import React from 'react'
-import { Link } from 'react-router-dom';
 import './style.css'
 import ErrorComponent from '../error/ErrorComponent';
 import Loading from '../Loading/Loading';
@@ -51,7 +50,7 @@ class Reviews extends React.Component {
     render() {
         const { error, isLoaded, reviews } = this.state;
         let newReviwForm = (
-            <div className="text-left newReview col-md-9">
+            <div className="text-left newReview col-md-12">
                 <h5>Already watched? Share your impressions with others!</h5>
                 <form onSubmit={this.postReview}>
                     <textarea className="col-md-12 newReview__text form-control" 
@@ -79,7 +78,7 @@ class Reviews extends React.Component {
                     <h3 className="text-left">Reviews:</h3>
                     {
                         reviews.map(el =>{
-                            return <div key={el.id} className="col-md-9 review">
+                            return <div key={el.id} className="col-md-12 review">
                                     <div className="d-flex justify-content-between col-md-12 review__header">
                                         <h6 className="col-md-5 text-left">{el.firstName + " " + el.lastName}</h6>
                                         <span className="col-md-5 text-right">{el.creationDate}</span>
@@ -102,7 +101,7 @@ class Reviews extends React.Component {
         });
     }
 
-    postReview(event){ //TODO: Add real user data in request
+    postReview(event){
         event.preventDefault();
 
         if (this.state.newReviewText.length < 20)
@@ -116,7 +115,8 @@ class Reviews extends React.Component {
                         creationDate: result.creationDate,
                         movieId: result.movieId,
                         authorId: result.authorId,
-                        authorName: result.authorName,                    
+                        firstName: result.firstName,        
+                        lastName: result.lastName            
                     })
                     this.setState({
                         newReviewText: ""

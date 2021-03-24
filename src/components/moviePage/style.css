@@ -29,7 +29,7 @@
     color: var(--colorShadeA);
     font-weight: 700;
     text-transform: uppercase;
-    margin-top: 30px;
+    margin-bottom: 30px;
   }
   
   .buttonBook.big-button {
@@ -203,4 +203,12 @@
 .movieData .movie-back-button:hover {
   transition: 0.4s;
   background-color: #499C9C;
+}
+
+.scrollSessions {
+  height: 450px;
+}
+
+.scrollSessions .scrollarea-content {
+  min-height: 400px;
 }
