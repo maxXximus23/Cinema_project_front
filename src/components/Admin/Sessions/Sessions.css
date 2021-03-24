@@ -1,0 +1,101 @@
+.sessions__container {
+    margin: 0 auto;
+    border: solid rgba(46, 229, 157, .4) 5px;
+    border-radius: 30px;
+    padding: 20px;
+    padding-top: 0;
+    margin-top: 30px;
+}
+
+.sessions__label {
+    margin-top: 20px;
+}
+
+.sessions__header {
+    font-size: 18px;
+    font-weight: 900;
+    padding-bottom: 15px;
+    margin-bottom: 15px;
+    border-bottom: solid rgb(200, 200, 200) 2px;
+}
+
+.session__poster img {
+    height: auto;
+    width: inherit;
+}
+
+.session__item:nth-child(n) {
+    align-items: center;
+}
+
+.session__edit__btn, .session__remove__btn {
+    font-size: 30px;
+    border: 0;
+}
+
+.session__edit__btn:hover, .session__remove__btn:hover {
+    color: rgb(46, 229, 157);
+    transition: .3s;
+}
+
+.session__remove__btn:hover {
+    color: red;
+    transition: .3s;
+}
+
+.session__edit__btn:focus, .session__remove__btn:focus {
+    outline: none;
+}
+
+.sessions__header [type="radio"]{
+    visibility: hidden;
+}
+
+.sessions__header [type="radio"]:checked ~ span{
+    color: red;
+}
+
+.sessions__header .session__poster,
+.sessions__header .session__edit,
+.sessions__header .session__delete {
+    margin-top: 27px;
+}
+
+.session__remove__sure {
+    border: 1px solid red;
+    border-radius: 10px;
+    font-weight: 900;
+    margin: 0 0 0 -10px;
+}
+
+.session__remove__sure:hover {
+    color: white;
+    background: red;
+}
+
+.session__pageButtons [type="radio"] {
+    display: none;
+}
+
+.session__pageButtons .page-label {
+    padding: 10px;
+    border: solid 2px #499C9C;
+    border-radius: 10px;
+    width: 50px;
+    transition: .2s;
+}
+
+.session__pageButtons .page-label:hover {
+    transition: .2s;
+    color: white;
+    background: #499C9C;
+}
+
+.session__pageButtons {
+    margin-top: 20px;
+}
+
+.session__pageButtons input:checked ~ .page-label{
+    color: white;
+    background: #499C9C;
+}

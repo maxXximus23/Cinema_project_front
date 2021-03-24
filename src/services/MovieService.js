@@ -41,7 +41,17 @@ class MovieService {
                 }
             })
             .then(BaseService.handleError);
-    };
+    }
+
+    static async getTitles() {
+        return fetch('http://localhost:8081/movies/titles',
+            {
+                headers: {
+                    Authorization: AccountService.getToken()
+                }
+            })
+            .then(BaseService.handleError);
+    }
 
     static addMovie= async (movie) =>{
         console.log("MovieService.addMovie(movie):");
