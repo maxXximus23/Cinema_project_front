@@ -4,14 +4,17 @@ import BackButton from '../../backButton/BackButton';
 import Loading from '../../Loading/Loading';
 import MovieService from '../../../services/MovieService'
 import HallService from '../../../services/HallService'
+import ErrorComponent from '../../error/ErrorComponent';
 
 class EditSession extends React.Component {
     constructor(props){
         super(props)
         this.state = {
             isLoaded: false,
+            errorPost: null,
             error: null,
-            session: props.location.session,
+            sessionId: props.match.params.sessionId,
+            session: {},
             halls: [],
             titles: [{
                 id: Number,
@@ -31,20 +34,30 @@ class EditSession extends React.Component {
         this.confirmEdit = this.confirmEdit.bind(this);
     }
 
-    componentDidMount(){        
-        this.state.newSession = this.state.session
-        HallService.getAll()
-            .then(result => {
-                this.state.halls = result.sort((e1, e2) => {
-                    return e1.rowsAmount*e1.places >= e2.rowsAmount*e2.places ? 1 : -1
-                })
-                MovieService.getTitles()
+    componentDidMount(){
+        SessionService.getSession(this.state.sessionId)
+            .then(res => {
+                this.state.session = res
+                this.state.newSession = res
+                HallService.getAll()
                     .then(result => {
-                        this.setState({
-                            isLoaded: true,
-                            titles: result
+                        this.state.halls = result.sort((e1, e2) => {
+                            return e1.rowsAmount*e1.places >= e2.rowsAmount*e2.places ? 1 : -1
                         })
-                        
+                        MovieService.getTitles()
+                            .then(result => {
+                                this.setState({
+                                    isLoaded: true,
+                                    titles: result
+                                })
+                                
+                            })
+                            .catch(err => {
+                                this.setState({
+                                    isLoaded: true,
+                                    error: err
+                                })
+                            })
                     })
                     .catch(err => {
                         this.setState({
@@ -59,19 +72,17 @@ class EditSession extends React.Component {
                     error: err
                 })
             })
-
-        
     }
 
     confirmEdit(event){
         event.preventDefault();
-        SessionService.updateSession(this.state.session.id, this.state.newSession)
+        SessionService.updateSession(this.state.sessionId, this.state.newSession)
             .then(() => {
                 this.props.history.push("/admin/sessions")
             })
             .catch(err => {
                 this.setState({
-                    error: err,
+                    errorPost: err,
                     isLoaded: true
                 })
             })
@@ -90,16 +101,15 @@ class EditSession extends React.Component {
     }
 
     render() {
-        const {error, isLoaded, session, titles, halls} = this.state
+        const {errorPost, isLoaded, session, titles, halls, error} = this.state
         if (!isLoaded){
             return <Loading />
+        } else if (error) {
+            return <ErrorComponent error={error} />
         } else {
-            if (session==null)
-                return <div><BackButton backPath={() => this.props.history.goBack()} /></div>
-
             return  (<div className="container">
                         <BackButton backPath={() => this.props.history.goBack()} /><br/>
-                        {error && error.message}
+                        {errorPost && errorPost.message}
                         <form onSubmit={this.confirmEdit}>
                             <label>
                                 <span>Hall: </span> 

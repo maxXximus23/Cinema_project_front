@@ -33,7 +33,7 @@ function App() {
             <Route exact path="/movies" component={MoviesListPage} />
             <Route path="/book/:sessionId" component={Booking} />
             <Route path="/account" component={Account} />
-            <Route exact path="/admin/sessions/edit" component={EditSession} />
+            <Route exact path="/admin/sessions/:sessionId" component={EditSession} />
             <Route exact path="/admin/sessions/create" component={CreateSession} />
             <Route exact path="/admin/sessions" component={SessionsMain} />
             <Route component={Error} exact/>

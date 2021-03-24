@@ -59,7 +59,7 @@ class SessionElement extends React.Component {
                     <div className="session__hall col-md-2">{session.hallName}</div>
                     <div className="session__date col-md-2">{moment(session.date).format("HH:mm DD-MM-YYYY")}</div>
                     <div className="col-md-1 session__edit">
-                        <Link to={{pathname: "/admin/sessions/edit", session: session}}
+                        <Link to={"/admin/sessions/" + session.id}
                             className="session__edit__btn"
                             onClick={this.editSession}>
                             <i className="fa fa-pencil-square-o"></i>
