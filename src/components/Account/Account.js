@@ -32,7 +32,7 @@ class UserPage extends Component{
    }
  
    componentDidMount() {
-    AccountService.geUser()
+    AccountService.getUser()
         .then(res => {
             this.setState({
                 user: res
@@ -83,10 +83,10 @@ class UserPage extends Component{
                 <div className="user_list__item"> 
                                 <fieldset className="lists_wrapper__item">
                                     <input  type="radio" name="sizeBy" value="weight" id="sizeWeight" defaultChecked/>
-                                    <label id="bookedlist_controller__item" className="radio_button__item" for="sizeWeight">Booked tickets</label>
+                                    <label id="bookedlist_controller__item" className="radio_button__item" htmlFor="sizeWeight">Booked tickets</label>
                                    
                                     <input type="radio" name="sizeBy" value="dimensions" id="sizeDimensions" />
-                                    <label id="historylist_controller__item"className="radio_button__item" for="sizeDimensions">History</label>
+                                    <label id="historylist_controller__item"className="radio_button__item" htmlFor="sizeDimensions">History</label>
                                
                                     <div id="booked_list__item" className="container"><div className="row"><Ticket tickets={groupBy(bookedTickets,'sessionId')} /></div></div>
                                     <div id="history_list__item"className="container"><div className="row"><Ticket tickets={groupBy(historyTickets,'sessionId')} /></div></div>
