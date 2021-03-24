@@ -89,3 +89,13 @@
     line-height: 1.8;
     
 }
+
+.canceled__session {
+    border: red solid 2px;
+}
+
+.canceled__label {
+    margin-top: -70px;
+    margin-bottom: 55px;
+    color: red;
+}

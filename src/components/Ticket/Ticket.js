@@ -97,11 +97,11 @@ class Ticket extends React.Component {
                    tickets.map(el => {
 
                        return <Link to={"/movies/" + el[1][0].movieId}>
-                            <div className="main">                         
+                            <div className={el[1][0].isCanceled ? "main canceled__session" : "main"}>                      
                                 <img className="img_ticket__item" src={el[1][0].posterPath} alt=""/> 
                                 <div className="text">
+                                    {el[1][0].isCanceled && <h2 className="canceled__label">Canceled!</h2>}
                                     <h3>{el[1][0].movieTitle}</h3>
-                                
                                     <p>Date: {moment(el[1][0].date).format('HH:mm DD.MM.YY')}</p>
                                     <p>Hall name: {el[1][0].hallName}</p>
                                     <p>Amount: {el[1].length}</p>

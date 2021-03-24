@@ -4,6 +4,7 @@ import BackButton from '../../backButton/BackButton';
 import Loading from '../../Loading/Loading';
 import MovieService from '../../../services/MovieService'
 import HallService from '../../../services/HallService'
+import ErrorComponent from '../../error/ErrorComponent'
 
 class CreateSession extends React.Component {
     constructor(props){
@@ -22,8 +23,8 @@ class CreateSession extends React.Component {
                 title: String
             }],
             session: {
-                movieId: Number,
-                hallId: Number,
+                movieId: -1,
+                hallId: -1,
                 date: Date
             },
             requireSure: false
@@ -48,11 +49,6 @@ class CreateSession extends React.Component {
                             isLoaded: true,
                             titles: res
                         })
-                        this.state.session = {
-                            movieId: this.state.titles[0].id,
-                            hallId: this.state.halls[0].id,
-                            date: new Date()
-                        }
                     })
                     .catch(err => {
                         this.setState({
@@ -85,6 +81,14 @@ class CreateSession extends React.Component {
 
     confirmCreation(event){
         event.preventDefault();
+        console.log(this.state.session)
+        if (this.state.session.movieId==-1 ||
+            this.state.session.hallId==-1)
+        {
+            this.state.session.movieId = this.state.titles[0].id
+            this.state.session.hallId = this.state.halls[0].id
+        }
+
         SessionService.createSession(this.state.session)
             .then(() => {
                 this.props.history.push("/admin/sessions")
@@ -101,6 +105,8 @@ class CreateSession extends React.Component {
         const {error, isLoaded, titles, halls} = this.state
         if (!isLoaded){
             return <Loading />
+        } if (error) {
+            return <ErrorComponent error={error} />
         } else {
             return  (<div className="container">
                         <BackButton backPath={() => this.props.history.goBack()} /><br/>

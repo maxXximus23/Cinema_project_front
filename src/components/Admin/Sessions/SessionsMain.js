@@ -26,7 +26,8 @@ class SessionsMain extends React.Component {
             lastSort: "id",
             page: 1,
             perPage: 100,
-            pages: 0
+            pages: 0,
+            showOutdated: true
         }
 
         this.sortById = this.sortById.bind(this)
@@ -37,6 +38,8 @@ class SessionsMain extends React.Component {
         this.changePage = this.changePage.bind(this)
         this.changePerPage = this.changePerPage.bind(this)
         this.applyChange = this.applyChange.bind(this)
+
+        this.dontShowOutdated = this.dontShowOutdated.bind(this)
     }
 
     componentDidMount(){
@@ -157,6 +160,13 @@ class SessionsMain extends React.Component {
         })
     }
 
+    dontShowOutdated(event){
+        this.setState({
+            showOutdated: !this.state.showOutdated
+        })
+
+    }
+
     render(){
         const {error, isLoaded } = this.state
         if (!isLoaded){
@@ -164,7 +174,13 @@ class SessionsMain extends React.Component {
         } else if (error){
             return <ErrorComponent error={error} />
         } else {
-            let sessions = this.state.sessions.slice((this.state.page - 1)*this.state.perPage, this.state.page*this.state.perPage)
+            let ses = []
+            if (!this.state.showOutdated)
+                ses = this.state.sessions.filter(e => moment(e.date) > moment())
+            else
+                ses = this.state.sessions
+
+            let sessions = ses.slice((this.state.page - 1)*this.state.perPage, this.state.page*this.state.perPage)
 
             let pageButtons = []
             for (let i = 1; i <= this.state.pages; i++){
@@ -185,6 +201,10 @@ class SessionsMain extends React.Component {
                                 <input type="number" min="1" max="100" defaultValue={this.state.perPage} onChange={this.changePerPage}/>
                                 <button onClick={this.applyChange}>Apply</button>
                             </label>
+                            <label>
+                                <input type="checkbox" defaultValue={false} onChange={this.dontShowOutdated}/>
+                                <span>Dont show outdated</span>
+                            </label>
                             <Link to={'/admin/sessions/create'}>Create session</Link>
                         </div>
                         <div className="sessions__container">
@@ -200,7 +220,7 @@ class SessionsMain extends React.Component {
                                     <input type="radio" name="sort" onClick={this.sortByTitle}/><br />
                                     <span>Movie Title</span>
                                 </label>
-                                <label className="session__hall col-md-2">
+                                <label className="session__hall col-md-1">
                                     <input type="radio" name="sort" onClick={this.sortByHall}/><br />
                                     <span>Hall Name</span>
                                 </label>
@@ -208,6 +228,9 @@ class SessionsMain extends React.Component {
                                     <input type="radio" name="sort" onClick={this.sortByDate}/><br />
                                     <span>Date</span>
                                 </label>
+                                <div className="session__edit col-md-1">
+                                    <span>Cancel</span>
+                                </div>
                                 <div className="session__edit col-md-1">
                                     <span>Edit</span>
                                 </div>

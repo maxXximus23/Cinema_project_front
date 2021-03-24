@@ -6,7 +6,7 @@ class SessionService {
         return fetch(BaseService._baseUrl+'/sessions/actual',
             {
                 headers: {
-                    "Authorization": "Bearer_" + JSON.parse(localStorage.getItem("userCredentials"))?.token
+                    "Authorization": AccountService.getToken()
                 }
             })
             .then(BaseService.handleError);
@@ -16,7 +16,7 @@ class SessionService {
         return fetch(BaseService._baseUrl+'/sessions',
             {
                 headers: {
-                    "Authorization": "Bearer_" + JSON.parse(localStorage.getItem("userCredentials"))?.token
+                    "Authorization": AccountService.getToken()
                 }
             })
             .then(BaseService.handleError);
@@ -27,7 +27,7 @@ class SessionService {
             method: 'DELETE',
             headers: { 
                 'Content-Type': 'application/json',
-                "Authorization": "Bearer_" + JSON.parse(localStorage.getItem("userCredentials"))?.token
+                "Authorization": AccountService.getToken()
             }
         };
         return fetch(BaseService._baseUrl+'/sessions/' + id, requestOptions)
@@ -39,7 +39,7 @@ class SessionService {
             method: 'PUT',
             headers: { 
                 'Content-Type': 'application/json',
-                "Authorization": "Bearer_" + JSON.parse(localStorage.getItem("userCredentials"))?.token
+                "Authorization": AccountService.getToken()
             },
             body: JSON.stringify(sessionData)
         };
@@ -62,11 +62,23 @@ class SessionService {
             method: 'POST',
             headers: { 
                 'Content-Type': 'application/json',
-                "Authorization": "Bearer_" + JSON.parse(localStorage.getItem("userCredentials"))?.token
+                "Authorization": AccountService.getToken()
             },
             body: JSON.stringify(session)
         };
         return fetch(BaseService._baseUrl+'/sessions', requestOptions)
+            .then(BaseService.handleError);
+    }
+
+    static async cancelSession(id){
+        const requestOptions = {
+            method: 'POST',
+            headers: { 
+                'Content-Type': 'application/json',
+                "Authorization": AccountService.getToken()
+            }
+        };
+        return fetch(BaseService._baseUrl+'/sessions/' + id + '/cancel', requestOptions)
             .then(BaseService.handleError);
     }
 
