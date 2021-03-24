@@ -1,20 +1,17 @@
+import AccountService from "./AccountService";
 import BaseService from "./BaseService"
 
 class SessionService{
-    static getSession= async (id) =>{
-        console.log("SessionService.getSession(id):");
-        console.log("id: " + id);
-        return fetch(BaseService._baseUrl+'/sessions/'+id)
-            .then(response => {
-                if (!response.ok) {
-                    BaseService.handleResponseError(response);
-                }
-                return response.json();
-            })
-            .catch(error => {
-                BaseService.handleError(error);
-            });
-    };
+    static async getSession(id) {
+        return fetch(BaseService._baseUrl + '/sessions/' + id,
+        {
+            headers: {
+                Authorization: AccountService.getToken()
+            }
+        })
+            .then(BaseService.handleError);
+    }
+
     static addSession= async (session) =>{
         console.log("SessionService.addSession(session):");
         const requestOptions = {

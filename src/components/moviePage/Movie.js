@@ -64,7 +64,7 @@ class Movie extends React.Component {
             let genres = []
 
             for (let i = 0; i < genresList?.length; i++){
-                genres.push(<span key={i}><Link to={{pathname: '/movies', query: genresList[i]}}>{genresList[i]}</Link>{(i === genresList.length - 1) ? "" : ", "}</span>)
+                genres.push(<span key={i}><Link to={{pathname: '/movies', genre: genresList[i]}}>{genresList[i]}</Link>{(i === genresList.length - 1) ? "" : ", "}</span>)
             }
 
             return (
@@ -108,10 +108,12 @@ class Movie extends React.Component {
         var m = Math.floor(d % 3600 / 60);
         var s = Math.floor(d % 3600 % 60);
 
-        var hDisplay = h > 0 ? h + ":" : "00";
-        var mDisplay = (m > 0) ? ((m >= 10) ? m : "0" + m) + ":" : "00";
-        var sDisplay = s > 0 ? s : "00";
-        return 'Duration: ' + hDisplay + mDisplay + sDisplay; 
+        // var hDisplay = h > 0 ? h + ":" : "00";
+        // var mDisplay = (m > 0) ? ((m >= 10) ? m : "0" + m) + ":" : "00";
+        // var sDisplay = s > 0 ? s : "00";
+        // return 'Duration: ' + hDisplay + mDisplay + sDisplay; 
+
+        return h +"h " + m + "m"
     }
 }
 

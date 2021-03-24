@@ -4,6 +4,7 @@ import './style.css'
 import ErrorComponent from '../error/ErrorComponent';
 import Loading from '../Loading/Loading';
 import MovieService from '../../services/MovieService';
+import ScrollArea from 'react-scrollbar'
 
 class MovieSessions extends React.Component {
     constructor(props) {
@@ -58,19 +59,21 @@ class MovieSessions extends React.Component {
             return (
                 <div>
                     <h3 className="mrg20px">Upcoming sessions:</h3>
-                    {
-                        sessions.map(el =>{
-                            return <Link to={"/book/" + el.id}
-                                        key={el.id} 
-                                        className="buttonBook big-button d-flex justify-content-between">
-                                        <div className="col-md-4 text-left">{el.hallName}</div>
-                                        <div className="col-md-8 text-right">
-                                            <span>{el.date.substr(0, 5)}</span><br/>
-                                            <span>{el.date.substr(6)}</span>
-                                        </div>
-                                </Link>
-                        })
-                    }
+                    <ScrollArea className="scrollSessions">
+                        {
+                            sessions.map(el =>{
+                                return <Link to={"/book/" + el.id}
+                                            key={el.id} 
+                                            className="buttonBook big-button d-flex justify-content-between">
+                                            <div className="col-md-4 text-left">{el.hallName}</div>
+                                            <div className="col-md-8 text-right">
+                                                <span>{el.date.substr(0, 5)}</span><br/>
+                                                <span>{el.date.substr(6)}</span>
+                                            </div>
+                                    </Link>
+                            })
+                        }
+                    </ScrollArea>
                 </div>
             );
         }

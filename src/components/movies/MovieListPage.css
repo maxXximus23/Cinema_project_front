@@ -84,3 +84,13 @@
 .page_input__item{
     display: none;     
 }
+
+.perPageForm {
+    margin: 20px;
+}
+
+.perPageForm span {
+    padding: 10px;
+    font-weight: 900;
+    font-size: 18px;
+}

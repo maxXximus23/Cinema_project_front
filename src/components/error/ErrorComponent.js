@@ -1,5 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
+import AccountService from '../../services/AccountService';
 import './style.css'
 
 class ErrorComponent extends React.Component {
@@ -12,7 +13,10 @@ class ErrorComponent extends React.Component {
 
     componentDidMount(){
         if(this.state.error?.status == 403)
-            window.location.replace("/login")
+            if (!AccountService.isLogged())
+                window.location.replace("/login")
+            else
+                AccountService.logout()
     }
 
     render() {
