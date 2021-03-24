@@ -24,7 +24,7 @@ class SessionsMain extends React.Component {
             }],
             lastSort: "id",
             page: 1,
-            perPage: 1,
+            perPage: 100,
             pages: 0
         }
 

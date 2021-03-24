@@ -39,7 +39,9 @@ class CreateSession extends React.Component {
     componentDidMount(){
         HallService.getAll()
             .then(result => {
-                this.state.halls = result
+                this.state.halls = result.sort((e1, e2) => {
+                    return e1.rowsAmount*e1.places >= e2.rowsAmount*e2.places ? 1 : -1
+                })
                 MovieService.getTitles()
                     .then(res => {
                         this.setState({
