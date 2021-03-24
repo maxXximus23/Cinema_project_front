@@ -98,8 +98,7 @@ class Ticket extends React.Component {
 
                        return <Link to={"/movies/" + el[1][0].movieId}>
                             <div className="main">                         
-                                <img className="img_ticket__item" src={el[1][0].posterPath} width="225"
-                                 height="275" alt=""/> 
+                                <img className="img_ticket__item" src={el[1][0].posterPath} alt=""/> 
                                 <div className="text">
                                     <h3>{el[1][0].movieTitle}</h3>
                                 
