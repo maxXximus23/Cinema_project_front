@@ -6,6 +6,7 @@ import './Sessions.css'
 import SessionElement from './SessionElement'
 import BackButton from '../../backButton/BackButton'
 import { Link } from 'react-router-dom';
+import moment from 'moment'
 
 class SessionsMain extends React.Component {
     constructor(props){
@@ -128,8 +129,8 @@ class SessionsMain extends React.Component {
                 isLoaded: true,
                 lastSort: "date",
                 sessions: this.state.sessions.sort((e1, e2) => {
-                        return e1.date >= e2.date ? 1 : -1
-                    })
+                    return moment(e1.date) > moment(e2.date) ? 1 : -1
+                })
             })
         } else {
             this.setState({
