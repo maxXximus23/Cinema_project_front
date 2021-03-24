@@ -35,9 +35,7 @@ export default class Header extends Component {
                     <Navbar.Toggle aria-controls="responsive-navbar-nav"/>
                     <Navbar.Collapse id="responsive-navbar-nav">
                         <Nav className="mr-auto">
-                            <div className="custom-nav">
-                            <Nav.Link href="/contacts"> Contacts </Nav.Link>
-                            </div>
+                            <div className="custom-nav"> </div>
                         </Nav>
                         {!AccountService.isLogged() && (
                                 <Form inline >

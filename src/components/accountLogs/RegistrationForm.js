@@ -221,17 +221,8 @@ class RegistrationForm extends React.Component{
                                placeholder="Password" required="" style={{border: this.state.borderColorPassword}} />
                         {(this.state.passwordDirty && this.state.passwordError) && <div className="error__item" style={{color: 'red'}}>{this.state.passwordError}</div>}
                     </div>
-                    <div className="checkbox mb-3">
-                        <label>
-                            <input type="checkbox" value="remember-me" />
-                            Remember me
-                        </label>
-                    </div>
                     <div>
-                        <a className="forgot_pass__item" href="/">Forgot your password?</a>
-                    </div>
-                    <div>
-                        <button id="btn_singup__item" className="w-100 btn btn-lg btn-primary" type="submit">Sign up</button>
+                        <button id="btn_singup__item" className="btn btn-lg btn-primary" type="submit">Sign up</button>
                     </div>
                 </form>
             </div>
