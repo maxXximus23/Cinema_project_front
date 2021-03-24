@@ -3,6 +3,9 @@ import './style.css'
 import ErrorComponent from '../error/ErrorComponent';
 import Loading from '../Loading/Loading'
 import TicketService from '../../services/TicketService';
+import SessionService from '../../services/SessionService';
+import { Link } from 'react-router-dom';
+import moment from 'moment';
 
 class Booking extends React.Component {
     constructor(props) {
@@ -17,7 +20,8 @@ class Booking extends React.Component {
                 tickets: []
             },
             id: props.match.params.sessionId,
-            selectedTickets: []
+            selectedTickets: [],
+            session: {}
         };
         this.onValueChange = this.onValueChange.bind(this);
         this.book = this.book.bind(this);
@@ -37,11 +41,22 @@ class Booking extends React.Component {
     componentDidMount() {
         TicketService.getBySession(this.state.id)
             .then((result) => {
-                    this.setState({
-                        isLoaded: true,
-                        places: result
-                    }
-                );
+                this.setState({
+                    places: result
+                });
+                SessionService.getSession(this.state.id)
+                    .then(res => {
+                        this.setState({
+                            isLoaded: true,
+                            session: res
+                        });
+                    })
+                    .catch(err => {
+                        this.setState({
+                            isLoaded: true,
+                            error: err
+                        })
+                    })
             })
             .catch(err => {
                 this.setState({
@@ -53,13 +68,10 @@ class Booking extends React.Component {
     }
   
     render() {
-        const { error, isLoaded, places } = this.state;
-        
-        if (!isLoaded) {
-            return <Loading/>;
-        } else {
-            const seats = [,]
-        
+        const { error, isLoaded, places, session } = this.state;
+        const seats = [,]
+
+        if (places)
             for (let i = places.rowsAmount - 1; i >= 0; i--){
                 let item = {key: Number, values: []}
                 item.key = i
@@ -79,9 +91,32 @@ class Booking extends React.Component {
                 }
                 seats.push(item)
             }
-                    
+
+        if (!isLoaded) {
+            return <Loading/>;
+        } else if (error && error.status != 400) {
+            return <ErrorComponent error={error} />
+        } else {    
+            let date = moment(session.date).format('HH:mm DD-MM-YYYY')           
             return (
                 <div className="container hallDemo">
+                    <div>
+                        <Link to={'/movies/' + session.movieId}>
+                            <h1>{session.movieTitle}</h1>
+                        </Link>
+                        <p>{date.slice(0,6)}</p>
+                        <p>{date.slice(6)}</p>
+                    </div>
+                    <div className="demo row">
+                        <div className="col-md-6">
+                            <img src="https://img.icons8.com/windows/50/000000/armchair.png" className="seat booked"/>
+                            <span> - booked</span>
+                        </div>
+                        <div className="col-md-6">
+                            <img src="https://img.icons8.com/windows/50/000000/armchair.png" className="seat pick"/>
+                            <span> - your pick</span>
+                        </div>
+                    </div>
                     <form onSubmit={this.book}>
                        <div className="row justify-content-center">
 

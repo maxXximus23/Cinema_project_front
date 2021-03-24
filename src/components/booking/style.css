@@ -12,11 +12,13 @@
     visibility:hidden;
 }
 
-.booking_checkbox__item:checked ~ img {
+.booking_checkbox__item:checked ~ img,
+.demo .pick {
     background-color: #499C9C;
 }
 
-.booking_checkbox__item:disabled ~ img {
+.booking_checkbox__item:disabled ~ img, 
+.demo .booked {
     background-color: grey;
 }
 
@@ -44,7 +46,7 @@ a h6 {
 
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,300;1,400&display=swap');
 .hallDemo {
-    margin-top: 68px;
+    margin-top: 45px;
     font-family: 'Montserrat', sans-serif; 
 }
 
@@ -85,7 +87,7 @@ a h6 {
     font-weight: 800;
 }
 
-.bookPlaces {
-
+.demo {
+    margin-bottom: 25px;
 }
 
