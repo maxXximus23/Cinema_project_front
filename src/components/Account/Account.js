@@ -14,11 +14,9 @@ class UserPage extends Component{
             isLoaded: false,
             error: null,
             tickets: [],
-            user: {}
+            user: {},
+            sort: 0
         }
-
-
-        
     }
 
 
@@ -37,21 +35,12 @@ class UserPage extends Component{
     AccountService.geUser()
         .then(res => {
             this.setState({
-                isLoaded: true,
                 user: res
             })
-        })
-        .catch(err => {
-            this.setState({
-                isLoaded: true,
-                error: err
-            })
-        })
-    
-    TicketService.getUsersTickets()
+            TicketService.getUsersTickets()
                 .then(res=>{
-                    console.log(res)
                     this.setState({
+                        isLoaded: true,
                         tickets: res
                     })
                 })
@@ -61,13 +50,21 @@ class UserPage extends Component{
                     })
                 
             })
-}
+        })
+        .catch(err => {
+            this.setState({
+                isLoaded: true,
+                error: err
+            })
+        })
+    
+    
+    }
     
     render() {
         const {isLoaded, error, user} = this.state
         const bookedTickets = this.state.tickets.filter(e =>(moment(e.date) > moment()))
-        console.log(bookedTickets)
-        const historyTickets = this.state.tickets.filter(e => moment(e.date) < moment()).sort()
+        const historyTickets = this.state.tickets.filter(e => moment(e.date) < moment())
         
         const groupBy = (arr, fn) =>
             arr
@@ -76,9 +73,6 @@ class UserPage extends Component{
                 acc[val] = (acc[val] || []).concat(arr[i]); 
                 return acc
         }, {});
-        
-        
-
         
         return(
             <div className="wrapper">
