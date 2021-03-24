@@ -59,7 +59,7 @@ class SessionsMain extends React.Component {
         this.setState({
             isLoaded: false
         })
-        if (event.target.checked && this.state.lastSort != "id")
+        if (this.state.lastSort != "id")
         {
             this.setState({
                 isLoaded: true,
@@ -71,10 +71,7 @@ class SessionsMain extends React.Component {
         } else {
             this.setState({
                 isLoaded: true,
-                lastSort: "",
-                sessions: this.state.sessions.sort((e1, e2) => {
-                        return e1.id > e2.id ? -1 : 1
-                    })
+                sessions: this.state.sessions.reverse()
             })
         }
     }
@@ -83,7 +80,7 @@ class SessionsMain extends React.Component {
         this.setState({
             isLoaded: false
         })
-        if (event.target.checked && this.state.lastSort != "title")
+        if (this.state.lastSort != "title")
         {
             this.setState({
                 isLoaded: true,
@@ -95,10 +92,7 @@ class SessionsMain extends React.Component {
         } else {
             this.setState({
                 isLoaded: true,
-                lastSort: "",
-                sessions: this.state.sessions.sort((e1, e2) => {
-                        return e1.movieTitle > e2.movieTitle ? -1 : 1
-                    })
+                sessions: this.state.sessions.reverse()
             })
         }
     }
@@ -107,7 +101,7 @@ class SessionsMain extends React.Component {
         this.setState({
             isLoaded: false
         })
-        if (event.target.checked && this.state.lastSort != "hall")
+        if (this.state.lastSort != "hall")
         {
             this.setState({
                 isLoaded: true,
@@ -119,10 +113,7 @@ class SessionsMain extends React.Component {
         } else {
             this.setState({
                 isLoaded: true,
-                lastSort: "",
-                sessions: this.state.sessions.sort((e1, e2) => {
-                        return e1.hallId > e2.hallId ? -1 : 1
-                    })
+                sessions: this.state.sessions.reverse()
             })
         }
     }
@@ -143,10 +134,7 @@ class SessionsMain extends React.Component {
         } else {
             this.setState({
                 isLoaded: true,
-                lastSort: "",
-                sessions: this.state.sessions.sort((e1, e2) => {
-                        return e1.date > e2.date ? -1 : 1
-                    })
+                sessions: this.state.sessions.reverse()
             })
         }
     }
