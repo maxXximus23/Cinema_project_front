@@ -72,3 +72,30 @@
     color: white;
     background: red;
 }
+
+.session__pageButtons [type="radio"] {
+    display: none;
+}
+
+.session__pageButtons .page-label {
+    padding: 10px;
+    border: solid 2px #499C9C;
+    border-radius: 10px;
+    width: 50px;
+    transition: .2s;
+}
+
+.session__pageButtons .page-label:hover {
+    transition: .2s;
+    color: white;
+    background: #499C9C;
+}
+
+.session__pageButtons {
+    margin-top: 20px;
+}
+
+.session__pageButtons input:checked ~ .page-label{
+    color: white;
+    background: #499C9C;
+}

@@ -22,13 +22,20 @@ class SessionsMain extends React.Component {
                 hallName: String,
                 date: Date
             }],
-            lastSort: "id"
+            lastSort: "id",
+            page: 1,
+            perPage: 1,
+            pages: 0
         }
 
         this.sortById = this.sortById.bind(this)
         this.sortByTitle = this.sortByTitle.bind(this)
         this.sortByHall = this.sortByHall.bind(this)
         this.sortByDate = this.sortByDate.bind(this)
+        
+        this.changePage = this.changePage.bind(this)
+        this.changePerPage = this.changePerPage.bind(this)
+        this.applyChange = this.applyChange.bind(this)
     }
 
     componentDidMount(){
@@ -36,7 +43,8 @@ class SessionsMain extends React.Component {
             .then(result => {
                 this.setState({
                     isLoaded: true,
-                    sessions: result
+                    sessions: result,
+                    pages: Math.ceil(result.length/this.state.perPage)
                 })
             })
             .catch(err => {
@@ -143,17 +151,51 @@ class SessionsMain extends React.Component {
         }
     }
 
+    changePage(event){
+        this.setState({
+            page: event.target.value
+        })
+    }
+
+    changePerPage(event){
+        this.state.perPage = event.target.value
+    }
+
+    applyChange(event){
+        this.setState({
+            page: 1,
+            pages: Math.ceil(this.state.sessions.length/this.state.perPage)
+        })
+    }
+
     render(){
-        const {error, isLoaded, sessions} = this.state
+        const {error, isLoaded } = this.state
         if (!isLoaded){
             return <Loading />
         } else if (error){
             return <ErrorComponent error={error} />
         } else {
+            let sessions = this.state.sessions.slice((this.state.page - 1)*this.state.perPage, this.state.page*this.state.perPage)
+
+            let pageButtons = []
+            for (let i = 1; i <= this.state.pages; i++){
+                pageButtons.push(
+                    <label key={i}>
+                        <input type="radio" defaultChecked={i==this.state.page} name="pages" onChange={this.changePage} value={i}/>
+                        <div className="page-label">{i}</div>
+                    </label>
+                )
+            }
+            
             return (<div className="container">
                         <div className="d-flex justify-content-between sessions__label">
                             <BackButton backPath={() => this.props.history.goBack()} />
                             <h3>Sessions Managing</h3>
+                            <label>
+                                <span>Items per page: </span>
+                                <input type="number" min="1" max="100" defaultValue={this.state.perPage} onChange={this.changePerPage}/>
+                                <button onClick={this.applyChange}>Apply</button>
+                            </label>
                             <Link to={'/admin/sessions/create'}>Create session</Link>
                         </div>
                         <div className="sessions__container">
@@ -189,6 +231,9 @@ class SessionsMain extends React.Component {
                                     return  <SessionElement session={el}  key={el.id}/>
                                 })
                             }
+                        </div>
+                        <div className="session__pageButtons">
+                            {pageButtons}
                         </div>
                     </div>)
         }

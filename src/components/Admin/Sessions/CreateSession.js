@@ -1,8 +1,6 @@
 import React from 'react'
-import { Link } from 'react-router-dom';
 import SessionService from '../../../services/SessionService';
 import BackButton from '../../backButton/BackButton';
-import ErrorComponent from '../../error/ErrorComponent';
 import Loading from '../../Loading/Loading';
 import MovieService from '../../../services/MovieService'
 import HallService from '../../../services/HallService'

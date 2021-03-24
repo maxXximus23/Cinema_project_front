@@ -128,7 +128,6 @@ class MoviesListPage extends React.Component {
         for (let i = 1; i <= this.state.pageAmount; i++){
             pagebuttons.push(
                 <label className="page_button__item">
-                    
                     <input type="radio" name="page" className="page_input__item" key={i} onClick={this.updatePage} checked={i==this.state.page} value={i}/>
                     <div className="page_label">{i}</div>
                 </label>
