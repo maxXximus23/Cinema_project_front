@@ -105,7 +105,7 @@ class EditSession extends React.Component {
                                     {halls.map(el => {
                                         return <option key={el.id} value={el.id}>{el.name} (Places: {el.rowsAmount}x{el.places})</option>
                                     })}
-                                </select><br />
+                                </select>
                             </label><br/>
                             <label>
                                 <span>Movie: </span> 
@@ -113,9 +113,12 @@ class EditSession extends React.Component {
                                     {titles.map(el => {
                                         return <option key={el.id} value={el.id}>{el.title}</option>
                                     })}
-                                </select><br />
+                                </select>
                             </label><br/>
-                            <input type="datetime-local" defaultValue={session.date}  onChange={this.changeDate}/><br />
+                            <label>
+                                <span>Date: </span> 
+                                <input type="datetime-local" defaultValue={session.date}  onChange={this.changeDate}/>  
+                            </label><br/>
                             <input type="submit" value="Apply" />
                         </form>
                     </div>)

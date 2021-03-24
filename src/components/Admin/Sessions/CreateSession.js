@@ -122,7 +122,10 @@ class CreateSession extends React.Component {
                                     })}
                                 </select>
                             </label><br/>
-                            <input type="datetime-local" defaultValue={Date.now()}  onChange={this.changeDate}/>
+                            <label>
+                                <span>Date: </span> 
+                                <input type="datetime-local" defaultValue={Date.now()}  onChange={this.changeDate}/>
+                            </label><br/>
                             <input type="submit" value="Apply" />
                         </form>
                     </div>)
