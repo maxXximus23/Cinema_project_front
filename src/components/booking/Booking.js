@@ -99,7 +99,7 @@ class Booking extends React.Component {
         } else {    
             let date = moment(session.date).format('HH:mm DD-MM-YYYY')           
             return (
-                <div className="container hallDemo">
+                <div className="hallDemo">
                     <div>
                         <Link to={'/movies/' + session.movieId}>
                             <h1>{session.movieTitle}</h1>
