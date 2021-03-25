@@ -54,21 +54,18 @@ import SessionService from '../../services/SessionService';
         } else if (!isLoaded) {
             return <Loading/>;
         } else {
-            return(
-                <div>
-                    
+            return <div>
                     <div>
-                        <MovieSlider movies ={sessions.slice(0,4)}/>
+                        <MovieSlider movies ={sessions.slice(0,5)}/>
                     </div>
 
                     <div className="col-md-12 d-flex flex-row-reverse allMovies">
                         <Link to={"/movies"} className="text-right allMovies-text">See full list of movies &#8641;</Link>
                     </div>
                     <div className="movie_list__item">
-                        <MovieList movies={sessions.slice()}/>
+                        <MovieList movies={sessions.slice(5)}/>
                     </div>
                 </div>
-            )
         }
     }
 }
