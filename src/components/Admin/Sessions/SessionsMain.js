@@ -156,12 +156,12 @@ class SessionsMain extends React.Component {
     applyChange(event){
         this.setState({
             page: 1,
-            pages: Math.ceil(this.state.sessions.length/this.state.perPage)
         })
     }
 
     dontShowOutdated(event){
         this.setState({
+            page: 1,
             showOutdated: !this.state.showOutdated
         })
 
@@ -181,7 +181,8 @@ class SessionsMain extends React.Component {
                 ses = this.state.sessions
 
             let sessions = ses.slice((this.state.page - 1)*this.state.perPage, this.state.page*this.state.perPage)
-
+            
+            this.state.pages = Math.ceil(ses.length/this.state.perPage)
             let pageButtons = []
             for (let i = 1; i <= this.state.pages; i++){
                 pageButtons.push(
@@ -229,10 +230,10 @@ class SessionsMain extends React.Component {
                                     <span>Date</span>
                                 </label>
                                 <div className="session__edit col-md-1">
-                                    <span>Cancel</span>
+                                    <span>Edit</span>
                                 </div>
                                 <div className="session__edit col-md-1">
-                                    <span>Edit</span>
+                                    <span>Cancel</span>
                                 </div>
                                 <div className="session__delete col-md-1">
                                     <span>Delete</span>

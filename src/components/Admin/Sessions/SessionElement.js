@@ -85,24 +85,24 @@ class SessionElement extends React.Component {
                     <div className={moment(session.date) < moment() ? "session__date col-md-2 session__outdated" : "session__date col-md-2"}>
                         {moment(session.date).format("HH:mm DD-MM-YYYY")}
                     </div>
-                    <div className="col-md-1 session__cancel">
-                    <div onClick={this.markToCancel}>
-                        {!reqiureSureCancel &&
-                            <button 
-                                className="session__cancel__btn">
-                                X
-                            </button>
-                        }
-                        {reqiureSureCancel && 
-                            <button className="session__cancel__sure" onClick={this.cancelSession}>{session.isCanceled ? 'Activate' : 'Cancel'}</button>
-                        }
-                    </div>
-                    </div>
                     <div className="col-md-1 session__edit">
                         <Link to={"/admin/sessions/" + session.id}
                             className="session__edit__btn">
                             <i className="fa fa-pencil-square-o"></i>
                         </Link>
+                    </div>
+                    <div className="col-md-1 session__cancel">
+                        <div onClick={this.markToCancel}>
+                            {!reqiureSureCancel &&
+                                <button 
+                                    className="session__cancel__btn">
+                                    X
+                                </button>
+                            }
+                            {reqiureSureCancel && 
+                                <button className="session__cancel__sure" onClick={this.cancelSession}>{session.isCanceled ? 'Activate' : 'Cancel'}</button>
+                            }
+                        </div>
                     </div>
                     <div className="col-md-1 session__remove">
                         {!reqiureSure &&
