@@ -40,6 +40,19 @@ class TicketService extends BaseService{
             .then(BaseService.handleError);
     }
 
+    static async cancelBooking(id) {
+        const requestOptions = {
+            method: 'DELETE',
+            headers: { 
+                'Content-Type': 'application/json',
+                Authorization: AccountService.getToken()
+            }
+        };
+        
+        return fetch(BaseService._baseUrl+'/tickets/' + id, requestOptions)
+            .then(BaseService.handleError);
+    }
+
     static purchaseTicket= async (purchaseTicket) =>{
         console.log("TicketService.purchaseTicket(purchase):");
         const requestOptions = {
@@ -58,24 +71,5 @@ class TicketService extends BaseService{
                 BaseService.handleError(error);
             });
     };
-    static cancelBooking= async (id) =>{
-        console.log("TicketService.cancelBooking(id):");
-        console.log("id: " + id);
-        const requestOptions = {
-            method: 'DELETE',
-            headers: { 'Content-Type': 'application/json' }
-        };
-        return fetch(BaseService._baseUrl+'/tickets/' + id, requestOptions)
-            .then(response => {
-                if (!response.ok) {
-                    BaseService.handleResponseError(response);
-                }
-                return response.json();
-            })
-            .catch(error => {
-                BaseService.handleError(error);
-            });
-    };
-
 }
 export default TicketService;

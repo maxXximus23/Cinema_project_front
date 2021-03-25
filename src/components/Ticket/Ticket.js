@@ -3,6 +3,8 @@ import './Ticket.css'
 import moment from 'moment';
 import { Link } from 'react-router-dom';
 import Loading from "../Loading/Loading";
+import TicketService from "../../services/TicketService";
+import ErrorComponent from "../error/ErrorComponent";
 
 class Ticket extends React.Component {
     constructor(props) {
@@ -10,11 +12,15 @@ class Ticket extends React.Component {
         this.state = {
             isLoaded: false,
             tickets: [],
-            reversed: false
+            reversed: false,
+            deleteMode: false
         };
 
         this.changeSort = this.changeSort.bind(this)
         this.reverse = this.reverse.bind(this)
+
+        this.deleteMode = this.deleteMode.bind(this)
+        this.removeTicket = this.removeTicket.bind(this)
     }
 
     componentWillReceiveProps(nextProps){
@@ -71,12 +77,47 @@ class Ticket extends React.Component {
             reversed: !this.state.reversed
         })
     }
+
+    deleteMode(event){
+        this.setState({
+            deleteMode: !this.state.deleteMode
+        })
+    }
+
+    removeTicket(event){
+        TicketService.cancelBooking(event.target.value)
+            .then(() => {
+                let shouldFilter = false
+                
+                this.state.tickets.map(el => {
+                    el[1] = el[1].filter(e => e.id != event.target.value)
+                    if (el[1].length==0)
+                        shouldFilter = true
+                })
+                if (shouldFilter)
+                    this.state.tickets = this.state.tickets.filter(el => 
+                        el[1].length > 0
+                    )
+                
+                this.setState({})
+            })
+            .catch(err => {
+                this.setState({
+                    error: err
+                })
+            })
+    }
     
     render() {
-        const tickets = this.state.tickets
+        const { tickets, deleteMode, error } = this.state
+        console.log(tickets)
         if(!this.state.isLoaded)
             return <Loading />
+        else if (error)
+            return <ErrorComponent error={error} />
         else
+            if (tickets==null || tickets.length==0 || tickets[0].length==0)
+                return <h2>No tickets</h2>
 
         return (
            <div className="tickets_wrap__item col-md-12">
@@ -93,30 +134,49 @@ class Ticket extends React.Component {
                         <span></span>
                     </label>
                 </div>
+                <label>
+                        <input type="checkbox" onChange={this.deleteMode}/>
+                        <span></span>
+                </label>
                {
                    tickets.map(el => {
 
-                       return <Link to={"/movies/" + el[1][0].movieId}>
-                            <div className="main">                         
-                                <img className="img_ticket__item" src={el[1][0].posterPath} alt=""/> 
-                                <div className="text">
-                                    <h3>{el[1][0].movieTitle}</h3>
+                       return <div>  
+                                <div className="main">    
+                                                   
+                                    <img className="img_ticket__item" src={el[1][0].posterPath} alt=""/> 
+                                    <div className="text">
+                                        <Link to={'/movies/' + el[1][0].movieId}>
+                                            <h3>{el[1][0].movieTitle}</h3>
+                                        </Link>
+                                        <p>Date: {moment(el[1][0].date).format('HH:mm DD.MM.YY')}</p>
+                                        <p>Hall name: {el[1][0].hallName}</p>
+                                        <p>Amount: {el[1].length}</p>
+                                    </div>  
                                 
-                                    <p>Date: {moment(el[1][0].date).format('HH:mm DD.MM.YY')}</p>
-                                    <p>Hall name: {el[1][0].hallName}</p>
-                                    <p>Amount: {el[1].length}</p>
-                                </div>  
-                                <div className="place__item">Place: <br/><ul className="places_wrap__item"> 
+                                <div className="place__item">Places: <br/><ul className="places_wrap__item"> 
                                     {
                                         el[1].map(tick => {
-                                            return <li><div className="place__text">
-                                                [ {tick.row} row / {tick.place} place ]
-                                                </div></li>
+                                            return <li key={tick.id}>
+                                                        {!deleteMode && 
+                                                            <div className="place__text">
+                                                                [ {tick.row} row / {tick.place} place ]
+                                                            </div>
+                                                        }  
+                                                        {deleteMode && 
+                                                            <button 
+                                                                className="remove__ticket__btn" 
+                                                                onClick={this.removeTicket}
+                                                                value={tick.id}>
+                                                                Cancel<br/>[ {tick.row} row / {tick.place} place ]
+                                                            </button>
+                                                        }
+                                                    </li>
                                         })
                                     }</ul>
                                     </div>
                                 </div>
-                        </Link>
+                            </div>
                    })
                }
            </div>
