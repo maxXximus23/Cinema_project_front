@@ -1,6 +1,6 @@
 import './App.css';
 import React from "react";
-import {Route, BrowserRouter, Switch} from 'react-router-dom';
+import {Route, Switch} from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
@@ -15,9 +15,9 @@ import Home from './components/Home/Home'
 import Error from './components/error/ErrorComponent'
 import MoviesListPage from './components/movies/MoviesListPage';
 
-import AllMovies from "./components/admin/movie/AllMovies";
-import CreateMovie from "./components/admin/movie/CreateMovie";
-import UpdateMovie from "./components/admin/movie/UpdateMovie";
+import AllMovies from "./components/admin/manageMovies/AllMovies";
+import CreateMovie from "./components/admin/manageMovies/CreateMovie";
+import UpdateMovie from "./components/admin/manageMovies/UpdateMovie";
 
 import './style.scss'
 
@@ -35,7 +35,7 @@ function App() {
             <Route path="/book/:sessionId" component={Booking} />
             <Route path="/account" component={Account} />
 
-            <Route path="/movie" component={AllMovies} />
+            <Route path="/all-movies" component={AllMovies} />
             <Route path="/create-movie/" component={CreateMovie} />
             <Route path="/update-movie/:movieId" component={UpdateMovie} />
 

@@ -55,7 +55,9 @@ class UpdateMovie extends React.Component {
             borderColorGreen: "2px solid green",
             requiredError: 'This field is required',
             updateMovieFailed:false,
-            time: String
+            time: String,
+            posterPathChecked:Boolean,
+            trailerPathChecked:Boolean
         }
 
 
@@ -77,9 +79,16 @@ class UpdateMovie extends React.Component {
     componentDidMount = async()=> {
         await MovieService.getById(this.state.id)
             .then((result) => {
-                this.setState({movie: result});
-                this.setState({newMovie:{posterPath : result.posterPath, trailerPath:result.trailerPath}});
-                this.setState({time:this.parseDuration(result.duration)})
+                this.setState({movie: result, time:this.parseDuration(result.duration)});
+                if(result.posterPath!=="no-poster.png" && result.trailerPath!=="")
+                    this.setState({posterPathChecked:true, trailerPathChecked:true, newMovie:{posterPath : result.posterPath, trailerPath:result.trailerPath}});
+                else if(result.posterPath==="no-poster.png" && result.trailerPath==="")
+                    this.setState({posterPathChecked:false, trailerPathChecked:false});
+                else if(result.posterPath==="no-poster.png")
+                    this.setState({posterPathChecked:false,trailerPathChecked:true, newMovie:{trailerPath:result.trailerPath}});
+                else if(result.trailerPath==="")
+                    this.setState({trailerPathChecked:false, posterPathChecked:true, newMovie:{posterPath : result.posterPath}});
+
             });
     }
     closeButton = () =>{
@@ -107,10 +116,10 @@ class UpdateMovie extends React.Component {
                     await MovieService.updateMovie(this.state.id, this.state.newMovie)
                         .then((response) => {
                             console.log(response)
-                            if(response.ok){
-                                window.location.replace("/movie");
-                            }
-                            this.setState({updateMovieFailed:true});
+                            if(response.ok)
+                                window.location.replace("/all-movies");
+                            else
+                                this.setState({updateMovieFailed:true});
                         })
                         .catch((error)=>{
                             console.log(error);
@@ -120,8 +129,6 @@ class UpdateMovie extends React.Component {
     }
 
     changeHandler = (e) =>{
-        console.log(e.target.value)
-        console.log(this.state.movie.actors)
         switch (e.target.name){
             case 'actors':
                 this.state.newMovie.actors=e.target.value;
@@ -193,25 +200,24 @@ class UpdateMovie extends React.Component {
                 break
             case 'trailerPath':
                 this.state.newMovie.trailerPath=e.target.value;
-                const trailerPathTitle = 'https://i.ytimg.com/vi/'+e.target.value+'/hqdefault.jpg';
                 if(e.target.value==="")
                     this.setState({trailerPathError: 'This field is required', trailerPathBorderColor: this.state.borderColorRed})
                 else if(e.target.value===this.state.movie.trailerPath)
                     this.setState({trailerPathError: '', trailerPathBorderColor: ""})
                 else {
-                    fetch(trailerPathTitle)
+                    fetch('http://www.youtube.com/oembed?url=http://www.youtube.com/watch?v='+e.target.value+'&format=json')
                         .then((response) => {
                             if (response.ok)
                                 this.setState({
                                     trailerPathError: '',
-                                    posterPathBorderColor: this.state.trailerPathBorderColor
-                                })
+                                    trailerPathBorderColor: this.state.borderColorGreen
+                                });
                             else
                                 this.setState({
                                     trailerPathError: 'This trailer path not find',
                                     trailerPathBorderColor: this.state.borderColorRed
                                 })
-                        })
+                            })
                         .catch(() => {
                             this.setState({
                                 trailerPathError: 'This trailer path not find',
@@ -229,12 +235,47 @@ class UpdateMovie extends React.Component {
                 else
                     this.setState({titleError: '', titleBorderColor: this.state.borderColorGreen})
                 break
+            case 'posterPathChecked':
+                if(e.target.checked) {
+                    if(this.state.movie.posterPath==="no-poster.png")
+                        this.state.newMovie.posterPath="";
+                    else
+                        this.state.newMovie.posterPath=this.state.movie.posterPath;
+                    this.setState({posterPathChecked: true,
+                        posterPathError: '',
+                        posterPathBorderColor: ''});
+                }
+                else {
+                    this.setState({posterPathChecked: false,
+                        posterPathError: '',
+                        posterPathBorderColor: this.state.borderColorGreen});
+                    this.state.newMovie.posterPath="no-poster.png";
+                }
+                break
+            case 'trailerPathChecked':
+                if(e.target.checked) {
+                    if(this.state.movie.trailerPath==="")
+                        this.state.newMovie.trailerPath="";
+                    else
+                        this.state.newMovie.trailerPath=this.state.movie.trailerPath;
+                    this.setState({trailerPathChecked: true,
+                        trailerPathError: '',
+                        trailerPathBorderColor: ''});
+                }
+                else {
+                    this.setState({trailerPathChecked: false,
+                        trailerPathError: '',
+                        trailerPathBorderColor: this.state.borderColorGreen});
+                    this.state.newMovie.trailerPath="";
+                }
+                console.log(this.state.newMovie.posterPath)
+                break
         }
     };
 
     render() {
         return(
-            <div>
+            <div className="login_block">
                 <BackButton backPath={() => this.props.history.goBack()} />
                 <div>
                     {(this.state.updateMovieFailed) && <a style={{color: 'red'}}>An unknown error occurred
@@ -286,21 +327,27 @@ class UpdateMovie extends React.Component {
                     </div>
                     <div>
                         Poster path:
-                        <input defaultValue={this.state.movie.posterPath} onChange={e => this.changeHandler(e)}
-                               type="text" name="posterPath" className="form-control"
-                               style={{border: this.state.posterPathBorderColor}} />
-                        <div style={{color: 'red'}}>{this.state.posterPathError}</div>
-                        <div className="movie_poster col-md-12">
-                            <img className="img_poster" alt="" src={this.state.newMovie.posterPath} />
-                        </div>
+                        <input type="checkbox" onChange={e => this.changeHandler(e)} defaultChecked={this.state.posterPathChecked} name="posterPathChecked" />
+                        {(this.state.posterPathChecked) && <div >
+                            <input defaultValue={this.state.newMovie.posterPath} onChange={e => this.changeHandler(e)}
+                                   type="text" name="posterPath" className="form-control"
+                                   style={{border: this.state.posterPathBorderColor}} />
+                            <div style={{color: 'red'}}>{this.state.posterPathError}</div>
+                            <div className="movie_poster col-md-12">
+                                <img className="img_poster" alt="" src={this.state.newMovie.posterPath} />
+                            </div>
+                        </div>}
                     </div>
                     <div>
                         Trailer path id:
-                        <input defaultValue={this.state.movie.trailerPath} onChange={e => this.changeHandler(e)}
-                               type="text" name="trailerPath" className="form-control"
-                               style={{border: this.state.trailerPathBorderColor}} />
-                        <div style={{color: 'red'}}>{this.state.trailerPathError}</div>
-                        <YouTube videoId={this.state.newMovie.trailerPath} />
+                        <input type="checkbox" onChange={e => this.changeHandler(e)} defaultChecked={this.state.trailerPathChecked} name="trailerPathChecked" />
+                        {(this.state.trailerPathChecked) && <div >
+                            <input defaultValue={this.state.movie.trailerPath} onChange={e => this.changeHandler(e)}
+                                   type="text" name="trailerPath" className="form-control"
+                                   style={{border: this.state.trailerPathBorderColor}} />
+                            <div style={{color: 'red'}}>{this.state.trailerPathError}</div>
+                            <YouTube videoId={this.state.newMovie.trailerPath} />
+                        </div>}
                     </div>
                     <div>
                         <button id="btn_singin__item" className="w-100 btn btn-lg btn-primary" type="submit">Update</button>

@@ -42,14 +42,16 @@ class CreateMovie extends React.Component {
             borderColorGreen: "2px solid green",
             requiredError: 'This field is required',
             test:false,
-            createMovieFailed: false
+            createMovieFailed: false,
+            posterPathChecked:true,
+            trailerPathChecked:true
         }
     }
 
     createMovie = async(event)=>{
         event.preventDefault();
         let test = true;
-        if(this.state.trailerPathBorderColor!==this.state.borderColorGreen) {
+        if(this.state.trailerPathBorderColor!==this.state.borderColorGreen && this.state.trailerPathChecked) {
             this.setState({trailerPathError: 'This field is required', trailerPathBorderColor: this.state.borderColorRed});
             test=false;
         }
@@ -57,7 +59,7 @@ class CreateMovie extends React.Component {
             this.setState({titleError: 'This field is required', titleBorderColor: this.state.borderColorRed});
             test=false;
         }
-        if(this.state.posterPathBorderColor!==this.state.borderColorGreen) {
+        if(this.state.posterPathBorderColor!==this.state.borderColorGreen && this.state.posterPathChecked) {
             this.setState({posterPathError: 'This field is required', posterPathBorderColor: this.state.borderColorRed});
             test=false;
         }
@@ -87,7 +89,7 @@ class CreateMovie extends React.Component {
                 .then((response) => {
                     console.log(response)
                     if(response.ok){
-                        window.location.replace("/movie");
+                        window.location.replace("/all-movies");
                     }
                     this.setState({createMovieFailed:true});
                 })
@@ -143,9 +145,9 @@ class CreateMovie extends React.Component {
                 else if(!this.isValidUrl(e.target.value))
                     this.setState({posterPathError: 'This is not a path', posterPathBorderColor: this.state.borderColorRed})
                 else {
-                    fetch (e.target.value)
+                    fetch (e.target.value, {mode:'no-cors'})
                         .then((response)=>{
-                            if(response.ok)
+                            if(response.status!=404)
                                 this.setState({posterPathError: '', posterPathBorderColor: this.state.borderColorGreen})
                             else
                                 this.setState({posterPathError: 'This poster path not find', posterPathBorderColor: this.state.borderColorRed})
@@ -157,21 +159,28 @@ class CreateMovie extends React.Component {
                 break
             case 'trailerPath':
                 this.state.movie.trailerPath=e.target.value;
-                this.state.trailerPathTitle = 'https://i.ytimg.com/vi/'+e.target.value+'/hqdefault.jpg';
                 if(e.target.value==="")
                     this.setState({trailerPathError: 'This field is required', trailerPathBorderColor: this.state.borderColorRed})
                 else {
-                    fetch (this.state.trailerPathTitle)
-                        .then((response)=>{
-                            if(response.ok)
-                                this.setState({trailerPathError: '', trailerPathBorderColor: this.state.trailerPathBorderColor})
+                    fetch('http://www.youtube.com/oembed?url=http://www.youtube.com/watch?v='+e.target.value+'&format=json')
+                        .then((response) => {
+                            if (response.ok)
+                                this.setState({
+                                    trailerPathError: '',
+                                    trailerPathBorderColor: this.state.borderColorGreen
+                                });
                             else
-                                this.setState({trailerPathError: 'This trailer path not find', trailerPathBorderColor: this.state.borderColorRed})
+                                this.setState({
+                                    trailerPathError: 'This trailer path not find',
+                                    trailerPathBorderColor: this.state.borderColorRed
+                                })
                         })
-                        .catch(()=>{
-                            this.setState({trailerPathError: 'This trailer path not find', trailerPathBorderColor: this.state.borderColorRed})
+                        .catch(() => {
+                            this.setState({
+                                trailerPathError: 'This trailer path not find',
+                                trailerPathBorderColor: this.state.borderColorRed
+                            })
                         });
-                    this.setState({trailerPathError: '', trailerPathBorderColor: this.state.borderColorGreen})
                 }break
             case 'title':
                 this.state.movie.title=e.target.value;
@@ -180,7 +189,30 @@ class CreateMovie extends React.Component {
                 else
                     this.setState({titleError: '', titleBorderColor: this.state.borderColorGreen})
                 break
+            case 'posterPathChecked':
+                if(e.target.checked) {
+                    this.setState({posterPathChecked: true});
+                    this.state.newMovie.posterPath="";
+                }
+                else {
+                    this.setState({posterPathChecked: false});
+                    this.state.movie.posterPath="no-poster.png";
+                }
+                break
+            case 'trailerPathChecked':
+                if(e.target.checked) {
+                    this.setState({trailerPathChecked: true});
+                    this.state.movie.trailerPath="";
+                }
+                else {
+                    this.setState({trailerPathChecked: false});
+                    this.state.movie.trailerPath="";
+                }
+                break
         }
+    };
+    readResponseAsBlob=(response) =>{
+        return response.blob();
     };
     closeButton = () =>{
         this.setState({createMovieFailed: false});
@@ -248,21 +280,29 @@ class CreateMovie extends React.Component {
                     </div>
                     <div>
                         Poster path:
-                        <input value={this.posterPath} onChange={e => this.changeHandler(e)} onBlur={e => this.changeHandler(e)}
-                               type="text" name="posterPath" className="form-control"
-                               style={{border: this.state.posterPathBorderColor}} />
-                        <div style={{color: 'red'}}>{this.state.posterPathError}</div>
-                        <div className="movie_poster col-md-12">
-                            <img className="img_poster" alt="" src={this.state.movie.posterPath}/>
-                        </div>
+                        <input type="checkbox" onChange={e => this.changeHandler(e)} defaultChecked="checked" name="posterPathChecked" />
+                        {(this.state.posterPathChecked) && <div >
+                            <input value={this.posterPath} onChange={e => this.changeHandler(e)} onBlur={e => this.changeHandler(e)}
+                                   type="text" name="posterPath" className="form-control"
+                                   style={{border: this.state.posterPathBorderColor}} />
+                            <div style={{color: 'red'}}>{this.state.posterPathError}</div>
+                            <div className="movie_poster col-md-12">
+                                <img className="img_poster" alt="" src={this.state.movie.posterPath} />
+                            </div>
+                        </div>}
+
+
                     </div>
                     <div>
                         Trailer path id:
-                        <input value={this.trailerPath} onChange={e => this.changeHandler(e)} onBlur={e => this.changeHandler(e)}
-                               type="text" name="trailerPath" className="form-control"
-                               style={{border: this.state.trailerPathBorderColor}} />
-                        <div style={{color: 'red'}}>{this.state.trailerPathError}</div>
-                        <YouTube videoId={this.state.movie.trailerPath}  />
+                        <input type="checkbox" onChange={e => this.changeHandler(e)} defaultChecked="checked" name="trailerPathChecked" />
+                        {(this.state.trailerPathChecked) && <div >
+                            <input value={this.trailerPath} onChange={e => this.changeHandler(e)} onBlur={e => this.changeHandler(e)}
+                                   type="text" name="trailerPath" className="form-control"
+                                   style={{border: this.state.trailerPathBorderColor}} />
+                            <div style={{color: 'red'}}>{this.state.trailerPathError}</div>
+                            <YouTube videoId={this.state.movie.trailerPath}  />
+                        </div>}
                     </div>
                     <div>
                         <button id="btn_singin__item" className="w-100 btn btn-lg btn-primary" type="submit">Create</button>
