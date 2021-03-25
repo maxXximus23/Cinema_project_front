@@ -84,7 +84,7 @@ class AccountService {
         return !(localStorage.getItem("userCredentials") == null)
     } 
 
-    static geUser(){
+    static getUser(){
         return fetch('http://localhost:8081/users/' + AccountService.getId(),
             {
                 headers: {
@@ -102,7 +102,6 @@ class AccountService {
     }
 
     static getId(){
-        console.log(JSON.parse(localStorage.userCredentials)?.id)
         if (AccountService.isLogged())
             return JSON.parse(localStorage.userCredentials)?.id
         else

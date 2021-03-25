@@ -13,7 +13,6 @@ import AccountService from "../../services/AccountService";
 
 export default class Header extends Component {
     render (){
-        console.log(AccountService.isLogged())
         return (
             <>
             <Navbar className="navbar-custom" collapseOnSelect /*fixed="top"*/ expand="md" variant="dark">
