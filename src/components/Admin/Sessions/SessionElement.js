@@ -10,16 +10,26 @@ class SessionElement extends React.Component {
         this.state = {
             error: null,
             session: props.session,
-            reqiureSure: false
+            reqiureSure: false,
+            reqiureSureCancel: false
         }
         
         this.removeSession = this.removeSession.bind(this);
         this.markToDelete = this.markToDelete.bind(this);
+
+        this.cancelSession = this.cancelSession.bind(this);
+        this.markToCancel = this.markToCancel.bind(this);
     }
 
     markToDelete(event){
         this.setState({
             reqiureSure: true
+        })        
+    }
+
+    markToCancel(event){
+        this.setState({
+            reqiureSureCancel: !this.state.reqiureSureCancel
         })        
     }
 
@@ -37,8 +47,23 @@ class SessionElement extends React.Component {
             })
     }
 
+    cancelSession(event){
+        SessionService.cancelSession(this.state.session.id)
+            .then((result) => {
+                this.setState({
+                    session: result
+                })
+                console.log(this.state.session)
+            })
+            .catch(err => {
+                this.setState({
+                    error: err
+                })
+            })
+    }
+
     render() {
-        const { session, error, reqiureSure } = this.state
+        const { session, error, reqiureSure, reqiureSureCancel } = this.state
 
         if (error)
             return <ErrorComponent error={error} />
@@ -46,7 +71,7 @@ class SessionElement extends React.Component {
         if (session==null)
             return <div></div>
 
-        return  <div className="session__item row">
+        return  <div className={session.isCanceled ? "session__item row session__canceled" : "session__item row"}>
                     <label className="session__id col-md-1">{session.id}</label>
                     <div className="session__poster col-md-2">
                         <img alt="" src={session.moviePoster}></img>
@@ -56,14 +81,28 @@ class SessionElement extends React.Component {
                             {session.movieTitle}
                         </Link>
                     </div>
-                    <div className="session__hall col-md-2">{session.hallName}</div>
-                    <div className="session__date col-md-2">{moment(session.date).format("HH:mm DD-MM-YYYY")}</div>
+                    <div className="session__hall col-md-1">{session.hallName}</div>
+                    <div className={moment(session.date) < moment() ? "session__date col-md-2 session__outdated" : "session__date col-md-2"}>
+                        {moment(session.date).format("HH:mm DD-MM-YYYY")}
+                    </div>
                     <div className="col-md-1 session__edit">
                         <Link to={"/admin/sessions/" + session.id}
-                            className="session__edit__btn"
-                            onClick={this.editSession}>
+                            className="session__edit__btn">
                             <i className="fa fa-pencil-square-o"></i>
                         </Link>
+                    </div>
+                    <div className="col-md-1 session__cancel">
+                        <div onClick={this.markToCancel}>
+                            {!reqiureSureCancel &&
+                                <button 
+                                    className="session__cancel__btn">
+                                    X
+                                </button>
+                            }
+                            {reqiureSureCancel && 
+                                <button className="session__cancel__sure" onClick={this.cancelSession}>{session.isCanceled ? 'Activate' : 'Cancel'}</button>
+                            }
+                        </div>
                     </div>
                     <div className="col-md-1 session__remove">
                         {!reqiureSure &&

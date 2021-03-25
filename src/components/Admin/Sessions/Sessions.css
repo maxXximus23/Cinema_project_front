@@ -28,7 +28,7 @@
     align-items: center;
 }
 
-.session__edit__btn, .session__remove__btn {
+.session__edit__btn, .session__remove__btn, .session__cancel__btn {
     font-size: 30px;
     border: 0;
 }
@@ -38,7 +38,7 @@
     transition: .3s;
 }
 
-.session__remove__btn:hover {
+.session__remove__btn:hover, .session__cancel__btn:hover {
     color: red;
     transition: .3s;
 }
@@ -48,17 +48,11 @@
 }
 
 .sessions__header [type="radio"]{
-    visibility: hidden;
+    display: none;
 }
 
 .sessions__header [type="radio"]:checked ~ span{
     color: red;
-}
-
-.sessions__header .session__poster,
-.sessions__header .session__edit,
-.sessions__header .session__delete {
-    margin-top: 27px;
 }
 
 .session__remove__sure {
@@ -98,4 +92,12 @@
 .session__pageButtons input:checked ~ .page-label{
     color: white;
     background: #499C9C;
+}
+
+.session__canceled {
+    border: 2px solid red;
+}
+
+.session__outdated {
+    background-color: red;
 }

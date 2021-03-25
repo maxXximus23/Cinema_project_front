@@ -140,7 +140,6 @@ class Ticket extends React.Component {
                 </label>
                {
                    tickets.map(el => {
-
                        return <div>  
                                 <div className="main">    
                                                    
