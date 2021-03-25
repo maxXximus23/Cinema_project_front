@@ -15,10 +15,6 @@ import Home from './components/Home/Home'
 import Error from './components/error/ErrorComponent'
 import MoviesListPage from './components/movies/MoviesListPage';
 
-import AllMovies from "./components/admin/manageMovies/AllMovies";
-import CreateMovie from "./components/admin/manageMovies/CreateMovie";
-import UpdateMovie from "./components/admin/manageMovies/UpdateMovie";
-
 import './style.scss'
 import SessionsMain from './components/Admin/Sessions/SessionsMain';
 import EditSession from './components/Admin/Sessions/EditSession';
@@ -37,15 +33,9 @@ function App() {
             <Route exact path="/movies" component={MoviesListPage} />
             <Route path="/book/:sessionId" component={Booking} />
             <Route path="/account" component={Account} />
-
-            <Route path="/admin/all-movies" component={AllMovies} />
-            <Route path="/admin/create-movie/" component={CreateMovie} />
-            <Route path="/admin/update-movie/:movieId" component={UpdateMovie} />
-
             <Route exact path="/admin/sessions/:sessionId" component={EditSession} />
             <Route exact path="/admin/sessions/create" component={CreateSession} />
             <Route exact path="/admin/sessions" component={SessionsMain} />
-    
             <Route component={Error} exact/>
         </Switch>
         <Footer />
