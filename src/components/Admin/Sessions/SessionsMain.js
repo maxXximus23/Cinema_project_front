@@ -211,22 +211,22 @@ class SessionsMain extends React.Component {
                         <div className="sessions__container">
                             <div className="sessions__header row">
                                 <label className="session__id col-md-1" id="sesId">
-                                    <input type="radio" name="sort" defaultChecked onClick={this.sortById}/><br />
+                                    <input type="radio" name="sort" defaultChecked onClick={this.sortById}/>
                                     <span>ID</span>
                                 </label>
                                 <div className="session__poster col-md-2">
                                     <span>Movie Poster</span>
                                 </div>
                                 <label className="session__title col-md-3">
-                                    <input type="radio" name="sort" onClick={this.sortByTitle}/><br />
+                                    <input type="radio" name="sort" onClick={this.sortByTitle}/>
                                     <span>Movie Title</span>
                                 </label>
                                 <label className="session__hall col-md-1">
-                                    <input type="radio" name="sort" onClick={this.sortByHall}/><br />
+                                    <input type="radio" name="sort" onClick={this.sortByHall}/>
                                     <span>Hall Name</span>
                                 </label>
                                 <label className="session__date col-md-2">
-                                    <input type="radio" name="sort" onClick={this.sortByDate}/><br />
+                                    <input type="radio" name="sort" onClick={this.sortByDate}/>
                                     <span>Date</span>
                                 </label>
                                 <div className="session__edit col-md-1">

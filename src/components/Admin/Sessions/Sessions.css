@@ -19,6 +19,10 @@
     border-bottom: solid rgb(200, 200, 200) 2px;
 }
 
+.sessions__header:nth-child(n) {
+    padding-top: 30px;
+}
+
 .session__poster img {
     height: auto;
     width: inherit;

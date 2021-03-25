@@ -116,7 +116,7 @@ class CreateSession extends React.Component {
                                 <span>Hall: </span>
                                 <select onChange={this.changeHall}>
                                     {halls.map(el => {
-                                        return <option key={el.id} value={el.id}>{el.name} (Places: {el.rowsAmount}x{el.places})</option>
+                                        return <option key={el.id} value={el.id}>{el.name} ({el.rowsAmount*el.places} places)</option>
                                     })}
                                 </select>
                             </label><br/>
