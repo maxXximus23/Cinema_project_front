@@ -1,6 +1,17 @@
+import AccountService from "./AccountService";
 import BaseService from "./BaseService"
 
 class HallService{
+    static async getAll() {
+        return fetch('http://localhost:8081/halls',
+            {
+                headers: {
+                    Authorization: AccountService.getToken()
+                }
+            })
+            .then(BaseService.handleError);
+    }
+
     static getById= async (id) =>{
         console.log("HallService.getById(id):");
         console.log("id: " + id);

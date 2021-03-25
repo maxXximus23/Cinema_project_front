@@ -1,6 +1,9 @@
 import React, {Component} from 'react'
+import Ticket from '../Ticket/Ticket'
+import AccountService from '../../services/AccountService'
+import TicketService from '../../services/TicketService'
 import './Account.css'
-
+import moment from 'moment';
 //import BookedList from '../BookedList/BookedList'
 //import HistoryList from '../HistoryList/HistoryList'
 
@@ -10,14 +13,11 @@ class UserPage extends Component{
         this.state = {
             isLoaded: false,
             error: null,
-            id: 31,
-            user: {}
+            tickets: [],
+            user: {},
+            sort: 0
         }
-
-
-        
     }
-
 
 
     async errorHandler(response){
@@ -32,48 +32,65 @@ class UserPage extends Component{
    }
  
    componentDidMount() {
-       fetch('http://localhost:8081/users/'+this.state.id)
-           .then(this.errorHandler)
-           .then((result) => {
-                   console.log(result)
-                   this.setState({
-                       isLoaded: true,
-                       user: result
-                   }
-               );
-           })
-           .catch(err => {
-               this.setState({
-                   isLoaded: true,
-                   error: err
-               })
-           }
-       );
-   }
+    AccountService.geUser()
+        .then(res => {
+            this.setState({
+                user: res
+            })
+            TicketService.getUsersTickets()
+                .then(res=>{
+                    this.setState({
+                        isLoaded: true,
+                        tickets: res
+                    })
+                })
+                .catch(error => {
+                    this.setState({
+                        ticketsError: error
+                    })
+                
+            })
+        })
+        .catch(err => {
+            this.setState({
+                isLoaded: true,
+                error: err
+            })
+        })
+    
+    
+    }
     
     render() {
         const {isLoaded, error, user} = this.state
+        const bookedTickets = this.state.tickets.filter(e =>(moment(e.date) > moment()))
+        const historyTickets = this.state.tickets.filter(e => moment(e.date) < moment())
+        
+        const groupBy = (arr, fn) =>
+            arr
+                .map(typeof fn === 'function' ? fn : val => val[fn])
+                .reduce((acc, val, i) => {
+                acc[val] = (acc[val] || []).concat(arr[i]); 
+                return acc
+        }, {});
+        
         return(
             <div className="wrapper">
                 <div className="user_info__item">
                     <img className="user_img__item" src="https://cdn1.flamp.ru/6e8b1e5fe1cc01a4d15e1d27c602dfa7.jpg" alt='img'/>
-                    <div className="user_name__item">{user.first_name}</div>
+                    <div className="user_name__item">{user.firstName} {user.lastName}</div>
                 </div>
-                <div className="user_list__item">
-                            
-                            <div className="lists_wrapper__item">
-                                   <fieldset>
-                                    <input  type="radio" name="sizeBy" value="weight" id="sizeWeight" checked="checked" />
+                <div className="user_list__item"> 
+                                <fieldset className="lists_wrapper__item">
+                                    <input  type="radio" name="sizeBy" value="weight" id="sizeWeight" defaultChecked/>
                                     <label id="bookedlist_controller__item" className="radio_button__item" for="sizeWeight">Booked tickets</label>
                                    
                                     <input type="radio" name="sizeBy" value="dimensions" id="sizeDimensions" />
                                     <label id="historylist_controller__item"className="radio_button__item" for="sizeDimensions">History</label>
                                
-                                    <div id="booked_list__item">BookedList</div>
-                                    <div id="history_list__item">HistoryList</div>
+                                    <div id="booked_list__item" className="container"><div className="row"><Ticket tickets={groupBy(bookedTickets,'sessionId')} /></div></div>
+                                    <div id="history_list__item"className="container"><div className="row"><Ticket tickets={groupBy(historyTickets,'sessionId')} /></div></div>
                                 </fieldset>
-                            </div>
-                            
                 </div>
                 
             </div>

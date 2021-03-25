@@ -26,10 +26,11 @@ export default class PageResult extends React.Component {
         } else if (movies.length === 0) {
             return <h3>Sorry, no movies found</h3>
         } else {
-            return  <div className="col-md-12">
-                        <ul className="col-md-12 d-flex">
+            return  <div className="list_container" style={{width:'100%'}}>
+                        <ul className="movies_table row">
                             {
                             movies.map(movie =>
+                               
                                     <li key = {movie.id} className="movie-list__li col-lg-3">
                                         <div className="movie-element__item post-wrap">
                                             <div className="post-item">
@@ -48,6 +49,7 @@ export default class PageResult extends React.Component {
                                             </div>
                                         </div>    
                                     </li>
+                               
                                 )
                             }
                         </ul>

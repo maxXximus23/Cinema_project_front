@@ -17,17 +17,16 @@
 }
 
 .user_name__item{
-    font-size: 15px;
+    margin-top: 20px;
+    font-size: 25px;
     color:#4A639E;
     font-weight: 900;
 }
 
 .lists_wrapper__item{
     padding: 10px;
-    background-color: white;
     width: 80%;
     margin: 0 auto;
-    border: 1px solid #c7c7c7;
 }
 
 #booked_list__item, #history_list__item{
@@ -40,7 +39,7 @@
 
 
 
-input[type="radio"]{
+#sizeWeight, #sizeDimensions{
     display: none;
 }
 

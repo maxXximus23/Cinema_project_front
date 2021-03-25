@@ -1,5 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
+import AccountService from '../../services/AccountService';
 import './style.css'
 
 class ErrorComponent extends React.Component {
@@ -10,8 +11,20 @@ class ErrorComponent extends React.Component {
         };
     }
 
+    componentDidMount(){
+        if(this.state.error?.status == 403)
+            if (!AccountService.isLogged())
+                window.location.replace("/login")
+            else
+                AccountService.logout()
+    }
+
     render() {
         const { error } = this.state;
+
+        if(error?.status == 403)
+            return <div></div>
+
         let body
         if (error === undefined)
             body = <div className="error-body">

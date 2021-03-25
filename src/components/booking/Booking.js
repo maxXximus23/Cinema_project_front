@@ -2,6 +2,10 @@ import React from 'react'
 import './style.css'
 import ErrorComponent from '../error/ErrorComponent';
 import Loading from '../Loading/Loading'
+import TicketService from '../../services/TicketService';
+import SessionService from '../../services/SessionService';
+import { Link } from 'react-router-dom';
+import moment from 'moment';
 
 class Booking extends React.Component {
     constructor(props) {
@@ -16,7 +20,8 @@ class Booking extends React.Component {
                 tickets: []
             },
             id: props.match.params.sessionId,
-            selectedTickets: []
+            selectedTickets: [],
+            session: {}
         };
         this.onValueChange = this.onValueChange.bind(this);
         this.book = this.book.bind(this);
@@ -34,14 +39,24 @@ class Booking extends React.Component {
     }
   
     componentDidMount() {
-        fetch('http://localhost:8081/sessions/' + this.state.id + "/tickets")
-            .then(this.errorHandler)
+        TicketService.getBySession(this.state.id)
             .then((result) => {
-                    this.setState({
-                        isLoaded: true,
-                        places: result
-                    }
-                );
+                this.setState({
+                    places: result
+                });
+                SessionService.getSession(this.state.id)
+                    .then(res => {
+                        this.setState({
+                            isLoaded: true,
+                            session: res
+                        });
+                    })
+                    .catch(err => {
+                        this.setState({
+                            isLoaded: true,
+                            error: err
+                        })
+                    })
             })
             .catch(err => {
                 this.setState({
@@ -53,14 +68,10 @@ class Booking extends React.Component {
     }
   
     render() {
-        const { error, isLoaded, places } = this.state;
-        if (error) {
-            return <ErrorComponent error={error} />;
-        } else if (!isLoaded) {
-            return <Loading/>;
-        } else {
-            const seats = [,]
-        
+        const { error, isLoaded, places, session } = this.state;
+        const seats = [,]
+
+        if (places)
             for (let i = places.rowsAmount - 1; i >= 0; i--){
                 let item = {key: Number, values: []}
                 item.key = i
@@ -80,13 +91,36 @@ class Booking extends React.Component {
                 }
                 seats.push(item)
             }
-                    
+
+        if (!isLoaded) {
+            return <Loading/>;
+        } else if (error && error.status != 400) {
+            return <ErrorComponent error={error} />
+        } else {    
+            let date = moment(session.date).format('HH:mm DD-MM-YYYY')           
             return (
-                <div className="container hallDemo">
+                <div className="hallDemo">
+                    <div>
+                        <Link to={'/movies/' + session.movieId}>
+                            <h1>{session.movieTitle}</h1>
+                        </Link>
+                        <p>{date.slice(0,6)}</p>
+                        <p>{date.slice(6)}</p>
+                    </div>
+                    <div className="demo row">
+                        <div className="col-md-6">
+                            <img src="https://img.icons8.com/windows/50/000000/armchair.png" className="seat booked"/>
+                            <span> - booked</span>
+                        </div>
+                        <div className="col-md-6">
+                            <img src="https://img.icons8.com/windows/50/000000/armchair.png" className="seat pick"/>
+                            <span> - your pick</span>
+                        </div>
+                    </div>
                     <form onSubmit={this.book}>
                        <div className="row justify-content-center">
 
-                            {
+                            {seats.length != 0 &&
                                 seats.map(el =>{
                                     return  <div key={el.key} className="d-flex justify-content-around col-md-12">
                                                 <div className="row-number text-center">{el.key + 1}</div>
@@ -97,8 +131,17 @@ class Booking extends React.Component {
                             }
                         </div>
                         <div className="screen">
-                            <h2>SCREEN</h2>
+                            <p>SCREEN</p>
                         </div>
+                        {this.state.selectedTickets.length > 0 &&
+                            <div>
+                                <p className="alertBook">You are booking: </p>
+                                {this.state.selectedTickets.map(el => {
+                                    return <p className="bookPlaces">Row : {el.row} Place: {el.place}</p>
+                                })}
+                            </div>
+                        }
+                        <p className="errorMessage">{error && error.message}</p>
                         <button className="bookTicketsBtn" type="submit">
                             Book tickets
                         </button>
@@ -111,36 +154,17 @@ class Booking extends React.Component {
     book(event) { //TODO: Add real user data in request
         event.preventDefault();
 
-        let data = {
-            sessionId: this.state.id,
-            userId: -1,
-            places: this.state.selectedTickets
-        }
-
-        fetch('http://localhost:8081/tickets/purchaselist',
-            {
-                method: 'POST', 
-                mode: 'cors',
-                cache: 'no-cache', 
-                credentials: 'same-origin', 
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                redirect: 'follow', 
-                referrerPolicy: 'no-referrer',
-                body: JSON.stringify(data) 
-            }
-        )
-        .then(this.errorHandler)
-        .then(result => {
-                console.log(result) //TODO: redirect to tickets
-        })
-        .catch(err => {
-            this.setState({
-                isLoaded: true,
-                error: err
+        TicketService.purchaseTickets(this.state.id, this.state.selectedTickets)
+            .then(result => {
+                this.props.history.push('/account')
+                console.log(result)
             })
-        })
+            .catch(err => {
+                this.setState({
+                    isLoaded: true,
+                    error: err
+                })
+            })
     }
 
     onValueChange(event) {
@@ -153,11 +177,13 @@ class Booking extends React.Component {
                 return el.row == place[0] && el.place == place[1]
             });
 
-            if (index == -1)
+            if (index == -1){
                 selectedTickets.push({
                     row: place[0],
                     place: place[1]
                 })
+                this.setState({})
+            }
         }
         else
         {
@@ -166,6 +192,7 @@ class Booking extends React.Component {
             });
             if (index > -1) {
                 selectedTickets.splice(index, 1);
+                this.setState({})
             }
         }
 

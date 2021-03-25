@@ -20,6 +20,9 @@ import CreateMovie from "./components/admin/manageMovies/CreateMovie";
 import UpdateMovie from "./components/admin/manageMovies/UpdateMovie";
 
 import './style.scss'
+import SessionsMain from './components/Admin/Sessions/SessionsMain';
+import EditSession from './components/Admin/Sessions/EditSession';
+import CreateSession from './components/Admin/Sessions/CreateSession';
 
 function App() {
   return (
@@ -39,6 +42,10 @@ function App() {
             <Route path="/admin/create-movie/" component={CreateMovie} />
             <Route path="/admin/update-movie/:movieId" component={UpdateMovie} />
 
+            <Route exact path="/admin/sessions/:sessionId" component={EditSession} />
+            <Route exact path="/admin/sessions/create" component={CreateSession} />
+            <Route exact path="/admin/sessions" component={SessionsMain} />
+    
             <Route component={Error} exact/>
         </Switch>
         <Footer />

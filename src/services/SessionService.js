@@ -1,38 +1,75 @@
+import AccountService from "./AccountService";
 import BaseService from "./BaseService"
 
-class SessionService{
-    static getSession= async (id) =>{
-        console.log("SessionService.getSession(id):");
-        console.log("id: " + id);
-        return fetch(BaseService._baseUrl+'/sessions/'+id)
-            .then(response => {
-                if (!response.ok) {
-                    BaseService.handleResponseError(response);
+class SessionService {
+    static async getActual() {
+        return fetch(BaseService._baseUrl+'/sessions/actual',
+            {
+                headers: {
+                    "Authorization": "Bearer_" + JSON.parse(localStorage.getItem("userCredentials"))?.token
                 }
-                return response.json();
             })
-            .catch(error => {
-                BaseService.handleError(error);
-            });
-    };
-    static addSession= async (session) =>{
-        console.log("SessionService.addSession(session):");
+            .then(BaseService.handleError);
+    }
+
+    static async getAll() {
+        return fetch(BaseService._baseUrl+'/sessions',
+            {
+                headers: {
+                    "Authorization": "Bearer_" + JSON.parse(localStorage.getItem("userCredentials"))?.token
+                }
+            })
+            .then(BaseService.handleError);
+    }
+
+    static async removeSession(id) {
+        const requestOptions = {
+            method: 'DELETE',
+            headers: { 
+                'Content-Type': 'application/json',
+                "Authorization": "Bearer_" + JSON.parse(localStorage.getItem("userCredentials"))?.token
+            }
+        };
+        return fetch(BaseService._baseUrl+'/sessions/' + id, requestOptions)
+            .then(BaseService.handleError);
+    }
+
+    static async updateSession(id, sessionData){
+        const requestOptions = {
+            method: 'PUT',
+            headers: { 
+                'Content-Type': 'application/json',
+                "Authorization": "Bearer_" + JSON.parse(localStorage.getItem("userCredentials"))?.token
+            },
+            body: JSON.stringify(sessionData)
+        };
+        return fetch(BaseService._baseUrl+'/sessions/' + id, requestOptions)
+            .then(BaseService.handleError);
+    }
+                  
+    static async getSession(id) {
+        return fetch(BaseService._baseUrl + '/sessions/' + id,
+        {
+            headers: {
+                Authorization: AccountService.getToken()
+            }
+        })
+            .then(BaseService.handleError);
+    }
+                     
+    static async createSession(session) {
         const requestOptions = {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: { 
+                'Content-Type': 'application/json',
+                "Authorization": "Bearer_" + JSON.parse(localStorage.getItem("userCredentials"))?.token
+            },
             body: JSON.stringify(session)
         };
         return fetch(BaseService._baseUrl+'/sessions', requestOptions)
-            .then(response => {
-                if (!response.ok) {
-                    BaseService.handleResponseError(response);
-                }
-                return response.json();
-            })
-            .catch(error => {
-                BaseService.handleError(error);
-            });
-    };
+            .then(BaseService.handleError);
+    }
+
     static deleteSession= async (id) =>{
         console.log("SessionService.deleteSession(id):");
         console.log("id: " + id);
@@ -51,34 +88,6 @@ class SessionService{
                 BaseService.handleError(error);
             });
     };
-    static updateSession= async (id, session) =>{
-        console.log("SessionService.updateSession(id, session):");
-        console.log("id: " + id);
-        const requestOptions = {
-            method: 'PUT',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(session)
-        };
-        return fetch(BaseService._baseUrl+'/sessions/' + id, requestOptions)
-            .then(response => {
-                if (!response.ok) {
-                    BaseService.handleResponseError(response);
-                }
-                return response.json();
-            })
-            .catch(error => {
-                BaseService.handleError(error);
-            });
-    };
-    static async getActual() {
-        return fetch(BaseService._baseUrl+'/sessions/actual',
-            {
-                headers: {
-                    "Authorization": "Bearer_" + JSON.parse(localStorage.getItem("userCredentials"))?.token
-                }
-            })
-            .then(BaseService.handleError);
-    }
 
     static getTicketsList= async (id) =>{
         console.log("SessionService.getTicketsList(id):");

@@ -64,12 +64,15 @@ class AccountService {
         const requestOptions = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: localStorage.getItem("userCredentials")
+            body: JSON.stringify({
+                id: AccountService.getId(),
+                token: AccountService.getToken()
+            })
         };
         fetch(BaseService._baseUrl + '/users/logout', requestOptions)
             .then(BaseService.handleError)
             .then(() => {
-                localStorage.setItem('userCredentials', "null")
+                localStorage.removeItem('userCredentials')
                 window.location.replace("/")
             })
             .catch(error => {
@@ -78,14 +81,32 @@ class AccountService {
     }
 
     static isLogged() {
-        return !(localStorage.getItem("userCredentials") == "null")
+        return !(localStorage.getItem("userCredentials") == null)
     } 
+
+    static geUser(){
+        return fetch('http://localhost:8081/users/' + AccountService.getId(),
+            {
+                headers: {
+                    Authorization: AccountService.getToken()
+                }
+            })
+            .then(BaseService.handleError);
+    }
 
     static getToken(){
         if (AccountService.isLogged())
             return "Bearer_" + JSON.parse(localStorage.getItem("userCredentials"))?.token
         else
             return "none"
+    }
+
+    static getId(){
+        console.log(JSON.parse(localStorage.userCredentials)?.id)
+        if (AccountService.isLogged())
+            return JSON.parse(localStorage.userCredentials)?.id
+        else
+            return -1
     }
 }
 export default AccountService;
