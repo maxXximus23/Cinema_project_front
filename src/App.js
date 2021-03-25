@@ -35,9 +35,9 @@ function App() {
             <Route path="/book/:sessionId" component={Booking} />
             <Route path="/account" component={Account} />
 
-            <Route path="/all-movies" component={AllMovies} />
-            <Route path="/create-movie/" component={CreateMovie} />
-            <Route path="/update-movie/:movieId" component={UpdateMovie} />
+            <Route path="/admin/all-movies" component={AllMovies} />
+            <Route path="/admin/create-movie/" component={CreateMovie} />
+            <Route path="/admin/update-movie/:movieId" component={UpdateMovie} />
 
             <Route component={Error} exact/>
         </Switch>

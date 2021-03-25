@@ -2,6 +2,7 @@ import React from "react";
 import MovieService from "../../../services/MovieService";
 import './ManageMovies.css'
 
+
 class ActiveMovies extends React.Component {
 
     constructor(props) {
@@ -50,7 +51,7 @@ class ActiveMovies extends React.Component {
                             <h3>Title: {this.state.movies[i].title}</h3>
                         </div>
                         <div >
-                            <button onClick={()=>window.location.replace("/update-movie/"+this.state.movies[i].id)} className="update-button">Update</button>
+                            <button onClick={()=>window.location.replace("/admin/update-movie/"+this.state.movies[i].id)} className="update-button">Update</button>
                             <button id={this.state.movies[i].id} onClick={this.block} className="block-button">Block</button>
                         </div>
                     </div>

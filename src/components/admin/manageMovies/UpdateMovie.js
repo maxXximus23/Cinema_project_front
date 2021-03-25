@@ -2,6 +2,7 @@ import React from "react";
 import MovieService from "../../../services/MovieService";
 import BackButton from "../../backButton/BackButton";
 import YouTube from "react-youtube";
+import NoPoster from "./NoPosterUrl"
 
 class UpdateMovie extends React.Component {
 
@@ -80,11 +81,11 @@ class UpdateMovie extends React.Component {
         await MovieService.getById(this.state.id)
             .then((result) => {
                 this.setState({movie: result, time:this.parseDuration(result.duration)});
-                if(result.posterPath!=="no-poster.png" && result.trailerPath!=="")
+                if(result.posterPath!==NoPoster._url && result.trailerPath!=="")
                     this.setState({posterPathChecked:true, trailerPathChecked:true, newMovie:{posterPath : result.posterPath, trailerPath:result.trailerPath}});
-                else if(result.posterPath==="no-poster.png" && result.trailerPath==="")
+                else if(result.posterPath===NoPoster._url && result.trailerPath==="")
                     this.setState({posterPathChecked:false, trailerPathChecked:false});
-                else if(result.posterPath==="no-poster.png")
+                else if(result.posterPath===NoPoster._url)
                     this.setState({posterPathChecked:false,trailerPathChecked:true, newMovie:{trailerPath:result.trailerPath}});
                 else if(result.trailerPath==="")
                     this.setState({trailerPathChecked:false, posterPathChecked:true, newMovie:{posterPath : result.posterPath}});
@@ -117,7 +118,7 @@ class UpdateMovie extends React.Component {
                         .then((response) => {
                             console.log(response)
                             if(response.ok)
-                                window.location.replace("/all-movies");
+                                window.location.replace("/admin/all-movies");
                             else
                                 this.setState({updateMovieFailed:true});
                         })
@@ -237,7 +238,7 @@ class UpdateMovie extends React.Component {
                 break
             case 'posterPathChecked':
                 if(e.target.checked) {
-                    if(this.state.movie.posterPath==="no-poster.png")
+                    if(this.state.movie.posterPath===NoPoster._url)
                         this.state.newMovie.posterPath="";
                     else
                         this.state.newMovie.posterPath=this.state.movie.posterPath;
@@ -249,7 +250,7 @@ class UpdateMovie extends React.Component {
                     this.setState({posterPathChecked: false,
                         posterPathError: '',
                         posterPathBorderColor: this.state.borderColorGreen});
-                    this.state.newMovie.posterPath="no-poster.png";
+                    this.state.newMovie.posterPath=NoPoster._url;
                 }
                 break
             case 'trailerPathChecked':

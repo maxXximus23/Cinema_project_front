@@ -2,6 +2,7 @@ import React from "react";
 import MovieService from "../../../services/MovieService";
 import BackButton from "../../backButton/BackButton";
 import YouTube from "react-youtube";
+import NoPoster from "./NoPosterUrl"
 
 class CreateMovie extends React.Component {
 
@@ -89,7 +90,7 @@ class CreateMovie extends React.Component {
                 .then((response) => {
                     console.log(response)
                     if(response.ok){
-                        window.location.replace("/all-movies");
+                        window.location.replace("/admin/all-movies");
                     }
                     this.setState({createMovieFailed:true});
                 })
@@ -196,7 +197,7 @@ class CreateMovie extends React.Component {
                 }
                 else {
                     this.setState({posterPathChecked: false});
-                    this.state.movie.posterPath="no-poster.png";
+                    this.state.movie.posterPath=NoPoster._url;
                 }
                 break
             case 'trailerPathChecked':
@@ -210,9 +211,6 @@ class CreateMovie extends React.Component {
                 }
                 break
         }
-    };
-    readResponseAsBlob=(response) =>{
-        return response.blob();
     };
     closeButton = () =>{
         this.setState({createMovieFailed: false});

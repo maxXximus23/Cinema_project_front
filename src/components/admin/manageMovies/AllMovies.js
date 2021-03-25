@@ -16,7 +16,7 @@ class AllMovies extends React.Component {
                 <div className="lists_wrapper__item">
                     <div className="button-box">
                         <BackButton backPath={() => this.props.history.goBack()} />
-                        <button onClick={()=>window.location.replace("/create-movie/")} className="create-button">Create</button>
+                        <button onClick={()=>window.location.replace("/admin/create-movie/")} className="create-button">Create</button>
                     </div>
                     <fieldset>
                         <input type="radio" name="sizeBy" value="weight" id="sizeWeight" checked="checked"/>
