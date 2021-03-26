@@ -1,0 +1,17 @@
+
+.genre-name {
+    margin-top: 50px;
+    margin-left: 50px;
+    margin-right: 10px;
+}
+
+.create-genre {
+    display: flex;
+}
+.all-genre{
+    display: grid;
+    grid-row: auto;
+}
+all-genre-column{
+
+}
