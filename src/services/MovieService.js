@@ -4,13 +4,19 @@ import BaseService from "./BaseService"
 class MovieService {
 
     static async getById(id) {
-        return fetch('http://localhost:8081/movies/' + id,
-            {
-                headers: {
-                    Authorization: AccountService.getToken()
+        return fetch('http://localhost:8081/movies/' + id, {
+            headers: {
+                Authorization: AccountService.getToken()
+            }})
+            .then(response => {
+                if (!response.ok) {
+                    BaseService.handleResponseError(response);
                 }
+                return response.json();
             })
-            .then(BaseService.handleError);
+            .catch(error => {
+                BaseService.handleError(error);
+            });
     }
 
     static async getSessions(id) {
@@ -57,15 +63,15 @@ class MovieService {
         console.log("MovieService.addMovie(movie):");
         const requestOptions = {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(movie)
+            headers: { 'Content-Type': 'application/json' , Authorization: AccountService.getToken()},
+            body: JSON.stringify(movie),
         };
         return fetch(BaseService._baseUrl+'/movies', requestOptions)
             .then(response => {
                 if (!response.ok) {
                     BaseService.handleResponseError(response);
                 }
-                return response.json();
+                return response;
             })
             .catch(error => {
                 BaseService.handleError(error);
@@ -76,7 +82,7 @@ class MovieService {
         console.log("id: " + id);
         const requestOptions = {
             method: 'DELETE',
-            headers: { 'Content-Type': 'application/json' }
+            headers: { 'Content-Type': 'application/json', Authorization: AccountService.getToken()}
         };
         return fetch(BaseService._baseUrl+'/movies/' + id, requestOptions)
             .then(response => {
@@ -94,10 +100,65 @@ class MovieService {
         console.log("id: " + id);
         const requestOptions = {
             method: 'PUT',
-            headers: { 'Content-Type': 'application/json' },
+            headers: { 'Content-Type': 'application/json' ,
+                Authorization: AccountService.getToken()},
             body: JSON.stringify(movie)
         };
         return fetch(BaseService._baseUrl+'/movies/' + id, requestOptions)
+            .then(response => {
+                if (!response.ok) {
+                    BaseService.handleResponseError(response);
+                }
+                return response;
+            })
+            .catch(error => {
+                BaseService.handleError(error);
+            });
+    };
+    static blockMovie= async (id) =>{
+        console.log("MovieService.blockMovie(id):");
+        console.log("id: " + id);
+        const requestOptions = {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' ,
+                Authorization: AccountService.getToken()}
+        };
+        return fetch(BaseService._baseUrl+'/movies/block/' + id, requestOptions)
+            .then(response => {
+                if (!response.ok) {
+                    BaseService.handleResponseError(response);
+                }
+                return response;
+            })
+            .catch(error => {
+                BaseService.handleError(error);
+            });
+    };
+    static unblockMovie= async (id) =>{
+        console.log("MovieService.unblockMovie(id):");
+        console.log("id: " + id);
+        const requestOptions = {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' ,
+                Authorization: AccountService.getToken()}
+        };
+        return fetch(BaseService._baseUrl+'/movies/unblock/' + id, requestOptions)
+            .then(response => {
+                if (!response.ok) {
+                    BaseService.handleResponseError(response);
+                }
+                return response;
+            })
+            .catch(error => {
+                BaseService.handleError(error);
+            });
+    };
+    static async getAll() {
+        console.log("MovieService.getAll():");
+        return fetch(BaseService._baseUrl+'/movies/all',{
+            headers: {
+                Authorization: AccountService.getToken()
+            }})
             .then(response => {
                 if (!response.ok) {
                     BaseService.handleResponseError(response);
@@ -107,6 +168,22 @@ class MovieService {
             .catch(error => {
                 BaseService.handleError(error);
             });
-    };
+    }
+    static async getBlocked() {
+        console.log("MovieService.getBlocked():");
+        return fetch(BaseService._baseUrl+'/movies/blocked',{
+            headers: {
+                Authorization: AccountService.getToken()
+            }})
+            .then(response => {
+                if (!response.ok) {
+                    BaseService.handleResponseError(response);
+                }
+                return response.json();
+            })
+            .catch(error => {
+                BaseService.handleError(error);
+            });
+    }
 }
 export default MovieService;
