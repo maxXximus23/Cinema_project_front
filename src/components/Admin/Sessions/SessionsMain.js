@@ -240,9 +240,10 @@ class SessionsMain extends React.Component {
                      <label className='session__id col-md-1' id='sesId'>
                         <input
                            className='sessions_input__item'
-                           type='checkbox'
+                           type='radio'
                            name='sort'
                            onClick={this.sortById}
+                           defaultChecked
                         />
                         <span>
                            ID <BsArrowUpDown />
@@ -251,7 +252,7 @@ class SessionsMain extends React.Component {
                      <label className='session__title col-md-2'>
                         <input
                            className='sessions_input__item'
-                           type='checkbox'
+                           type='radio'
                            name='sort'
                            onClick={this.sortByTitle}
                         />
@@ -262,7 +263,7 @@ class SessionsMain extends React.Component {
                      <label className='session__hall col-md-2'>
                         <input
                            className='sessions_input__item'
-                           type='checkbox'
+                           type='radio'
                            name='sort'
                            onClick={this.sortByHall}
                         />
@@ -273,7 +274,7 @@ class SessionsMain extends React.Component {
                      <label className='session__date col-md-2'>
                         <input
                            className='sessions_input__item'
-                           type='checkbox'
+                           type='radio'
                            name='sort'
                            onClick={this.sortByDate}
                         />
