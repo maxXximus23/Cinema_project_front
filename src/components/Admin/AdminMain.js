@@ -36,9 +36,10 @@ class AdminMain extends React.Component{
                     <div className="row">
                         <Link to={'/admin/sessions'} className="col-md-4" >Sesseions managing</Link> 
                         <Link to={'/admin/movies'} className="col-md-4" >Movies managing</Link> 
-                        <Link to={'/admin/halls'} className="col-md-4" >Halls managing</Link> 
+                        <Link to={'/admin/halls'} className="col-md-4" >Halls managing</Link>
                     </div>
                     <div>
+                        <Link to={'/admin/genres'} className="col-md-4" >Genres managing</Link> 
                         <Link to={'/admin/reviews'} className="col-md-6" >Reviews managing</Link> 
                         <Link to={'/admin/users'} className="col-md-6" >Users managing</Link>    
                     </div>    
