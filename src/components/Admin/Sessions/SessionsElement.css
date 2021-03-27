@@ -26,3 +26,8 @@
     color: #2EE59D;
 }
 
+.all-session .error__message {
+    font-size: 30px;
+    color: rgb(126, 25, 25);
+    font-weight: 900;
+}

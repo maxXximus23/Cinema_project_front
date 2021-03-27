@@ -171,9 +171,6 @@
    border-radius: 20px;
 }
 
-.session__canceled {
-}
-
 .session__outdated {
    background-color: red;
    color: white;
