@@ -147,16 +147,18 @@
    color: #2ee59d;
 }
 
-.session__remove__sure {
-   border: 1px solid red;
+.session__remove__sure, .session__cancel__sure{
    border-radius: 10px;
    font-weight: 900;
    margin: 0 0 0 -10px;
+   background-color: red;
+   color:white;
+   border: none;
 }
 
-.session__remove__sure:hover {
+.session__remove__sure:hover, .session__cancel__sure:hover {
    color: white;
-   background: red;
+   background: #2ee59d;
 }
 
 .session__pageButtons {
