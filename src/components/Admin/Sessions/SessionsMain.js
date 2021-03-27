@@ -7,6 +7,7 @@ import SessionElement from './SessionElement'
 import BackButton from '../../backButton/BackButton'
 import { Link } from 'react-router-dom';
 import moment from 'moment'
+import AccountService from '../../../services/AccountService'
 
 class SessionsMain extends React.Component {
     constructor(props){
@@ -43,20 +44,25 @@ class SessionsMain extends React.Component {
     }
 
     componentDidMount(){
-        SessionService.getAll()
-            .then(result => {
-                this.setState({
-                    isLoaded: true,
-                    sessions: result,
-                    pages: Math.ceil(result.length/this.state.perPage)
+        AccountService.isAdmin()
+        .then(() => {
+            SessionService.getAll()
+                .then(result => {
+                    this.setState({
+                        isLoaded: true,
+                        sessions: result,
+                        pages: Math.ceil(result.length/this.state.perPage)
+                    })
                 })
-            })
-            .catch(err => {
-                this.setState({
-                    isLoaded: true,
-                    error: err
+                .catch(err => {
+                    this.setState({
+                        isLoaded: true,
+                        error: err
+                    })
                 })
-            })
+        })
+        .catch(()=>{ window.location.replace("/") })
+        
     }
 
     sortById(event){

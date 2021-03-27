@@ -1,0 +1,10 @@
+.admin_wrap__item{
+    margin-top: 80px;
+}
+
+.admin_control_img__item img{
+    height: 130px;
+    object-fit: cover;
+    border-radius: 65px;
+}
+
