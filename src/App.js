@@ -37,7 +37,7 @@ function App() {
             <Route exact path="/admin/sessions/create" component={CreateSession} />
             <Route exact path="/admin/sessions/:sessionId" component={EditSession} />
             <Route exact path="/admin/sessions" component={SessionsMain} />
-            <Route path='/admin' component={AdminMain} />
+            <Route exact path='/admin' component={AdminMain} />
             <Route component={Error} exact/>
         </Switch>
         <Footer />
