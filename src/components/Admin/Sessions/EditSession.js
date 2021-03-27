@@ -104,8 +104,6 @@ class EditSession extends React.Component {
         const {errorPost, isLoaded, session, titles, halls, error} = this.state
         if (!isLoaded){
             return <Loading />
-        } else if (error) {
-            return <ErrorComponent error={error} />
         } else {
             return  (<div className="container">
                         <BackButton backPath={() => this.props.history.goBack()} /><br/>

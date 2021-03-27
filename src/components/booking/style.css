@@ -9,17 +9,21 @@
 }
 
 .booking_checkbox__item {
-    visibility:hidden;
+    display: none;
 }
 
-.booking_checkbox__item:checked ~ img,
+
+.seat{
+    font-size: 45px;
+}
+.booking_checkbox__item:checked ~ .seat,
 .demo .pick {
-    background-color: #499C9C;
+    color: #499C9C;
 }
 
-.booking_checkbox__item:disabled ~ img, 
+.booking_checkbox__item:disabled ~ .seat, 
 .demo .booked {
-    background-color: grey;
+    color: rgb(150, 148, 148);
 }
 
 .seat {

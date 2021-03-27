@@ -5,6 +5,7 @@ import Loading from '../../Loading/Loading';
 import MovieService from '../../../services/MovieService'
 import HallService from '../../../services/HallService'
 import ErrorComponent from '../../error/ErrorComponent'
+import moment from 'moment';
 
 class CreateSession extends React.Component {
     constructor(props){
@@ -25,7 +26,7 @@ class CreateSession extends React.Component {
             session: {
                 movieId: -1,
                 hallId: -1,
-                date: Date
+                date: moment()
             },
             requireSure: false
         }
@@ -105,8 +106,6 @@ class CreateSession extends React.Component {
         const {error, isLoaded, titles, halls} = this.state
         if (!isLoaded){
             return <Loading />
-        } if (error) {
-            return <ErrorComponent error={error} />
         } else {
             return  (<div className="container">
                         <BackButton backPath={() => this.props.history.goBack()} /><br/>

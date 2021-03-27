@@ -6,6 +6,7 @@ import TicketService from '../../services/TicketService';
 import SessionService from '../../services/SessionService';
 import { Link } from 'react-router-dom';
 import moment from 'moment';
+import { FaCouch } from 'react-icons/fa';
 
 class Booking extends React.Component {
     constructor(props) {
@@ -84,7 +85,7 @@ class Booking extends React.Component {
                         <div key={j}>
                             <label>
                                 <input className="booking_checkbox__item"type="checkbox" onChange={this.onValueChange} name={(i+1) + "_" + (j+1)} disabled={enabled}/>
-                                <img src="https://img.icons8.com/windows/50/000000/armchair.png" title={"Row: " + (i+1) + "\nPlace: " + (j+1)} className="seat"/>
+                                <FaCouch title={"Row: " + (i+1) + "\nPlace: " + (j+1)} className="seat"/>
                             </label>
                         </div>
                     )
@@ -109,11 +110,11 @@ class Booking extends React.Component {
                     </div>
                     <div className="demo row">
                         <div className="col-md-6">
-                            <img src="https://img.icons8.com/windows/50/000000/armchair.png" className="seat booked"/>
+                            <FaCouch className="seat booked"/>
                             <span> - booked</span>
                         </div>
                         <div className="col-md-6">
-                            <img src="https://img.icons8.com/windows/50/000000/armchair.png" className="seat pick"/>
+                        <FaCouch className="seat pick"/>
                             <span> - your pick</span>
                         </div>
                     </div>
