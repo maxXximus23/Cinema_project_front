@@ -83,7 +83,7 @@ class Booking extends React.Component {
                     item.values.push(
                         <div key={j}>
                             <label>
-                                <input className="booking_checkbox__item"type="checkbox" onChange={this.onValueChange} name={(i+1) + "_" + (j+1)} disabled={enabled}/>
+                                <input className="booking_checkbox__item"type="checkbox" onChange={this.onValueChange} value={"[" + (i+1) + "," + (j+1) + "]"} disabled={enabled}/>
                                 <img src="https://img.icons8.com/windows/50/000000/armchair.png" title={"Row: " + (i+1) + "\nPlace: " + (j+1)} className="seat"/>
                             </label>
                         </div>
@@ -169,7 +169,7 @@ class Booking extends React.Component {
 
     onValueChange(event) {
         const { selectedTickets } = this.state
-        let place = event.target.getAttribute("name").split("_");
+        let place = JSON.parse(event.target.value)
 
         if (event.target.checked)
         {
