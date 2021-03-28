@@ -1,4 +1,5 @@
 import React from "react";
+import AccountService from "../../../services/AccountService";
 import GenreService from "../../../services/GenreService";
 import CreateGenre from "./CreateGenre";
 import DeleteGenre from "./DeleteGenre"
@@ -23,11 +24,16 @@ class AllGenres extends React.Component {
         }
     }
 
-    componentDidMount = async()=> {
-        await GenreService.getAll()
-            .then((result) => {
-                this.setState({genres: result});
-            });
+    componentDidMount() {
+        AccountService.isAdmin()
+            .then(() => {
+                GenreService.getAll()
+                    .then((result) => {
+                        this.setState({genres: result});
+                    });
+            })
+            .catch(() => {window.location.replace('/')})
+        
     };
 
     render() {

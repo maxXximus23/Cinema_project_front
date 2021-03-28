@@ -39,7 +39,7 @@ class AdminMain extends React.Component{
                         <Link to={'/admin/halls'} className="col-md-3 session_managing__item" >Halls managing</Link>
                     </div>
                     <div  className="row d-flex justify-content-center row_admin__item">
-                        <Link to={'/admin/genres'} className="col-md-3 session_managing__item" >Genres managing</Link> 
+                        <Link to={'/admin/all-genres'} className="col-md-3 session_managing__item" >Genres managing</Link> 
                         <Link to={'/admin/reviews'} className="col-md-3 session_managing__item" >Reviews managing</Link> 
                         <Link to={'/admin/users'} className="col-md-3 session_managing__item" >Users managing</Link>    
                     </div>    
