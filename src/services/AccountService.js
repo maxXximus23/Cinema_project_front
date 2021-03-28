@@ -33,7 +33,7 @@ class AccountService {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(user)
         };
-        return fetch(BaseService._baseUrl+'/users/register', requestOptions)
+        return fetch(BaseService._baseUrl+'/auth/register', requestOptions)
             .then(response => {
                 if (!response.ok) {
                     BaseService.handleResponseError(response);
