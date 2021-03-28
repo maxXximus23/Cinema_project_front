@@ -1,6 +1,6 @@
 import React from 'react'
 import MovieSessions from './MovieSessions';
-import Reviews from './Reviews';
+import Reviews from '../Reviews/Reviews';
 import './style.css'
 import YouTube from 'react-youtube'
 import ErrorComponent from '../error/ErrorComponent';

@@ -1,3 +1,4 @@
+import ErrorComponent from "../components/error/ErrorComponent";
 import BaseService from "./BaseService"
 
 class AccountService {
@@ -21,7 +22,7 @@ class AccountService {
                 return res
             })
             .catch(error => {
-                BaseService.handleError(error);
+                console.log(error);
             });
     }
 
@@ -61,9 +62,12 @@ class AccountService {
             });
     }
     static logout(){
+        console.log("logout")
         const requestOptions = {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: { 
+                'Content-Type': 'application/json'
+            },
             body: JSON.stringify({
                 id: AccountService.getId(),
                 token: AccountService.getToken()
@@ -83,6 +87,16 @@ class AccountService {
     static isLogged() {
         return !(localStorage.getItem("userCredentials") == null)
     } 
+
+    static async isAdmin() {
+        return fetch(BaseService._baseUrl + '/auth/is-admin-true',
+            {
+                headers: {
+                    Authorization: AccountService.getToken()
+                }
+            })
+            .then(BaseService.handleError)
+    }
 
     static getUser(){
         return fetch('http://localhost:8081/users/' + AccountService.getId(),

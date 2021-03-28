@@ -4,8 +4,7 @@ import AccountService from '../../services/AccountService'
 import TicketService from '../../services/TicketService'
 import './Account.css'
 import moment from 'moment';
-//import BookedList from '../BookedList/BookedList'
-//import HistoryList from '../HistoryList/HistoryList'
+import avatar from "../Header/user128.png";
 
 class UserPage extends Component{
     constructor(props){
@@ -77,11 +76,12 @@ class UserPage extends Component{
         return(
             <div className="wrapper">
                 <div className="user_info__item">
-                    <img className="user_img__item" src="https://cdn1.flamp.ru/6e8b1e5fe1cc01a4d15e1d27c602dfa7.jpg" alt='img'/>
+                    <img className="user_img__item" src={avatar} alt='img'/>
                     <div className="user_name__item">{user.firstName} {user.lastName}</div>
                 </div>
                 <div className="user_list__item"> 
                                 <fieldset className="lists_wrapper__item">
+                                    
                                     <input  type="radio" name="sizeBy" value="weight" id="sizeWeight" defaultChecked/>
                                     <label id="bookedlist_controller__item" className="radio_button__item" htmlFor="sizeWeight">Booked tickets</label>
                                    
