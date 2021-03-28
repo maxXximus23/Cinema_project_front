@@ -5,6 +5,7 @@ import ErrorComponent from '../error/ErrorComponent'
 import PageResult from './PageResult'
 import './MovieListPage.css'
 import Loading from '../Loading/Loading'
+import { TiDelete } from 'react-icons/ti'
 
 class MoviesListPage extends React.Component {
 	constructor(props) {
@@ -29,8 +30,9 @@ class MoviesListPage extends React.Component {
 		this.updatePage = this.updatePage.bind(this)
 
 		this.updateGenre = this.updateGenre.bind(this)
-		this.handleGenreChange = this.handleGenreChange.bind(this)
-		this.resetGenre = this.resetGenre.bind(this)
+		this.handleGenreAdd = this.handleGenreAdd.bind(this)
+		this.resetGenres = this.resetGenres.bind(this)
+      this.removeGenre = this.removeGenre.bind(this)
 
 		this.updateTitle = this.updateTitle.bind(this)
 		this.handleTitleTextChange = this.handleTitleTextChange.bind(this)
@@ -100,8 +102,8 @@ class MoviesListPage extends React.Component {
 	}
 
 	updateGenre(event) {
-      if (this.state.genres.length == 0)
-         this.state.genres.push(this.state.allGenres[0])
+		if (this.state.genres.length == 0)
+			this.state.genres.push(this.state.allGenres[0])
 		this.updateData(1)
 	}
 
@@ -111,19 +113,22 @@ class MoviesListPage extends React.Component {
 		}
 	}
 
-	handleGenreChange(event) {
-		this.state.genres = []
-      this.state.genres.push(this.state.allGenres.find(el => el.id == event.target.value))
+	handleGenreAdd(event) {
+		this.state.genres.push(
+			this.state.allGenres.find(el => el.id == event.target.value)
+		)
 	}
 
 	handleTitleTextChange(event) {
 		this.state.title = event.target.value
 	}
 
-	resetGenre(event) {
+	resetGenres(event) {
 		if (this.state.genres?.length != 0) {
 			this.state.genres = []
-			document.getElementById('genreField').value = ''
+			document.getElementById(
+				'genreField'
+			).value = this.state.allGenres[0].id
 			this.updateData(1)
 		}
 	}
@@ -147,6 +152,15 @@ class MoviesListPage extends React.Component {
 		if (event.target.value > 0 && event.target.value <= 100)
 			this.state.perPageWaiter = event.target.value
 	}
+
+	removeGenre(event){
+      this.state.genres = this.state.genres.filter(el => el.id!=event.target.value)
+      if (this.state.genres?.length == 0)
+         document.getElementById(
+				'genreField'
+			).value = this.state.allGenres[0].id
+      this.updateData(1)
+   }
 
 	render() {
 		const { error, isLoaded, movies } = this.state
@@ -201,8 +215,7 @@ class MoviesListPage extends React.Component {
 						<select
 							className='movies_input__item'
 							id='genreField'
-							defaultValue={null}
-							onChange={this.handleGenreChange}
+							onChange={this.handleGenreAdd}
 						>
 							{this.state.allGenres.map(el => {
 								return <option value={el.id}>{el.name}</option>
@@ -216,10 +229,27 @@ class MoviesListPage extends React.Component {
 						</button>
 						<button
 							className='reset_button__item'
-							onClick={this.resetGenre}
+							onClick={this.resetGenres}
 						>
 							Reset
 						</button>
+						<br />
+						<div className='d-flex align-items-center flex-column genres__continer'>
+							{this.state.genres.map(el => {
+								return (
+									<div className='p-2 genre__item'>
+										{el.name}{' '}
+										<button
+											onClick={this.removeGenre}
+											value={el.id}
+											className='genre__btn'
+										>
+											x
+										</button>
+									</div>
+								)
+							})}
+						</div>
 					</div>
 					<div className='perPageForm col-md-12'>
 						<span>Items per page: </span>
