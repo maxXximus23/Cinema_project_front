@@ -246,5 +246,9 @@
 }
 
 .sessions__header input:checked ~ span {
-   color: red;
+   color: white;
+}
+
+.sessions__header input:hover ~ span{
+   color:#2ee59d;
 }
