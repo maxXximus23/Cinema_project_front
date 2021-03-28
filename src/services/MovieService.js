@@ -24,22 +24,28 @@ class MovieService {
             .then(BaseService.handleError);
     }
 
-    static async getPageAmountForQuery(perPage, genre, title) {
-        return fetch(BaseService._baseUrl + '/movies/pages/' + perPage + '?genre=' + genre + '&title=' + title,
+    static async getPageAmountForQuery(perPage, title, genres) {
+        return fetch(BaseService._baseUrl + '/movies/pages/' + perPage + '?title=' + title,
             {
+                method: 'POST',
                 headers: {
+                    'Content-Type': 'application/json',
                     Authorization: AccountService.getToken()
-                }
+                },
+                body: JSON.stringify(genres)
             })
             .then(BaseService.handleError);
     }
 
-    static async getMoviesForQuery(page, perPage, genre, title) {
-        return fetch(BaseService._baseUrl + '/movies?page=' + page + '&perPage=' + perPage + '&genre=' + genre + '&title=' + title,
+    static async getMoviesForQuery(page, perPage, title, genres) {
+        return fetch(BaseService._baseUrl + '/movies/pages?page=' + page + '&perPage=' + perPage + '&title=' + title,
             {
+                method: 'POST',
                 headers: {
+                    'Content-Type': 'application/json',
                     Authorization: AccountService.getToken()
-                }
+                },
+                body: JSON.stringify(genres)
             })
             .then(BaseService.handleError);
     }

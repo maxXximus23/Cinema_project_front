@@ -94,3 +94,50 @@
     font-weight: 900;
     font-size: 18px;
 }
+
+.genres__continer {
+    margin-top: 10px;
+}
+
+.genre__item {
+    padding: 5px;
+    background: white;
+    width: 200px;
+    border-radius: 20px;
+      box-shadow: 
+    -2px -2px 1px rgba(0,0,0,0.5) inset,
+    10px 4px 10px rgba(0,0,0,0.15), 
+    0px 8px 10px rgba(0,0,0,0.15);
+    transition: 0.3s;
+    margin-bottom: 10px;
+}
+
+.genre__item:hover, .genre__item:hover button {
+    transition: 0.3s;
+    background: teal;
+    color: white;
+}
+
+.genre__item button {
+    transition: 0.3s;
+    border: none;
+    font-weight: 900;
+    background: white;
+    font-size: 18px;
+    float: right;
+    margin-top: -3px;
+}
+
+.genre__item:hover button {
+    color: red;
+}
+
+
+
+
+
+
+
+
+
+
