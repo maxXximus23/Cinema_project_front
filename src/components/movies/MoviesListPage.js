@@ -46,13 +46,16 @@ class MoviesListPage extends React.Component {
 		GenresService.getAll()
 			.then(res => {
 				this.setState({
-					allGenres: res,
+					allGenres: res.sort((e1, e2) => {
+                  return e1.name >= e2.name ? 1 : -1
+               }),
 				})
+            this.updateData(1)
 			})
 			.catch(err => {
 				console.log(err)
 			})
-		this.updateData(1)
+		
 	}
 
 	updateData(page) {
