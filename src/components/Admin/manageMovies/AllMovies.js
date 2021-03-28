@@ -3,14 +3,32 @@ import ActiveMovies from "./ActiveMovies";
 import BlockedMovies from "./BlockedMovies";
 import BackButton from "../../backButton/BackButton";
 import './ManageMovies.css'
+import Loading from "../../Loading/Loading";
+import AccountService from "../../../services/AccountService";
 
 class AllMovies extends React.Component {
 
     constructor(props) {
         super(props);
+        this.state ={
+            isLoaded: false
+        }
+    }
+
+    componentDidMount(){
+        AccountService.isAdmin()
+        .then(() =>{
+            this.setState({
+                isLoaded: true
+            })
+        })
+        .catch(() => window.location.replace('/'))
     }
 
     render() {
+        if (!this.state.isLoaded)
+            return <Loading />
+
         return (
             <div className="user_list__item">
                 <div className="lists_wrapper__item">
