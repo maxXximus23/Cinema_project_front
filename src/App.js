@@ -19,6 +19,7 @@ import './style.scss'
 import SessionsMain from './components/Admin/Sessions/SessionsMain';
 import EditSession from './components/Admin/Sessions/EditSession';
 import CreateSession from './components/Admin/Sessions/CreateSession';
+import UsersMain from './components/Admin/Users/UsersMain';
 import AdminMain from './components/Admin/AdminMain';
 
 function App() {
@@ -37,6 +38,7 @@ function App() {
             <Route exact path="/admin/sessions/create" component={CreateSession} />
             <Route exact path="/admin/sessions/:sessionId" component={EditSession} />
             <Route exact path="/admin/sessions" component={SessionsMain} />
+            <Route exact path="/admin/users" component={UsersMain} />
             <Route exact path='/admin' component={AdminMain} />
             <Route component={Error} exact/>
         </Switch>
