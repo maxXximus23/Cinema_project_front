@@ -29,9 +29,9 @@ class CreateSession extends React.Component {
             },
          ],
          session: {
-            movieId: Number,
-            hallId: Number,
-            date: Date,
+            movieId: -1,
+            hallId: -1,
+            date: moment(),
          },
          requireSure: false,
       }
@@ -85,8 +85,14 @@ class CreateSession extends React.Component {
       this.state.session.date = event.target.value
    }
 
-   confirmCreation(event) {
-      event.preventDefault()
+    confirmCreation(event){
+        event.preventDefault();
+        console.log(this.state.session)
+        if (this.state.session.movieId==-1)
+            this.state.session.movieId = this.state.titles[0].id
+        
+        if (this.state.session.hallId==-1)
+            this.state.session.hallId = this.state.halls[0].id
 
       SessionService.createSession(this.state.session)
          .then(() => {
