@@ -35,7 +35,7 @@ class AdminMain extends React.Component{
         return <div className="container admin_wrap__item ">
                     <div className="row d-flex justify-content-center row_admin__item">
                         <Link to={'/admin/sessions'} className="col-md-3 session_managing__item"    >Sesseions managing</Link> 
-                        <Link to={'/admin/movies'} className="col-md-3 session_managing__item" >Movies managing</Link> 
+                        <Link to={'/admin/all-movies'} className="col-md-3 session_managing__item" >Movies managing</Link> 
                         <Link to={'/admin/halls'} className="col-md-3 session_managing__item" >Halls managing</Link>
                     </div>
                     <div  className="row d-flex justify-content-center row_admin__item">
