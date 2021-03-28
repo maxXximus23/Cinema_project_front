@@ -5,6 +5,7 @@ import YouTube from "react-youtube";
 import NoPoster from "./NoPosterUrl"
 import { Multiselect } from 'multiselect-react-dropdown'
 import GenreService from "../../../services/GenreService";
+import './CreateMovie.css'
 
 class CreateMovie extends React.Component {
 
@@ -228,7 +229,7 @@ class CreateMovie extends React.Component {
     };
     render() {
         return(
-            <div className="login_block">
+            <div className="login_block row">
                 <BackButton backPath={() => this.props.history.goBack()} />
                 <div>
                     {(this.state.createMovieFailed) && <a style={{color: 'red'}}>An unknown error occurred
@@ -237,53 +238,53 @@ class CreateMovie extends React.Component {
                 </div>
                 <form onSubmit={this.createMovie}>
                     <div>
-                        Title:
-                        <input value={this.title} onChange={e => this.changeHandler(e)}
-                               type="text" name="title" className="form-control"
+                       <h3>Title:</h3>
+                        <input value={this.title} onChange={e => this.changeHandler(e) }
+                               type="text" name="title" className="form-control col-md-12"
                                style={{border: this.state.titleBorderColor}} onBlur={e => this.changeHandler(e)} />
-                        <div style={{color: 'red'}}>{this.state.titleError}</div>
+                        <div className="create_movie_error__item" style={{color: 'red'}}>{this.state.titleError}</div>
                     </div>
                     <div>
-                        Description:
-                        <textarea value={this.description} onBlur={e => this.changeHandler(e)}
+                        <h3>Description:</h3>
+                        <textarea className="col-md-12" value={this.description} onBlur={e => this.changeHandler(e)}
                                   onChange={e => this.changeHandler(e)} name="description"
                                   style={{border: this.state.descriptionBorderColor, width:'550px', height:'150px'}} />
-                        <div style={{color: 'red'}}>{this.state.descriptionError}</div>
+                        <div className="create_movie_error__item" style={{color: 'red'}}>{this.state.descriptionError}</div>
                     </div>
                     <div>
-                        Duration:
+                        <h3>Duration:</h3>
                         <input value={this.duration} onChange={e => this.changeHandler(e)} onBlur={e => this.changeHandler(e)}
-                               type="time" name="duration" className="form-control"
+                               type="time" name="duration" className="form-control col-md-12"
                                style={{border: this.state.durationBorderColor}} />
-                        <div style={{color: 'red'}}>{this.state.durationError}</div>
+                        <div className="create_movie_error__item" style={{color: 'red'}}>{this.state.durationError}</div>
                     </div>
                     <div >
-                        Genres:
+                        <h3>Genres:</h3>
                         <Multiselect ref={this.multiselectRef}
                             options={this.state.genres} displayValue="name" />
                     </div>
                     <div>
-                        Actors:
+                        <h3>Actors:</h3>
                         <input value={this.actors} onChange={e => this.changeHandler(e)} onBlur={e => this.changeHandler(e)}
-                               type="text" name="actors" className="form-control"
+                               type="text" name="actors" className="form-control col-md-12"
                                style={{border: this.state.actorsBorderColor}} />
-                        <div style={{color: 'red'}}>{this.state.actorsError}</div>
+                        <div className="create_movie_error__item" style={{color: 'red'}}>{this.state.actorsError}</div>
                     </div>
                     <div>
-                        Country:
+                        <h3>Country:</h3>
                         <input value={this.country} onChange={e => this.changeHandler(e)} onBlur={e => this.changeHandler(e)}
-                               type="text" name="country" className="form-control"
+                               type="text" name="country" className="form-control col-md-12"
                                style={{border: this.state.countryBorderColor}} />
-                        <div style={{color: 'red'}}>{this.state.countryError}</div>
+                        <div className="create_movie_error__item"style={{color: 'red'}}>{this.state.countryError}</div>
                     </div>
                     <div>
-                        Poster path:
+                        <h3>Poster path:</h3>
                         <input type="checkbox" onChange={e => this.changeHandler(e)} defaultChecked="checked" name="posterPathChecked" />
                         {(this.state.posterPathChecked) && <div >
                             <input value={this.posterPath} onChange={e => this.changeHandler(e)} onBlur={e => this.changeHandler(e)}
-                                   type="text" name="posterPath" className="form-control"
+                                   type="text" name="posterPath" className="form-control col-md-12"
                                    style={{border: this.state.posterPathBorderColor}} />
-                            <div style={{color: 'red'}}>{this.state.posterPathError}</div>
+                            <div className="create_movie_error__item" style={{color: 'red'}}>{this.state.posterPathError}</div>
                             <div className="movie_poster col-md-12">
                                 <img className="img_poster" alt="" src={this.state.movie.posterPath} />
                             </div>
@@ -292,18 +293,18 @@ class CreateMovie extends React.Component {
 
                     </div>
                     <div>
-                        Trailer path id:
-                        <input type="checkbox" onChange={e => this.changeHandler(e)} defaultChecked="checked" name="trailerPathChecked" />
+                        <h3>Trailer path id:</h3>
+                        <input  className="create_movie_input__item" type="checkbox" onChange={e => this.changeHandler(e)} defaultChecked="checked" name="trailerPathChecked" />
                         {(this.state.trailerPathChecked) && <div >
                             <input value={this.trailerPath} onChange={e => this.changeHandler(e)} onBlur={e => this.changeHandler(e)}
-                                   type="text" name="trailerPath" className="form-control"
+                                   type="text" name="trailerPath" className="form-control col-md-12"
                                    style={{border: this.state.trailerPathBorderColor}} />
-                            <div style={{color: 'red'}}>{this.state.trailerPathError}</div>
+                            <div className="create_movie_error__item" style={{color: 'red'}}>{this.state.trailerPathError}</div>
                             <YouTube videoId={this.state.movie.trailerPath}  />
                         </div>}
                     </div>
                     <div>
-                        <button id="btn_singin__item" className="w-100 btn btn-lg btn-primary" type="submit">Create</button>
+                        <button id="btn_create__item" className="w-60 btn btn-lg btn-primary" type="submit">Create</button>
                     </div>
                 </form>
             </div>
