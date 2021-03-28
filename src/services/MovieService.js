@@ -4,20 +4,15 @@ import BaseService from "./BaseService"
 class MovieService {
 
     static async getById(id) {
-        return fetch('http://localhost:8081/movies/' + id, {
-            headers: {
-                Authorization: AccountService.getToken()
-            }})
-            .then(response => {
-                if (!response.ok) {
-                    BaseService.handleResponseError(response);
+        return fetch('http://localhost:8081/movies/' + id,
+            {
+                headers: {
+                    Authorization: AccountService.getToken()
                 }
-                return response.json();
             })
-            .catch(error => {
-                BaseService.handleError(error);
-            });
+            .then(BaseService.handleError);
     }
+
 
     static async getSessions(id) {
         return fetch(BaseService._baseUrl+'/movies/' + id + '/sessions',

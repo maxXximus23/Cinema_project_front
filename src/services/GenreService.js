@@ -107,21 +107,6 @@ class GenreService {
                 BaseService.handleError(error);
             });
     }
-    static async getBlocked() {
-        console.log("MovieService.getBlocked():");
-        return fetch(BaseService._baseUrl+'/movies/blocked',{
-            headers: {
-                Authorization: AccountService.getToken()
-            }})
-            .then(response => {
-                if (!response.ok) {
-                    BaseService.handleResponseError(response);
-                }
-                return response.json();
-            })
-            .catch(error => {
-                BaseService.handleError(error);
-            });
-    }
+
 }
 export default GenreService;
