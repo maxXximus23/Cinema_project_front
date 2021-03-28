@@ -49,7 +49,7 @@ export default class Header extends Component {
                     <Nav.Link href="/"><Navbar className="cinema_name__item">DutCinema</Navbar></Nav.Link>
                     {
                         this.state.isAdmin && 
-                        <Link to={'/admin'} >Admin Page</Link>
+                        <Link to={'/admin'} id="button_adminpage__item">Admin Page</Link>
                     }
                     <Navbar.Toggle aria-controls="responsive-navbar-nav"/>
                     <Navbar.Collapse id="responsive-navbar-nav">
