@@ -202,14 +202,14 @@
    transform: translateY(-5px);
 }
 
-.page_input__item:checked ~ .page_label {
+.page_input__item:checked .page_label {
    background: #2ee59d;
    color: white;
    box-shadow: 0 15px 20px rgba(46, 229, 157, 0.4);
    border-radius: 45px;
 }
 
-.page_button__item {
+.page-label {
    text-align: center;
    text-decoration: none;
    width: 35px;
@@ -229,13 +229,22 @@
    transition: 0.3s;
 }
 
-.page_button__item:hover {
+.page-label:hover {
    background: #2ee59d;
    box-shadow: 0 15px 20px rgba(46, 229, 157, 0.4);
    color: white;
    transform: translateY(-7px);
 }
 
-.page_input__item {
+.page_input__item, 
+.sessions__header [type="radio"] {
    display: none;
+}
+
+.page_input__item:checked ~ .page-label {
+   background: #2ee59d;
+}
+
+.sessions__header input:checked ~ span {
+   color: red;
 }
