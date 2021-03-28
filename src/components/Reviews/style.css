@@ -54,12 +54,12 @@
     border: solid var(--colorShadeA) 2px;
   }
   
-  .buttonPost:hover {
+  .buttonPost:hover, .review__manage__buttons:hover, .buttonEdit:hover {
     transition: 0.5s;
     background-color: #d0fdfd;
   }
   
-  .buttonPost:focus {
+  .buttonPost:focus, .review__manage__buttons:focus, .buttonEdit:focus {
     outline: none;
   }
   
@@ -70,4 +70,14 @@
     border-radius: 20px;
     background-color: white;
     border: solid var(--colorShadeA) 2px;
+}
+
+.review__manage__buttons {
+  width: 80px;
+  border-radius: 7px;
+  margin-left: 5px;
+  margin-top: -7px;
+  margin-bottom: 5px;
+  background-color: white;
+  border: solid var(--colorShadeA) 2px;
 }

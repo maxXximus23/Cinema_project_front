@@ -93,40 +93,60 @@ class Review extends React.Component {
         else if (review==null)
             return <div></div>
 
-        return <div className="col-md-12 review">
-                    <div className="d-flex justify-content-between col-md-12 review__header">
-                        <h6 className="col-md-5 text-left">{review.firstName + " " + review.lastName}</h6>
-                        <span className="col-md-5 text-right">{review.creationDate}</span>
-                        {
-                            (review.authorId==AccountService.getId()) &&
-                            <div>
-                                <button onClick={this.editReview}>Edit</button>
-                                <button onClick={this.deleteReview}>Delete</button>
-                            </div>
-                        }
-                    </div>
-                    <div>
-                        {
-                            !this.state.edit &&
-                            <p className="col-md-12 review__text text-left">{review.text}</p>
-                        }
-                        {
-                            this.state.edit &&
-                            <form onSubmit={this.submitEdit}>
-                               <textarea className="col-md-12 newReview__text form-control" 
-                                    placeholder="Write your review (minimum 20 characters)" 
-                                    rows="5"
-                                    onChange={this.handleTextChange}
-                                    defaultValue={this.state.newText}/>
-                                {
-                                    (this.state.errorUpdate != null) &&
-                                    <p>{this.state.errorUpdate.message}</p>
-                                }
-                                <input type="submit" value="Submit" className="buttonEdit"/>
-                            </form>
-                        }
-                    </div>
-                </div>
+        return (
+				<div className='col-md-12 review'>
+					<div className='d-flex justify-content-between col-md-12 review__header'>
+						<h6 className='col-md-5 text-left'>
+							{review.firstName + ' ' + review.lastName}
+						</h6>
+						<span className='col-md-5 text-right'>
+							{review.creationDate}
+						</span>
+						{review.authorId == AccountService.getId() && (
+							<div>
+								<button
+									className='review__manage__buttons'
+									onClick={this.editReview}
+								>
+									Edit
+								</button>
+								<button
+									className='review__manage__buttons'
+									onClick={this.deleteReview}
+								>
+									Delete
+								</button>
+							</div>
+						)}
+					</div>
+					<div>
+						{!this.state.edit && (
+							<p className='col-md-12 review__text text-left'>
+								{review.text}
+							</p>
+						)}
+						{this.state.edit && (
+							<form onSubmit={this.submitEdit}>
+								<textarea
+									className='col-md-12 newReview__text form-control'
+									placeholder='Write your review (minimum 20 characters)'
+									rows='5'
+									onChange={this.handleTextChange}
+									defaultValue={this.state.newText}
+								/>
+								{this.state.errorUpdate != null && (
+									<p>{this.state.errorUpdate.message}</p>
+								)}
+								<input
+									type='submit'
+									value='Submit'
+									className='buttonEdit'
+								/>
+							</form>
+						)}
+					</div>
+				</div>
+			)
     }
 }
 
