@@ -1,6 +1,7 @@
 import React from "react";
 import GenreService from "../../../services/GenreService";
 import './ManageGenres.css'
+import {AiFillCloseCircle} from 'react-icons/ai'
 
 class CreateGenre extends React.Component {
 
@@ -12,7 +13,7 @@ class CreateGenre extends React.Component {
             },
             nameError:"",
             borderColorName:"",
-            createFailed:false,
+            createFailed: false,
             requiredError: 'This field is required',
             borderColorRed: "2px solid red",
             borderColorGreen: "2px solid green"
@@ -56,18 +57,16 @@ class CreateGenre extends React.Component {
         return (
             <div>
                 <form onSubmit={this.addGenre} className="create-genre">
-                    <div>
-                        {(this.state.createFailed) && <a style={{color: 'red'}}>An unknown error occurred
-                            <button onClick={this.closeButton} className="btn-close" aria-label="Close">x</button>
-                        </a>}
-                    </div>
-                    <div className="genre-name">
-                        <input onChange={e => this.changeHandler(e)} value={this.name} type="text" name="name" className="form-control" placeholder="New genre"
+                    {(this.state.createFailed) &&  <div className="error_window__item">
+                        <a style={{color: 'red'}}>An unknown error occurred
+                            < AiFillCloseCircle onClick={this.closeButton} className="btn_close__item"/>
+                        </a>
+                    </div>}
+                    <div className="genre-name row">
+                        <input onChange={e => this.changeHandler(e)} value={this.name} type="text" name="name" className="form-control__item" placeholder="New genre"
                                style={{border: this.state.borderColorName}}/>
-                        <div style={{color: 'red'}}>{this.state.nameError}</div>
-                    </div>
-                    <div>
-                        <button id="btn_singin__item" className="w-100 btn btn-lg btn-primary" type="submit">Add</button>
+                        <div id="error-text__item" style={{color: 'red', position: 'absolute', top:'120px'}}>{this.state.nameError}</div>
+                        <button id="btn_add__item" type="submit">Add</button>
                     </div>
                 </form>
             </div>

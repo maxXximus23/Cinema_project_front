@@ -1,5 +1,6 @@
 import React from "react";
 import GenreService from "../../../services/GenreService";
+import './ManageGenres.css'
 
 class DeleteGenre extends React.Component {
     constructor(props) {
@@ -17,8 +18,8 @@ class DeleteGenre extends React.Component {
     };
     render() {
         return (
-            <div >
-                <button onClick={this.delete}>Delete</button>
+            <div  className="genre_delete__item" onClick={this.delete}>
+            Delete
             </div>
         )
     }
