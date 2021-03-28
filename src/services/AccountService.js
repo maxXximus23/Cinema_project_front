@@ -1,3 +1,4 @@
+import ErrorComponent from "../components/error/ErrorComponent";
 import BaseService from "./BaseService"
 
 class AccountService {
@@ -8,7 +9,7 @@ class AccountService {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(user)
         };
-        return fetch(BaseService._baseUrl+'/users/login', requestOptions)
+        return fetch(BaseService._baseUrl+'/auth/login', requestOptions)
             .then(response => {
                 if (!response.ok) {
                     BaseService.handleResponseError(response);
@@ -21,7 +22,7 @@ class AccountService {
                 return res
             })
             .catch(error => {
-                BaseService.handleError(error);
+                console.log(error);
             });
     }
 
@@ -32,7 +33,7 @@ class AccountService {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(user)
         };
-        return fetch(BaseService._baseUrl+'/users/register', requestOptions)
+        return fetch(BaseService._baseUrl+'/auth/register', requestOptions)
             .then(response => {
                 if (!response.ok) {
                     BaseService.handleResponseError(response);
@@ -61,15 +62,18 @@ class AccountService {
             });
     }
     static logout(){
+        console.log("logout")
         const requestOptions = {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: { 
+                'Content-Type': 'application/json'
+            },
             body: JSON.stringify({
                 id: AccountService.getId(),
                 token: AccountService.getToken()
             })
         };
-        fetch(BaseService._baseUrl + '/users/logout', requestOptions)
+        fetch(BaseService._baseUrl + '/auth/logout', requestOptions)
             .then(BaseService.handleError)
             .then(() => {
                 localStorage.removeItem('userCredentials')
@@ -83,6 +87,16 @@ class AccountService {
     static isLogged() {
         return !(localStorage.getItem("userCredentials") == null)
     } 
+
+    static async isAdmin() {
+        return fetch(BaseService._baseUrl + '/auth/is-admin-true',
+            {
+                headers: {
+                    Authorization: AccountService.getToken()
+                }
+            })
+            .then(BaseService.handleError)
+    }
 
     static getUser(){
         return fetch('http://localhost:8081/users/' + AccountService.getId(),

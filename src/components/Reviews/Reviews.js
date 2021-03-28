@@ -3,12 +3,15 @@ import './style.css'
 import ErrorComponent from '../error/ErrorComponent';
 import Loading from '../Loading/Loading';
 import ReviewService from '../../services/ReviewService';
+import AccountService from '../../services/AccountService';
+import Review from './Review';
 
 class Reviews extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             error: null,
+            errorPost: null,
             isLoaded: false,
             id: props.id,
             reviews: [],
@@ -46,6 +49,15 @@ class Reviews extends React.Component {
             }
         );
     }
+
+    onItemDelete(id){
+        let index = this.state.reviews.findIndex(el => el.id == id)
+        
+        if (index > -1) {
+            this.state.reviews.splice(index, 1);
+            this.setState({})
+        }
+    }
   
     render() {
         const { error, isLoaded, reviews } = this.state;
@@ -58,6 +70,10 @@ class Reviews extends React.Component {
                         rows="5"
                         onChange={this.handleTextChange}
                         value={this.state.newReviewText}/>
+                    {
+                        this.state.errorPost &&
+                        <p className="text-right">{this.state.errorPost.message}</p>
+                    }
                     <input type="submit" value="Post Review" className="newReview__submit buttonPost"/>
                 </form>
             </div>
@@ -78,15 +94,7 @@ class Reviews extends React.Component {
                     <h3 className="text-left">Reviews:</h3>
                     {
                         reviews.map(el =>{
-                            return <div key={el.id} className="col-md-12 review">
-                                    <div className="d-flex justify-content-between col-md-12 review__header">
-                                        <h6 className="col-md-5 text-left">{el.firstName + " " + el.lastName}</h6>
-                                        <span className="col-md-5 text-right">{el.creationDate}</span>
-                                    </div>
-                                    <div>
-                                        <p className="col-md-12 review__text text-left">{el.text}</p>
-                                    </div>
-                                </div>
+                            return <Review  key={el.id} review={el} onDelete={(id) => this.onItemDelete(id)} />
                         })
                     }
                     {newReviwForm}
@@ -104,8 +112,14 @@ class Reviews extends React.Component {
     postReview(event){
         event.preventDefault();
 
-        if (this.state.newReviewText.length < 20)
-            return;
+        if (this.state.newReviewText.length < 20){
+            this.setState({
+                errorPost: {
+                    message: "Text is too short"
+                }
+            })
+            return
+        }
 
         ReviewService.addReview(this.state.id, this.state.newReviewText)
             .then(result => {
@@ -126,7 +140,7 @@ class Reviews extends React.Component {
             .catch(err => {
                 this.setState({
                     isLoaded: true,
-                    error: err
+                    errorPost: err
                 })
             })
     }
