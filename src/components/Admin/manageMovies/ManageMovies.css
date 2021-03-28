@@ -1,66 +1,90 @@
-.create-button {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 20px;
-    margin-top: 15px;
+.button-box{
+    width: 90%;
+    margin: 50px auto;
+    background: white;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, .1);
     border-radius: 20px;
-    border: 0;
-    box-shadow:
-            -2px -2px 1px rgba(0,0,0,0.5) inset,
-            10px 4px 10px rgba(0,0,0,0.15),
-            0px 8px 10px rgba(0,0,0,0.15);
-    background-color: rgb(76, 217, 175);
-    transition: 0.4s;
-    font-weight: 700;
-    font-size: 24px;
+    height: 100px;
 }
 
-.create-button:hover {
-    transition: 0.4s;
-    background-color: #019875;
-}
-.block-button {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 20px;
-    margin-top: 15px;
-    border-radius: 20px;
-    border: 0;
-    box-shadow:
-            -2px -2px 1px rgba(0,0,0,0.5) inset,
-            10px 4px 10px rgba(0,0,0,0.15),
-            0px 8px 10px rgba(0,0,0,0.15);
-    background-color: #e62136;
-    transition: 0.4s;
-    font-weight: 700;
-    font-size: 24px;
-}
-
-.block-button:hover {
-    transition: 0.4s;
-    background-color: #c51d2f;
-}
-.update-button {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 20px;
-    margin-top: 15px;
-    border-radius: 20px;
-    border: 0;
-    box-shadow:
-            -2px -2px 1px rgba(0,0,0,0.5) inset,
-            10px 4px 10px rgba(0,0,0,0.15),
-            0px 8px 10px rgba(0,0,0,0.15);
-    background-color: #f6ab38;
-    transition: 0.4s;
-    font-weight: 700;
-    font-size: 24px;
+.button-box  .movie-back-button, .create-button{
+    text-decoration: none;
+    width: 300px;
+    height: 65px;
+    line-height: 45px;
+    border-radius: 45px;
+    margin: 15px auto;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 15px;
+    text-transform: uppercase;
+    text-align: center;
+    letter-spacing: 3px;
+    font-weight: 600;
+    color: #524f4e;
+    background: rgb(174, 235, 235);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, .1);
+    transition: .3s;
+    border: none;
 }
 
-.update-button:hover {
-    transition: 0.4s;
-    background-color: #d09945;
+.button-box  .movie-back-button:hover, .create-button:hover{
+    background: #2EE59D;
+    box-shadow: 0 15px 20px rgba(46, 229, 157, .4);
+    color: white;
+    transform: translateY(-7px);
 }
+
+.movies_manage_wrap__item{
+    margin: 30px auto;
+}
+
+.movies_block_wrap__item{
+    padding-top: 150px;
+}
+
+.movies_manage_wrap__item{
+    width: 90%;
+}
+
+.update_block_button__item{
+    margin: 0 100px;
+}
+            
+.block-button , .update-button{
+    text-decoration: none;
+    width: 200px;
+    height: 60 px;
+    line-height: 45px;
+    border-radius: 45px;
+    margin: 20px 10px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 15px;
+    text-transform: uppercase;
+    text-align: center;
+    letter-spacing: 3px;
+    font-weight: 600;
+    color: white;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, .1);
+    transition: .3s;
+    border: none;
+}
+
+.block-button{
+    background-color: red;
+}
+
+.update-button{
+    background-color: orange;
+}
+
+.block-button:hover , .update-button:hover{
+    background: #2EE59D;
+    box-shadow: 0 15px 20px rgba(46, 229, 157, .4);
+    color: white;
+    transform: translateY(-7px);
+}
+
+
 .button-box{
     display: flex;
 }
@@ -77,8 +101,8 @@
             0px 8px 10px rgba(0,0,0,0.15);
 }
 
-.text{
-    margin-top: 120px;
+.update_block_button__item .text{
+    margin-top: 90px;
     line-height: 1.8;
     text-align: left;
     width: 300px;
@@ -88,7 +112,6 @@
     font-weight: 900;
     color:#4A639E;
 }
-
 
 .main {
     height: 420px;
@@ -109,17 +132,5 @@
 .main:hover{
     transition: 0.4s;
     box-shadow: 0 15px 20px rgba(46, 229, 157, .4);
-}
-
-.tickets_wrap__item{
-    margin-top: 30px;
-}
-
-.places_wrap__item{
-    height: 85px;
-    width: 200px;
-    list-style-type: none;
-    overflow: auto;
-    padding-left: 15px;
 }
 

@@ -48,15 +48,17 @@ class ActiveMovies extends React.Component {
             let item = {values: []}
             for (let i = this.state.movies.length-1; i >= 0; i--) {
                 item.values.push(
-                    <div className="main">
+                    <div className="main update_block_wrap__item">
                         <img className="img_ticket__item" src={this.state.movies[i].posterPath} width="225"
                              height="275" alt=""/>
-                        <div className="text">
-                            <h3>Title: {this.state.movies[i].title}</h3>
-                        </div>
-                        <div >
+                       
+                        <div className="update_block_button__item">
+                            <div className="text">
+                                <h3>Title: {this.state.movies[i].title}</h3>
+                            
                             <button onClick={()=>window.location.replace("/admin/update-movie/"+this.state.movies[i].id)} className="update-button">Update</button>
                             <button id={this.state.movies[i].id} onClick={this.block} className="block-button">Block</button>
+                            </div>
                         </div>
                     </div>
                 )

@@ -8,7 +8,7 @@ class AccountService {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(user)
         };
-        return fetch(BaseService._baseUrl+'/users/login', requestOptions)
+        return fetch(BaseService._baseUrl+'/auth/login', requestOptions)
             .then(response => {
                 if (!response.ok) {
                     BaseService.handleResponseError(response);
@@ -32,7 +32,7 @@ class AccountService {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(user)
         };
-        return fetch(BaseService._baseUrl+'/users/register', requestOptions)
+        return fetch(BaseService._baseUrl+'/auth/register', requestOptions)
             .then(response => {
                 if (!response.ok) {
                     BaseService.handleResponseError(response);
@@ -69,7 +69,7 @@ class AccountService {
                 token: AccountService.getToken()
             })
         };
-        fetch(BaseService._baseUrl + '/users/logout', requestOptions)
+        fetch(BaseService._baseUrl + '/auth/logout', requestOptions)
             .then(BaseService.handleError)
             .then(() => {
                 localStorage.removeItem('userCredentials')
