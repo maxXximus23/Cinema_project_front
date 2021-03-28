@@ -107,6 +107,5 @@ class GenreService {
                 BaseService.handleError(error);
             });
     }
-
 }
 export default GenreService;
