@@ -1,246 +1,249 @@
 import React from 'react'
 import MovieService from '../../services/MovieService'
+import GenresService from '../../services/GenresService'
 import ErrorComponent from '../error/ErrorComponent'
 import PageResult from './PageResult'
 import './MovieListPage.css'
+import Loading from '../Loading/Loading'
 
 class MoviesListPage extends React.Component {
-   constructor(props) {
-      super(props)
-      this.state = {
-         error: null,
-         isLoaded: false,
-         movies: [],
-         page: 1,
-         perPage: 20,
-         pageAmount: 0,
-         genre:
-            this.props.location.genre === undefined
-               ? ''
-               : this.props.location.genre,
-         title: '',
-         perPageWaiter: 20,
-      }
-      this.updatePage = this.updatePage.bind(this)
+	constructor(props) {
+		super(props)
+		this.state = {
+			error: null,
+			isLoaded: false,
+			movies: [],
+			page: 1,
+			perPage: 20,
+			pageAmount: 0,
+			title: '',
+			perPageWaiter: 20,
+			genres: [],
+			allGenres: [],
+		}
+		console.log(this.props.location)
+		if (!(this.props.location.genre === undefined)) {
+			this.state.genres.push(this.props.location.genre)
+		}
 
-      this.updateGenre = this.updateGenre.bind(this)
-      this.handleGenreTextChange = this.handleGenreTextChange.bind(this)
-      this.resetGenre = this.resetGenre.bind(this)
+		this.updatePage = this.updatePage.bind(this)
 
-      this.updateTitle = this.updateTitle.bind(this)
-      this.handleTitleTextChange = this.handleTitleTextChange.bind(this)
-      this.resetTitle = this.resetTitle.bind(this)
+		this.updateGenre = this.updateGenre.bind(this)
+		this.handleGenreChange = this.handleGenreChange.bind(this)
+		this.resetGenre = this.resetGenre.bind(this)
 
-      this.onPerPageApply = this.onPerPageApply.bind(this)
-      this.handlePerPageChange = this.handlePerPageChange.bind(this)
-   }
+		this.updateTitle = this.updateTitle.bind(this)
+		this.handleTitleTextChange = this.handleTitleTextChange.bind(this)
+		this.resetTitle = this.resetTitle.bind(this)
 
-   componentDidMount() {
-      this.updateData(1)
-   }
+		this.onPerPageApply = this.onPerPageApply.bind(this)
+		this.handlePerPageChange = this.handlePerPageChange.bind(this)
+	}
 
-   updateData(page) {
-      MovieService.getPageAmountForQuery(
-         this.state.perPage,
-         this.state.genre,
-         this.state.title
-      )
-         .then((result) => {
-            this.state.pageAmount = result
-            this.setPageData(page)
-         })
-         .catch((err) => {
-            this.setState({
-               isLoaded: true,
-               error: err,
-            })
-         })
-   }
+	componentDidMount() {
+		GenresService.getAll()
+			.then(res => {
+				this.setState({
+					allGenres: res,
+				})
+			})
+			.catch(err => {
+				console.log(err)
+			})
+		this.updateData(1)
+	}
 
-   setPageData(page) {
-      MovieService.getMoviesForQuery(
-         page,
-         this.state.perPage,
-         this.state.genre,
-         this.state.title
-      )
-         .then((result) => {
-            this.setState({
-               isLoaded: true,
-               movies: result,
-            })
-         })
-         .catch((err) => {
-            MovieService.getMoviesForQuery(
-               1,
-               this.state.perPage,
-               this.state.genre,
-               this.state.title
-            )
-               .then((result) => {
-                  this.setState({
-                     isLoaded: true,
-                     movies: result,
-                     page: 1,
-                  })
-               })
-               .catch((err) => {
-                  this.setState({
-                     isLoaded: true,
-                     error: err,
-                  })
-               })
-         })
-   }
+	updateData(page) {
+		MovieService.getPageAmountForQuery(
+			this.state.perPage,
+			this.state.title,
+			this.state.genres
+		)
+			.then(result => {
+				this.state.pageAmount = result
+				this.setPageData(page)
+			})
+			.catch(err => {
+				this.setState({
+					isLoaded: true,
+					error: err,
+				})
+			})
+	}
 
-   updatePage(event) {
-      if (this.state.page != event.target.value) {
-         this.state.page = event.target.value
-         this.setPageData(this.state.page)
-      }
-   }
+	setPageData(page) {
+		MovieService.getMoviesForQuery(
+			page,
+			this.state.perPage,
+			this.state.title,
+			this.state.genres
+		)
+			.then(result => {
+				this.setState({
+					isLoaded: true,
+					movies: result,
+				})
+			})
+			.catch(err => {
+				this.setState({
+					isLoaded: true,
+					error: err,
+				})
+			})
+	}
 
-   updateGenre(event) {
-      if (this.state.genre != event.target.value) {
-         this.updateData(1)
-      }
-   }
+	updatePage(event) {
+		if (this.state.page != event.target.value) {
+			this.state.page = event.target.value
+			this.setPageData(this.state.page)
+		}
+	}
 
-   updateTitle(event) {
-      if (this.state.title != event.target.value) {
-         this.updateData(1)
-      }
-   }
+	updateGenre(event) {
+      if (this.state.genres.length == 0)
+         this.state.genres.push(this.state.allGenres[0])
+		this.updateData(1)
+	}
 
-   handleGenreTextChange(event) {
-      this.state.genre = event.target.value
-   }
+	updateTitle(event) {
+		if (this.state.title != event.target.value) {
+			this.updateData(1)
+		}
+	}
 
-   handleTitleTextChange(event) {
-      this.state.title = event.target.value
-   }
+	handleGenreChange(event) {
+		this.state.genres = []
+      this.state.genres.push(this.state.allGenres.find(el => el.id == event.target.value))
+	}
 
-   resetGenre(event) {
-      if (this.state.genre != '') {
-         this.state.genre = ''
-         document.getElementById('genreField').value = ''
-         this.updateData(1)
-      }
-   }
+	handleTitleTextChange(event) {
+		this.state.title = event.target.value
+	}
 
-   resetTitle(event) {
-      if (this.state.title != '') {
-         this.state.title = ''
-         document.getElementById('titleField').value = ''
-         this.updateData(1)
-      }
-   }
+	resetGenre(event) {
+		if (this.state.genres?.length != 0) {
+			this.state.genres = []
+			document.getElementById('genreField').value = ''
+			this.updateData(1)
+		}
+	}
 
-   onPerPageApply(event) {
-      if (this.state.perPageWaiter > 0 && this.state.perPageWaiter <= 100) {
-         this.state.perPage = this.state.perPageWaiter
-         this.updateData(this.state.page)
-      }
-   }
+	resetTitle(event) {
+		if (this.state.title != '') {
+			this.state.title = ''
+			document.getElementById('titleField').value = ''
+			this.updateData(1)
+		}
+	}
 
-   handlePerPageChange(event) {
-      if (event.target.value > 0 && event.target.value <= 100)
-         this.state.perPageWaiter = event.target.value
-   }
+	onPerPageApply(event) {
+		if (this.state.perPageWaiter > 0 && this.state.perPageWaiter <= 100) {
+			this.state.perPage = this.state.perPageWaiter
+			this.updateData(1)
+		}
+	}
 
-   render() {
-      const { error, isLoaded, movies } = this.state
+	handlePerPageChange(event) {
+		if (event.target.value > 0 && event.target.value <= 100)
+			this.state.perPageWaiter = event.target.value
+	}
 
-      if (error) {
-         return <ErrorComponent error={error} />
-      } else if (!isLoaded) {
-         return <div>Loading...</div>
-      } else {
-         let pagebuttons = []
+	render() {
+		const { error, isLoaded, movies } = this.state
 
-         for (let i = 1; i <= this.state.pageAmount; i++) {
-            pagebuttons.push(
-               <label className='page_button__item'>
-                  <input
-                     type='radio'
-                     name='page'
-                     className='page_input__item'
-                     key={i}
-                     onClick={this.updatePage}
-                     checked={i == this.state.page}
-                     value={i}
-                  />
-                  <div className='page_label'>{i}</div>
-               </label>
-            )
-         }
-         return (
-            <div>
-               <div className='search_wrap__item'>
-                  <input
-                     className='movies_input__item'
-                     type='text'
-                     placeholder='Title...'
-                     id='titleField'
-                     onChange={this.handleTitleTextChange}
-                  />
-                  <button
-                     className='serch_button__item'
-                     onClick={this.updateTitle}
-                  >
-                     Search
-                  </button>
-                  <button
-                     className='reset_button__item'
-                     onClick={this.resetTitle}
-                  >
-                     Reset
-                  </button>
-               </div>
-               <div className='search_wrap__item'>
-                  <input
-                     className='movies_input__item'
-                     type='text'
-                     placeholder='Genre...'
-                     id='genreField'
-                     onChange={this.handleGenreTextChange}
-                  />
-                  <button
-                     className='serch_button__item'
-                     onClick={this.updateGenre}
-                  >
-                     Search
-                  </button>
-                  <button
-                     className='reset_button__item'
-                     onClick={this.resetGenre}
-                  >
-                     Reset
-                  </button>
-               </div>
-               <div className='perPageForm col-md-12'>
-                  <span>Items per page: </span>
-                  <input
-                     className='movies_input__item'
-                     type='number'
-                     min='1'
-                     max='100'
-                     onChange={this.handlePerPageChange}
-                     defaultValue='20'
-                  />
-                  <button
-                     className='serch_button__item'
-                     onClick={this.onPerPageApply}
-                  >
-                     Apply
-                  </button>
-               </div>
-               <PageResult movies={movies} className='row' />
-               <div>{pagebuttons}</div>
-            </div>
-         )
-      }
-   }
+		if (error) {
+			return <ErrorComponent error={error} />
+		} else if (!isLoaded) {
+			return <Loading />
+		} else {
+			let pagebuttons = []
+
+			for (let i = 1; i <= this.state.pageAmount; i++) {
+				pagebuttons.push(
+					<label className='page_button__item'>
+						<input
+							type='radio'
+							name='page'
+							className='page_input__item'
+							key={i}
+							onClick={this.updatePage}
+							checked={i == this.state.page}
+							value={i}
+						/>
+						<div className='page_label'>{i}</div>
+					</label>
+				)
+			}
+			return (
+				<div>
+					<div className='search_wrap__item'>
+						<input
+							className='movies_input__item'
+							type='text'
+							placeholder='Title...'
+							id='titleField'
+							onChange={this.handleTitleTextChange}
+						/>
+						<button
+							className='serch_button__item'
+							onClick={this.updateTitle}
+						>
+							Search
+						</button>
+						<button
+							className='reset_button__item'
+							onClick={this.resetTitle}
+						>
+							Reset
+						</button>
+					</div>
+					<div className='search_wrap__item'>
+						<select
+							className='movies_input__item'
+							id='genreField'
+							defaultValue={null}
+							onChange={this.handleGenreChange}
+						>
+							{this.state.allGenres.map(el => {
+								return <option value={el.id}>{el.name}</option>
+							})}
+						</select>
+						<button
+							className='serch_button__item'
+							onClick={this.updateGenre}
+						>
+							Search
+						</button>
+						<button
+							className='reset_button__item'
+							onClick={this.resetGenre}
+						>
+							Reset
+						</button>
+					</div>
+					<div className='perPageForm col-md-12'>
+						<span>Items per page: </span>
+						<input
+							className='movies_input__item'
+							type='number'
+							min='1'
+							max='100'
+							onChange={this.handlePerPageChange}
+							defaultValue='20'
+						/>
+						<button
+							className='serch_button__item'
+							onClick={this.onPerPageApply}
+						>
+							Apply
+						</button>
+					</div>
+					<PageResult movies={movies} className='row' />
+					<div>{pagebuttons}</div>
+				</div>
+			)
+		}
+	}
 }
 
 export default MoviesListPage

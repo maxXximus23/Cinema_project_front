@@ -60,12 +60,18 @@ class Movie extends React.Component {
         } else {
             const trailer = <YouTube videoId={movie.trailerPath} opts={{'height': '500px','width': '100%'}}/>
 
-            let genresList = movie.genres?.split(", ")
             let genres = []
 
-            for (let i = 0; i < genresList?.length; i++){
-                genres.push(<span key={i}><Link to={{pathname: '/movies', genre: genresList[i]}}>{genresList[i]}</Link>{(i === genresList.length - 1) ? "" : ", "}</span>)
-            }
+            for (let i = 0; i < movie.genres?.length; i++) {
+					genres.push(
+						<span key={i}>
+							<Link to={{ pathname: '/movies', genre: movie.genres[i] }}>
+								{movie.genres[i].name}
+							</Link>
+							{i === movie.genres?.length - 1 ? '' : ', '}
+						</span>
+					)
+				}
 
             return (
                 <div className="row moviePage">
@@ -85,8 +91,12 @@ class Movie extends React.Component {
                                     <h1>{movie.title}</h1>
                                     <p>{this.parseDuration(movie.duration)}</p>
                                     <p><strong>{genres}</strong></p>
-                                    <p><strong>Actors: </strong>{movie.actors}</p>
-                                    <p><strong>Country: </strong>{movie.country}</p>
+                                    {movie.actors &&
+                                        <p><strong>Actors: </strong>{movie.actors}</p>
+                                    }
+                                    {movie.country &&
+                                        <p><strong>Country: </strong>{movie.country}</p>
+                                    }
                                     <p>{movie.description}</p>
                                 </div>
                             </div>

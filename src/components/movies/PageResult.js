@@ -41,7 +41,7 @@ export default class PageResult extends React.Component {
                                                         </div>
                                                         <div className="text-wrapper">
                                                             <div className="post-title">{movie.title}</div>
-                                                            <h3 className="post-date">{movie.genres}</h3>
+                                                            <h3 className="post-date">{movie.genres.map(el => el.name + ' ')}</h3>
                                                         </div>
                                                         <div className="overlay"></div>
                                                     </Link>
