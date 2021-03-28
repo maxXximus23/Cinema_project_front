@@ -69,7 +69,7 @@ class UsersElement extends React.Component {
 					<div className='col-md-2 session__edit'>
 						{user.roles.map(el => el)}
 					</div>
-					<div className='col-md-1 session__cancel'>
+					<div className='col-md-2 session__cancel'>
 						<div onClick={this.markToAccess}>
 							{!reqiureSureAccess && (
 								<TiDelete className='session__cancel__btn' />
@@ -80,11 +80,11 @@ class UsersElement extends React.Component {
 								className='session__cancel__sure'
 								onClick={this.grandAccess}
 							>
-								{user.roles.includes('ADMIN') ? 'As user' : 'As admin'}
+								{user.roles.includes('ADMIN') ? 'Make as user' : 'Make as admin'}
 							</button>
 						)}
 					</div>
-					<div className='col-md-2 session__cancel'>
+					<div className='col-md-1 session__cancel'>
 						<div onClick={this.markToBlock}>
 							{!reqiureSureBlock && (
 								<TiDelete className='session__cancel__btn' />

@@ -199,62 +199,92 @@ class SessionsMain extends React.Component {
                 )
             }
             
-            return (<div className="container">
-                        <div className="d-flex justify-content-between sessions__label">
-                            <BackButton backPath={() => this.props.history.goBack()} />
-                            <h3>Sessions Managing</h3>
-                            <label>
-                                <span>Items per page: </span>
-                                <input type="number" min="1" max="100" defaultValue={this.state.perPage} onChange={this.changePerPage}/>
-                                <button onClick={this.applyChange}>Apply</button>
-                            </label>
-                            <label>
-                                <input type="checkbox" defaultValue={false} onChange={this.dontShowOutdated}/>
-                                <span>Dont show outdated</span>
-                            </label>
-                            <Link to={'/admin/sessions/create'}>Create session</Link>
-                        </div>
-                        <div className="sessions__container">
-                            <div className="sessions__header row">
-                                <label className="session__id col-md-1" id="sesId">
-                                    <input type="radio" name="sort" defaultChecked onClick={this.sortById}/>
-                                    <span>ID</span>
-                                </label>
-                                <div className="session__poster col-md-2">
-                                    <span>Movie Poster</span>
-                                </div>
-                                <label className="session__title col-md-3">
-                                    <input type="radio" name="sort" onClick={this.sortByTitle}/>
-                                    <span>Movie Title</span>
-                                </label>
-                                <label className="session__hall col-md-1">
-                                    <input type="radio" name="sort" onClick={this.sortByHall}/>
-                                    <span>Hall Name</span>
-                                </label>
-                                <label className="session__date col-md-2">
-                                    <input type="radio" name="sort" onClick={this.sortByDate}/>
-                                    <span>Date</span>
-                                </label>
-                                <div className="session__edit col-md-1">
-                                    <span>Edit</span>
-                                </div>
-                                <div className="session__edit col-md-1">
-                                    <span>Cancel</span>
-                                </div>
-                                <div className="session__delete col-md-1">
-                                    <span>Delete</span>
-                                </div>
-                            </div>
-                            {
-                                sessions.map(el => {
-                                    return  <SessionElement session={el}  key={el.id}/>
-                                })
-                            }
-                        </div>
-                        <div className="session__pageButtons">
-                            {pageButtons}
-                        </div>
-                    </div>)
+            return (
+					<div className='container'>
+						<div className='d-flex justify-content-between sessions__label'>
+							<BackButton backPath={() => this.props.history.goBack()} />
+							<h4>Sessions Managing</h4>
+							<label>
+								<span>Items per page: </span>
+								<input
+									type='number'
+									min='1'
+									max='100'
+									defaultValue={this.state.perPage}
+									onChange={this.changePerPage}
+								/>
+								<button
+									id='button_apply__item'
+									onClick={this.applyChange}
+								>
+									Apply
+								</button>
+							</label>
+							<label>
+								<input
+									type='checkbox'
+									defaultValue={false}
+									onChange={this.dontShowOutdated}
+								/>
+								<span>Dont show outdated</span>
+							</label>
+							<Link to={'/admin/sessions/create'}>Create session</Link>
+						</div>
+						<div className='sessions__container'>
+							<div className='sessions__header row'>
+								<label className='session__id col-md-1' id='sesId'>
+									<input
+										type='radio'
+										name='sort'
+										defaultChecked
+										onClick={this.sortById}
+									/>
+									<span>ID</span>
+								</label>
+								<div className='session__poster col-md-2'>
+									<span>Movie Poster</span>
+								</div>
+								<label className='session__title col-md-3'>
+									<input
+										type='radio'
+										name='sort'
+										onClick={this.sortByTitle}
+									/>
+									<span>Movie Title</span>
+								</label>
+								<label className='session__hall col-md-1'>
+									<input
+										type='radio'
+										name='sort'
+										onClick={this.sortByHall}
+									/>
+									<span>Hall Name</span>
+								</label>
+								<label className='session__date col-md-2'>
+									<input
+										type='radio'
+										name='sort'
+										onClick={this.sortByDate}
+									/>
+									<span>Date</span>
+								</label>
+								<div className='session__edit col-md-1'>
+									<span>Edit</span>
+								</div>
+								<div className='session__edit col-md-1'>
+									<span>Cancel</span>
+								</div>
+								<div className='session__delete col-md-1'>
+									<span>Delete</span>
+								</div>
+							</div>
+							{sessions.map(el => {
+								return <SessionElement session={el} key={el.id} />
+							})}
+						</div>
+						<div className='session__pageButtons'>{pageButtons}</div>
+					</div>
+				)
         }
         
     }

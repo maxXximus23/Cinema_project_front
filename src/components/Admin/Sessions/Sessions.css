@@ -7,11 +7,6 @@
    background: white;
    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
 }
-
-.sessions_elements__item {
-   padding: 0px 15px;
-}
-
 .sessions__label {
    margin-top: 50px;
    background: white;

@@ -4,8 +4,8 @@ import { BsArrowUpDown } from 'react-icons/bs'
 import ErrorComponent from '../../error/ErrorComponent'
 import Loading from '../../Loading/Loading'
 import BackButton from '../../backButton/BackButton'
-import { Link } from 'react-router-dom'
 import UsersElement from './UserElement'
+import AccountService from '../../../services/AccountService'
 
 class UsersMain extends React.Component {
 	constructor(props) {
@@ -23,25 +23,31 @@ class UsersMain extends React.Component {
 		this.sortByName = this.sortByName.bind(this)
 		this.sortByLastName = this.sortByLastName.bind(this)
 
-        this.changePage = this.changePage.bind(this)
+		this.changePage = this.changePage.bind(this)
 		this.changePerPage = this.changePerPage.bind(this)
 		this.applyChange = this.applyChange.bind(this)
 	}
 
 	componentDidMount() {
-		UserService.getAll()
-			.then(result => {
-				this.setState({
-					isLoaded: true,
-					users: result,
-					pages: Math.ceil(result.length / this.state.perPage),
-				})
+		AccountService.isAdmin()
+			.then(() => {
+				UserService.getAll()
+					.then(result => {
+						this.setState({
+							isLoaded: true,
+							users: result,
+							pages: Math.ceil(result.length / this.state.perPage),
+						})
+					})
+					.catch(err => {
+						this.setState({
+							isLoaded: true,
+							error: err,
+						})
+					})
 			})
-			.catch(err => {
-				this.setState({
-					isLoaded: true,
-					error: err,
-				})
+			.catch(() => {
+				window.location.replace('/')
 			})
 	}
 
@@ -215,10 +221,10 @@ class UsersMain extends React.Component {
 							<div className='session__edit col-md-2'>
 								<span>Role</span>
 							</div>
-							<div className='session__delete col-md-1'>
+							<div className='session__delete col-md-2'>
 								<span>Update Role</span>
 							</div>
-							<div className='session__delete col-md-2'>
+							<div className='session__delete col-md-1'>
 								<span>Block</span>
 							</div>
 						</div>
