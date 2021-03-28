@@ -9,7 +9,7 @@ class AccountService {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(user)
         };
-        return fetch(BaseService._baseUrl+'/users/login', requestOptions)
+        return fetch(BaseService._baseUrl+'/auth/login', requestOptions)
             .then(response => {
                 if (!response.ok) {
                     BaseService.handleResponseError(response);
@@ -22,7 +22,7 @@ class AccountService {
                 return res
             })
             .catch(error => {
-                BaseService.handleError(error);
+                console.log(error);
             });
     }
 
@@ -64,13 +64,16 @@ class AccountService {
     static logout(){
         const requestOptions = {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: { 
+                'Content-Type': 'application/json',
+                Authorization: AccountService.getToken()
+            },
             body: JSON.stringify({
                 id: AccountService.getId(),
                 token: AccountService.getToken()
             })
         };
-        fetch(BaseService._baseUrl + '/users/logout', requestOptions)
+        fetch(BaseService._baseUrl + '/auth/logout', requestOptions)
             .then(BaseService.handleError)
             .then(() => {
                 localStorage.removeItem('userCredentials')
@@ -86,7 +89,7 @@ class AccountService {
     } 
 
     static async isAdmin() {
-        return fetch(BaseService._baseUrl + '/users/is-admin-true',
+        return fetch(BaseService._baseUrl + '/auth/is-admin-true',
             {
                 headers: {
                     Authorization: AccountService.getToken()
