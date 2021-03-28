@@ -1,3 +1,4 @@
+import ErrorComponent from "../components/error/ErrorComponent";
 import BaseService from "./BaseService"
 
 class AccountService {
@@ -83,6 +84,16 @@ class AccountService {
     static isLogged() {
         return !(localStorage.getItem("userCredentials") == null)
     } 
+
+    static async isAdmin() {
+        return fetch(BaseService._baseUrl + '/users/is-admin-true',
+            {
+                headers: {
+                    Authorization: AccountService.getToken()
+                }
+            })
+            .then(BaseService.handleError)
+    }
 
     static getUser(){
         return fetch('http://localhost:8081/users/' + AccountService.getId(),

@@ -8,11 +8,28 @@ import {
     Button
 } from "react-bootstrap";
 import avatar from "./user128.png";
-import { useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 import AccountService from "../../services/AccountService";
 
 export default class Header extends Component {
-    render (){
+    constructor(props){
+        super(props)
+        this.state = {
+            isAdmin: false
+        }
+    }
+
+    componentDidMount(){
+        AccountService.isAdmin()
+            .then(()=>{ 
+                this.setState({
+                    isAdmin: true
+                })
+            })
+            .catch()
+    }
+
+    render (){      
         return (
             <>
             <Navbar className="navbar-custom" collapseOnSelect /*fixed="top"*/ expand="md" variant="dark">
@@ -30,7 +47,10 @@ export default class Header extends Component {
                         </Navbar.Brand>
                     </Nav.Link>
                     <Nav.Link href="/"><Navbar className="cinema_name__item">DutCinema</Navbar></Nav.Link>
-                   
+                    {
+                        this.state.isAdmin && 
+                        <Link to={'/admin'} >Admin Page</Link>
+                    }
                     <Navbar.Toggle aria-controls="responsive-navbar-nav"/>
                     <Navbar.Collapse id="responsive-navbar-nav">
                         <Nav className="mr-auto">
