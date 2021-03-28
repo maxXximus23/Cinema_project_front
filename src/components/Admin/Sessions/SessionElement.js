@@ -61,7 +61,6 @@ class SessionElement extends React.Component {
                     session: result,
                     reqiureSureCancel: false
                 })
-                console.log(this.state.session)
             })
             .catch(err => {
                 this.setState({

@@ -62,11 +62,11 @@ class AccountService {
             });
     }
     static logout(){
+        console.log("logout")
         const requestOptions = {
             method: 'POST',
             headers: { 
-                'Content-Type': 'application/json',
-                Authorization: AccountService.getToken()
+                'Content-Type': 'application/json'
             },
             body: JSON.stringify({
                 id: AccountService.getId(),
