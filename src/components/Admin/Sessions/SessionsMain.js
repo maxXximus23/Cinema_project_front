@@ -26,7 +26,7 @@ class SessionsMain extends React.Component {
             }],
             lastSort: "id",
             page: 1,
-            perPage: 1,
+            perPage: 100,
             pages: 0,
             showOutdated: true
         }
@@ -207,7 +207,7 @@ class SessionsMain extends React.Component {
             }
             
             return (
-					<div className='container'>
+					<div className='container editcreate_wrap__item'>
 						<div className='d-flex justify-content-between sessions__label'>
 							<BackButton backPath={() => this.props.history.goBack()} />
 							<h3>Sessions Managing</h3>

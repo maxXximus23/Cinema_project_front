@@ -1,5 +1,5 @@
-.container .movie-back-button,
-.apply_button__item {
+.apply_button__item,
+.editcreate_wrap__item .movie-back-button {
    text-align: center;
    text-decoration: none;
    line-height: 45px;
@@ -9,7 +9,6 @@
    font-family: 'Montserrat', sans-serif;
    font-size: 13px;
    text-transform: uppercase;
-   text-align: center;
    font-weight: 900;
    color: #524f4e;
    background: white;
@@ -17,7 +16,7 @@
    transition: 0.3s;
 }
 
-.container .movie-back-button:hover,
+.editcreate_wrap__item .movie-back-button:hover,
 .apply_button__item:hover {
    background: #2ee59d;
    box-shadow: 0 15px 20px rgba(46, 229, 157, 0.4);
@@ -25,7 +24,7 @@
    transform: translateY(-7px);
 }
 
-.container .movie-back-button {
+.editcreate_wrap__item .movie-back-button {
    width: 120px;
    height: 45px;
 }

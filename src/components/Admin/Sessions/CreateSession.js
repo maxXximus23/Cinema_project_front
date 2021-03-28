@@ -106,51 +106,63 @@ class CreateSession extends React.Component {
          return <Loading />
       } else {
          return (
-            <div className='container editcreate_wrap__item'>
-               <BackButton backPath={() => this.props.history.goBack()} />
-               <br />
-               {error && error.message}
-               <form onSubmit={this.confirmCreation}>
-                  <label>
-                     <span>Hall: </span>
-                     <select  className="label_sessions_editcreate__item" onChange={this.changeHall} defaultValue={halls[0].id}>
-                        {halls.map((el) => {
-                           return (
-                              <option key={el.id} value={el.id}>
-                                 {el.name} ({el.rowsAmount * el.places} places)
-                              </option>
-                           )
-                        })}
-                     </select>
-                  </label>
-                  <br />
-                  <label>
-                     <span style={{marginLeft:'-14px'}}>Movie: </span>
-                     <select  className="label_sessions_editcreate__item" onChange={this.changeMovie} defaultValue={titles[0].id}>
-                        {titles.map((el) => {
-                           return (
-                              <option key={el.id} value={el.id}>
-                                 {el.title}
-                              </option>
-                           )
-                        })}
-                     </select>
-                  </label>
-                  <br />
-                  <label>
-                     <span style={{marginLeft:'-4px'}}>Date: </span>
-                     <input
-                        type='datetime-local'
-                        defaultValue={moment()}
-                        onChange={this.changeDate}
-                        className="label_sessions_editcreate__item"
-                     />
-                  </label>
-                  <br />
-                  <input className="apply_button__item" type='submit' value='Apply' />
-               </form>
-            </div>
-         )
+				<div className='container editcreate_wrap__item'>
+					<BackButton backPath={() => this.props.history.goBack()} />
+					<br />
+					{error && error.message}
+					<form onSubmit={this.confirmCreation}>
+						<label>
+							<span>Hall: </span>
+							<select
+								className='label_sessions_editcreate__item'
+								onChange={this.changeHall}
+								defaultValue={halls[0].id}
+							>
+								{halls.map(el => {
+									return (
+										<option key={el.id} value={el.id}>
+											{el.name} ({el.rowsAmount * el.places} places)
+										</option>
+									)
+								})}
+							</select>
+						</label>
+						<br />
+						<label>
+							<span style={{ marginLeft: '-14px' }}>Movie: </span>
+							<select
+								className='label_sessions_editcreate__item'
+								onChange={this.changeMovie}
+								defaultValue={titles[0].id}
+							>
+								{titles.map(el => {
+									return (
+										<option key={el.id} value={el.id}>
+											{el.title}
+										</option>
+									)
+								})}
+							</select>
+						</label>
+						<br />
+						<label>
+							<span style={{ marginLeft: '-4px' }}>Date: </span>
+							<input
+								type='datetime-local'
+								defaultValue={moment()}
+								onChange={this.changeDate}
+								className='label_sessions_editcreate__item'
+							/>
+						</label>
+						<br />
+						<input
+							className='apply_button__item'
+							type='submit'
+							value='Apply'
+						/>
+					</form>
+				</div>
+			)
       }
    }
 }
