@@ -66,7 +66,7 @@
    background: rgb(174, 235, 235);
    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
    transition: 0.3s;
-   border:none;
+   border: none;
 }
 
 #button_apply__item:hover {
@@ -148,16 +148,18 @@
    color: #2ee59d;
 }
 
-.session__remove__sure, .session__cancel__sure{
+.session__remove__sure,
+.session__cancel__sure {
    border-radius: 10px;
    font-weight: 900;
    margin: 0 0 0 -10px;
    background-color: red;
-   color:white;
+   color: white;
    border: none;
 }
 
-.session__remove__sure:hover, .session__cancel__sure:hover {
+.session__remove__sure:hover,
+.session__cancel__sure:hover {
    color: white;
    background: #2ee59d;
 }
@@ -194,7 +196,7 @@
    background: rgb(174, 235, 235);
    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
    transition: 0.3s;
-   border:none;
+   border: none;
 }
 
 .sessions__label .movie-back-button:hover {
@@ -238,8 +240,8 @@
    transform: translateY(-7px);
 }
 
-.page_input__item, 
-.sessions__header [type="radio"] {
+.page_input__item,
+.sessions__header [type='radio'] {
    display: none;
 }
 
@@ -251,6 +253,6 @@
    color: white;
 }
 
-.sessions__header input:hover ~ span{
-   color:#2ee59d;
+.sessions__header input:hover ~ span {
+   color: #2ee59d;
 }
