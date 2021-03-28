@@ -12,7 +12,9 @@
     "node-sass": "^5.0.0",
     "react": "^17.0.1",
     "react-bootstrap": "^1.5.2",
+    "react-bootstrap-select": "^0.14.0",
     "react-dom": "^17.0.1",
+    "react-icons": "^4.2.0",
     "react-moment": "^1.1.1",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.3",
@@ -44,5 +46,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "multiselect-react-dropdown": "^1.6.11"
   }
 }

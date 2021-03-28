@@ -21,6 +21,13 @@ import EditSession from './components/Admin/Sessions/EditSession';
 import CreateSession from './components/Admin/Sessions/CreateSession';
 import AllGenres from "./components/Admin/manageGenres/AllGenres"
 
+import UsersMain from './components/Admin/Users/UsersMain';
+import AdminMain from './components/Admin/AdminMain';
+
+import AllMovies from "./components/Admin/manageMovies/AllMovies";
+import CreateMovie from "./components/Admin/manageMovies/CreateMovie";
+import UpdateMovie from "./components/Admin/manageMovies/UpdateMovie";
+
 function App() {
   return (
     <div className="App">
@@ -38,6 +45,12 @@ function App() {
             <Route exact path="/admin/sessions/:sessionId" component={EditSession} />
             <Route exact path="/admin/sessions" component={SessionsMain} />
             <Route path="/admin/all-genres" component={AllGenres} />
+            <Route exact path="/admin/all-movies" component={AllMovies} />
+            <Route exact path="/admin/create-movie/" component={CreateMovie} />
+            <Route exact path="/admin/update-movie/:movieId" component={UpdateMovie} />
+            <Route exact path="/admin/users" component={UsersMain} />
+            <Route exact path='/admin' component={AdminMain} />
+
             <Route component={Error} exact/>
         </Switch>
         <Footer />
