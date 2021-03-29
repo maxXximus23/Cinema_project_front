@@ -54,7 +54,13 @@ class ReviewService{
             .then(BaseService.handleError);
     }
 
-
+    static async getAll() {
+        return fetch(BaseService._baseUrl + '/reviews', {
+				headers: {
+					Authorization: AccountService.getToken(),
+				},
+			}).then(BaseService.handleError)
+    }
 
     static getById= async (id) =>{
         console.log("ReviewService.getById(id):");
