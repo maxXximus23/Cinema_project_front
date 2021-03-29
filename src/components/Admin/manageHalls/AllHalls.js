@@ -31,7 +31,7 @@ class AllHalls extends React.Component {
                 this.componentDidMount();
             }
         });
-        await HallService.getActive()
+        await HallService.getAllActive()
             .then((result) => {
                 this.setState({activeHalls: result});
                 console.log(result)
@@ -49,7 +49,7 @@ class AllHalls extends React.Component {
                 this.componentDidMount();
             }
         });
-        await HallService.getActive()
+        await HallService.getAllActive()
             .then((result) => {
                 this.setState({activeHalls: result});
                 console.log(result)
@@ -70,7 +70,7 @@ class AllHalls extends React.Component {
                 })
             })
             .catch(() => window.location.replace('/'));
-        await HallService.getActive()
+        await HallService.getAllActive()
             .then((result) => {
                 this.setState({activeHalls: result});
             });
