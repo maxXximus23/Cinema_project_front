@@ -72,7 +72,7 @@ class Reviews extends React.Component {
                         value={this.state.newReviewText}/>
                     {
                         this.state.errorPost &&
-                        <p className="text-right">{this.state.errorPost.message}</p>
+                        <p className="text-right error_reviewer_massage__item">{this.state.errorPost.message}</p>
                     }
                     <input type="submit" value="Post Review" className="newReview__submit buttonPost"/>
                 </form>

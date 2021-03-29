@@ -82,3 +82,12 @@
   background-color: white;
   border: solid var(--colorShadeA) 2px;
 }
+
+.error_reviewer_massage__item{
+  color:red;
+  padding-top: 15px;
+  font-size: 20px;
+  font-weight: 900;
+  padding-bottom: 0px;
+  margin-bottom: 0px;
+}
