@@ -3,6 +3,7 @@ import BackButton from "../../backButton/BackButton";
 import Loading from "../../Loading/Loading";
 import AccountService from "../../../services/AccountService";
 import HallService from "../../../services/HallService";
+import './style.css'
 
 class AllHalls extends React.Component {
 
@@ -85,13 +86,13 @@ class AllHalls extends React.Component {
     render() {
         if (!this.state.isLoaded)
             return <Loading />
-            
+
         const activeHalls = [];
         if(this.state.activeHalls.length > 0) {
             let item = {values: []}
             for (let i = this.state.activeHalls.length-1; i >= 0; i--) {
                 item.values.push(
-                    <div className="main update_block_wrap__item">
+                    <div className="hall update_block_wrap__item">
                         <div className="update_block_button__item">
                             <div className="text">
                                 <h3>Name: {this.state.activeHalls[i].name}</h3>
@@ -109,7 +110,7 @@ class AllHalls extends React.Component {
             let item = {values: []}
             for (let i = this.state.blockedHalls.length-1; i >= 0; i--) {
                 item.values.push(
-                    <div className="main update_block_wrap__item">
+                    <div className="hall update_block_wrap__item">
                         <div className="update_block_button__item">
                             <div className="text">
                                 <h3>Name: {this.state.blockedHalls[i].name}</h3>
