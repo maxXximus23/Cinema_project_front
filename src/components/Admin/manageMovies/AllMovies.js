@@ -37,7 +37,7 @@ class AllMovies extends React.Component {
                         <div className="col-md-6"><button onClick={()=>window.location.replace("/admin/create-movie/")} className="create-button">Create</button></div>
                     </div>
                     <fieldset className="movies_manage_wrap__item">
-                        <input type="radio" name="sizeBy" value="weight" id="sizeWeight" checked="checked"/>
+                        <input type="radio" name="sizeBy" value="weight" id="sizeWeight" defaultChecked/>
                         <label id="bookedlist_controller__item" className="radio_button__item" htmlFor="sizeWeight">
                             Active movies
                         </label>
