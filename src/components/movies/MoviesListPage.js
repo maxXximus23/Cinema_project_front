@@ -145,7 +145,7 @@ class MoviesListPage extends React.Component {
 	}
 
 	onPerPageApply(event) {
-		if (this.state.perPageWaiter > 0 && this.state.perPageWaiter <= 100) {
+		if (this.state.perPageWaiter > 0 && this.state.perPageWaiter < 100) {
 			this.state.perPage = this.state.perPageWaiter
 			this.updateData(1)
 		}

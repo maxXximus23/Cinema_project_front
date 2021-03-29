@@ -138,7 +138,8 @@ class ReviewsMain extends React.Component {
 	}
 
 	changePerPage(event) {
-		this.state.perPage = event.target.value
+		if (!(event.target.value > 100 && event.target.value < 1))
+			this.state.perPage = event.target.value
 	}
 
 	applyChange(event) {
