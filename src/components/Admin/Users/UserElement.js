@@ -17,6 +17,7 @@ class UsersElement extends React.Component {
 		this.blockUser = this.blockUser.bind(this)
 		this.markToBlock = this.markToBlock.bind(this)
         this.markToAccess = this.markToAccess.bind(this)
+		this.grandAccess = this.grandAccess.bind(this)
 	}
 
 	markToBlock(event) {
@@ -46,7 +47,21 @@ class UsersElement extends React.Component {
 			})
 	}
 
-	grandAccess() {}
+	grandAccess() {
+		UserService.changeUserRole(this.state.user.id)
+			.then((result) => {
+				this.setState({
+					user: result,
+					reqiureSureAccess: false
+				})
+			})
+			.catch(err => {
+				this.setState({
+					error: err,
+					reqiureSureAccess: false,
+				})
+			})
+	}
 
 	render() {
 		const { user, error, reqiureSureBlock, reqiureSureAccess } = this.state
@@ -72,7 +87,7 @@ class UsersElement extends React.Component {
 					<div className='col-md-2 session__cancel'>
 						<div onClick={this.markToAccess}>
 							{!reqiureSureAccess && (
-								<TiDelete className='session__cancel__btn' />
+								<AiFillEdit className='session__cancel__btn' />
 							)}
 						</div>
 						{reqiureSureAccess && (
