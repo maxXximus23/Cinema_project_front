@@ -219,8 +219,12 @@ class CreateMovie extends React.Component {
         this.setState({createMovieFailed: false});
     }
     isValidUrl(url){
-        const objRE = /(^https?:\/\/)?[a-z0-9~_\-\.]+\.[a-z]{2,9}(\/|:|\?[!-~]*)?$/i;
-        return objRE.test(url);
+        try {
+            new URL(url);
+            return true;
+        } catch (_) {
+            return false;
+        }
     }
     convertTime(time){
         const h = time.substr(0,2);

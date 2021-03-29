@@ -91,7 +91,7 @@ class AllHalls extends React.Component {
                     <div className="main update_block_wrap__item">
                         <div className="update_block_button__item">
                             <div className="text">
-                                <h3>Name: {this.state.activeHalls[i].name}</h3>
+                                <h3>{this.state.activeHalls[i].name}</h3>
                                 <button onClick={()=>window.location.replace("/admin/update-hall/"+this.state.activeHalls[i].id)} className="update-button">Update</button>
                                 <button  id={this.state.activeHalls[i].id} onClick={this.block} className="block-button">Block</button>
                             </div>
