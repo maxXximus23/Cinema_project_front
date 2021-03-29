@@ -37,7 +37,7 @@ class Review extends React.Component {
     submitEdit(event){
         event.preventDefault()
         
-        if (this.state.newText.length < 20){
+        if (this.state.newText.length < 5){
             this.setState({
                 errorUpdate: {
                     message: "Text is too short"
@@ -129,7 +129,7 @@ class Review extends React.Component {
 							<form onSubmit={this.submitEdit}>
 								<textarea
 									className='col-md-12 newReview__text form-control'
-									placeholder='Write your review (minimum 20 characters)'
+									placeholder='Write your review (minimum 5 characters)'
 									rows='5'
 									onChange={this.handleTextChange}
 									defaultValue={this.state.newText}

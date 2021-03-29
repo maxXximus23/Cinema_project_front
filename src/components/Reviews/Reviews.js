@@ -66,7 +66,7 @@ class Reviews extends React.Component {
                 <h5>Already watched? Share your impressions with others!</h5>
                 <form onSubmit={this.postReview}>
                     <textarea className="col-md-12 newReview__text form-control" 
-                        placeholder="Write your review (minimum 20 characters)" 
+                        placeholder="Write your review (minimum 5 characters)" 
                         rows="5"
                         onChange={this.handleTextChange}
                         value={this.state.newReviewText}/>
@@ -112,7 +112,7 @@ class Reviews extends React.Component {
     postReview(event){
         event.preventDefault();
 
-        if (this.state.newReviewText.length < 20){
+        if (this.state.newReviewText.length < 5){
             this.setState({
                 errorPost: {
                     message: "Text is too short"
