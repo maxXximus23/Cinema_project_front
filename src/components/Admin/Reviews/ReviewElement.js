@@ -20,16 +20,17 @@ class ReviewElement extends React.Component {
 	}
 
 	deleteReview(event) {
-		ReviewService.deleteReview(this.state.review.id).then(() => {
-			this.setState({
-				review: null,
+		ReviewService.deleteReview(this.state.review.id)
+			.then(() => {
+				this.setState({
+					review: null,
+				})
 			})
-		})
-        .catch(err => {
-            this.setState({
-                error: err
-            })
-        })
+			.catch(err => {
+				this.setState({
+					error: err,
+				})
+			})
 	}
 
 	markToDelete(event) {
@@ -47,8 +48,7 @@ class ReviewElement extends React.Component {
 	render() {
 		const { review, error, reqiureSureDelete, readAll } = this.state
 
-        if (review==null)
-            return <div></div>
+		if (review == null) return <div></div>
 
 		return (
 			<div>
@@ -65,12 +65,14 @@ class ReviewElement extends React.Component {
 					<div className='col-md-2'>{review.creationDate}</div>
 
 					<div className='col-md-4 review__manage__text'>
-						{!readAll && review.text.substring(0, 30) + '...'}
-						{readAll && review.text}
+						{(!readAll && review.text.length > 30) && review.text.substring(0, 30) + '...'}
+						{(readAll || 	 review.text.length < 30) && review.text}
 						<br />
-						<button onClick={this.readAllHandler}>
-							{readAll ? 'Read less' : 'Read more'}
-						</button>
+						{review.text.length > 30 && (
+							<button onClick={this.readAllHandler}>
+								{readAll ? 'Read less' : 'Read more'}
+							</button>
+						)}
 					</div>
 
 					<div className='col-md-1 session__remove'>
