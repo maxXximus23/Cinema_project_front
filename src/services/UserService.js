@@ -32,6 +32,19 @@ class UserService {
 			).then(BaseService.handleError)
 	}
 
+	
+    static async changeUserRole(id) {
+         const requestOptions = {
+            method: 'PUT', 
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: AccountService.getToken()
+            }
+        }
+        return fetch(BaseService._baseUrl+'/users/' + id + '/changeAdminStatus', requestOptions)
+            .then(BaseService.handleError);
+    }
+
 	static showAccount = async id => {
 		console.log('UserService.showAccount(id):')
 		console.log('id: ' + id)
