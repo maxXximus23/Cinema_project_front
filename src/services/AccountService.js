@@ -9,13 +9,7 @@ class AccountService {
             body: JSON.stringify(user)
         };
         return fetch(BaseService._baseUrl+'/auth/login', requestOptions)
-            .then(response => {
-                if (!response.ok) {
-                    BaseService.handleResponseError(response);
-                    throw response;
-                }
-                return response.json();
-            })
+            .then(BaseService.handleError)
             .then(res => {
                 localStorage.setItem("userCredentials", JSON.stringify(res));
                 return res;
