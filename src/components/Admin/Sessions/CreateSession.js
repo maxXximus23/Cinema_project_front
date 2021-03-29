@@ -47,7 +47,7 @@ class CreateSession extends React.Component {
    componentDidMount() {
       AccountService.isAdmin()
          .then(() => {
-            HallService.getAll()
+            HallService.getAllActive()
 					.then(result => {
 						this.state.halls = result.sort((e1, e2) => {
 							return e1.rowsAmount * e1.places >=

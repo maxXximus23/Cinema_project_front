@@ -45,7 +45,7 @@ class EditSession extends React.Component {
 					.then(res => {
 						this.state.session = res
 						this.state.newSession = res
-						HallService.getAll()
+						HallService.getAllActive()
 							.then(result => {
 								this.state.halls = result.sort((e1, e2) => {
 									return e1.rowsAmount * e1.places >=
