@@ -6,6 +6,8 @@ import NoPoster from "./NoPosterUrl"
 import { Multiselect } from 'multiselect-react-dropdown'
 import GenreService from "../../../services/GenreService";
 import './CreateMovie.css'
+import AccountService from "../../../services/AccountService";
+import Loading from "../../Loading/Loading";
 
 class CreateMovie extends React.Component {
 
@@ -50,14 +52,20 @@ class CreateMovie extends React.Component {
             test:false,
             createMovieFailed: false,
             posterPathChecked:true,
-            trailerPathChecked:true
+            trailerPathChecked:true,
+
+            isLoaded: false
         }
     }
     componentDidMount = async()=> {
-        await GenreService.getAll()
+        AccountService.isAdmin()
+        .then(() => {
+            GenreService.getAll()
             .then((result) => {
-                this.setState({genres: result});
+                this.setState({genres: result, isLoaded: true});
             });
+        })
+        .catch(() => { window.location.replace('/') })
     }
     getValues() {
         return this.multiselectRef.current.getSelectedItems();
@@ -232,6 +240,9 @@ class CreateMovie extends React.Component {
         return (Number(h) * 360 + Number(min) * 60);
     };
     render() {
+        if (!this.state.isLoaded)
+            return <Loading />
+
         return(
             <div className="login_block row">
                 <BackButton backPath={() => this.props.history.goBack()} />

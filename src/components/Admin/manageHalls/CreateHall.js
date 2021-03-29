@@ -1,12 +1,15 @@
 import React from "react";
 import BackButton from "../../backButton/BackButton";
 import HallService from "../../../services/HallService";
+import AccountService from "../../../services/AccountService";
+import Loading from "../../Loading/Loading";
 
 class CreateHall extends React.Component {
 
     constructor(props) {
         super(props);
         this.state={
+            isLoaded: false,
             hall:{
                 name: String,
                 rowsAmount: Number,
@@ -26,6 +29,16 @@ class CreateHall extends React.Component {
             requiredError: 'This field is required',
             createHallFailed:false
         }
+    }
+
+    componentDidMount(){
+        AccountService.isAdmin()
+            .then(() => {
+                this.setState({
+                    isLoaded: true
+                })
+            })
+            .catch(() => { window.location.replace('/') })
     }
 
     createHall= async(event)=>{
@@ -142,6 +155,9 @@ class CreateHall extends React.Component {
     }
 
     render() {
+        if (!this.state.isLoaded)
+            return <Loading />
+            
         return(
             <div className="login_block row">
                 <BackButton backPath={() => this.props.history.goBack()} />

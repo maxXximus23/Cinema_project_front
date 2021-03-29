@@ -3,6 +3,7 @@ import BackButton from "../../backButton/BackButton";
 import Loading from "../../Loading/Loading";
 import AccountService from "../../../services/AccountService";
 import HallService from "../../../services/HallService";
+import './style.css'
 
 class AllHalls extends React.Component {
 
@@ -83,21 +84,42 @@ class AllHalls extends React.Component {
 
 
     render() {
+        if (!this.state.isLoaded)
+            return <Loading />
+
         const activeHalls = [];
         if(this.state.activeHalls.length > 0) {
             let item = {values: []}
             for (let i = this.state.activeHalls.length-1; i >= 0; i--) {
                 item.values.push(
-                    <div className="main update_block_wrap__item">
-                        <div className="update_block_button__item">
-                            <div className="text">
-                                <h3>{this.state.activeHalls[i].name}</h3>
-                                <button onClick={()=>window.location.replace("/admin/update-hall/"+this.state.activeHalls[i].id)} className="update-button">Update</button>
-                                <button  id={this.state.activeHalls[i].id} onClick={this.block} className="block-button">Block</button>
-                            </div>
-                        </div>
-                    </div>
-                )
+
+							<div className='main hall update_block_wrap__item styling__tem'>
+								<div className='update_block_button__item'>
+									<div className='text'>
+										<h3>Name: {this.state.activeHalls[i].name}</h3>
+										<button
+											onClick={() =>
+												window.location.replace(
+													'/admin/update-hall/' +
+														this.state.activeHalls[i].id
+												)
+											}
+											className='update-button'
+										>
+											Update
+										</button>
+										<button
+											id={this.state.activeHalls[i].id}
+											onClick={this.block}
+											className='block-button'
+										>
+											Block
+										</button>
+									</div>
+								</div>
+							</div>
+						)
+
             }
             activeHalls.push(item)
         }
@@ -106,21 +128,35 @@ class AllHalls extends React.Component {
             let item = {values: []}
             for (let i = this.state.blockedHalls.length-1; i >= 0; i--) {
                 item.values.push(
-                    <div className="main update_block_wrap__item">
-                        <div className="update_block_button__item">
-                            <div className="text">
-                                <h3>Name: {this.state.blockedHalls[i].name}</h3>
-                                <button onClick={()=>window.location.replace("/admin/update-hall/"+this.state.activeHalls[i].id)} className="update-button">Update</button>
-                                <button  id={this.state.blockedHalls[i].id} onClick={this.unblock} className="block-button">Unblock</button>
-                                 </div>
-                        </div>
-                    </div>
-                )
+							<div className='main hall update_block_wrap__item styling__tem'>
+								<div className='update_block_button__item'>
+									<div className='text'>
+										<h3>Name: {this.state.blockedHalls[i].name}</h3>
+										<button
+											onClick={() =>
+												window.location.replace(
+													'/admin/update-hall/' +
+														this.state.activeHalls[i].id
+												)
+											}
+											className='update-button'
+										>
+											Update
+										</button>
+										<button
+											id={this.state.blockedHalls[i].id}
+											onClick={this.unblock}
+											className='block-button'
+										>
+											Unblock
+										</button>
+									</div>
+								</div>
+							</div>
+						)
             }
             blockedHalls.push(item)
         }
-        if (!this.state.isLoaded)
-            return <Loading />
 
         return (
             <div className="user_list__item">
@@ -130,7 +166,7 @@ class AllHalls extends React.Component {
                         <div className="col-md-6"><button onClick={()=>window.location.replace("/admin/create-hall/")} className="create-button">Create</button></div>
                     </div>
                     <fieldset className="movies_manage_wrap__item">
-                        <input type="radio" name="sizeBy" value="weight" id="sizeWeight" checked="checked"/>
+                        <input type="radio" name="sizeBy" value="weight" id="sizeWeight" defaultChecked/>
                         <label id="bookedlist_controller__item" className="radio_button__item" htmlFor="sizeWeight">
                             Active halls
                         </label>
@@ -139,13 +175,13 @@ class AllHalls extends React.Component {
                         <label id="historylist_controller__item" className="radio_button__item"
                                htmlFor="sizeDimensions">Blocked halls</label>
 
-                        <div className="movies_block_wrap__item" id="booked_list__item">
+                        <div className="movies_block_wrap__item div__item" id="booked_list__item">
                             {
                                 activeHalls.map(el =>{
                                     return el.values
                                 })}
                         </div>
-                        <div className="movies_block_wrap__item" id="history_list__item">
+                        <div className="movies_block_wrap__item div__item" id="history_list__item">
                             {
                                 blockedHalls.map(el =>{
                                     return el.values

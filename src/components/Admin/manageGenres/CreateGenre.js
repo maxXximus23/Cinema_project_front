@@ -2,6 +2,8 @@ import React from "react";
 import GenreService from "../../../services/GenreService";
 import './ManageGenres.css'
 import {AiFillCloseCircle} from 'react-icons/ai'
+import AccountService from "../../../services/AccountService";
+import Loading from "../../Loading/Loading";
 
 class CreateGenre extends React.Component {
 
@@ -16,10 +18,22 @@ class CreateGenre extends React.Component {
             createFailed: false,
             requiredError: 'This field is required',
             borderColorRed: "2px solid red",
-            borderColorGreen: "2px solid green"
+            borderColorGreen: "2px solid green",
+            isLoaded: false
 
         }
     }
+
+    componentDidMount(){
+        AccountService.isAdmin()
+            .then(() => {
+                this.setState({
+                    isLoaded: true
+                })
+            })
+            .catch(() => { window.location.replace('/') })
+    }
+
     addGenre = async(event)=> {
         event.preventDefault();
         if (this.state.borderColorName === this.state.borderColorGreen) {
@@ -54,6 +68,9 @@ class CreateGenre extends React.Component {
     }
 
     render() {
+        if (!this.state.isLoaded)
+            return <Loading />
+
         return (
             <div>
                 <form onSubmit={this.addGenre} className="create-genre">

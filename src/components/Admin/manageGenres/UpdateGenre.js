@@ -1,5 +1,7 @@
 import React from 'react'
+import AccountService from '../../../services/AccountService'
 import GenreService from '../../../services/GenreService'
+import Loading from '../../Loading/Loading'
 import './ManageGenres.css'
 
 class UpdateGenre extends React.Component {
@@ -19,6 +21,17 @@ class UpdateGenre extends React.Component {
          borderColorGreen: '2px solid green',
       }
    }
+
+   componentDidMount(){
+      AccountService.isAdmin()
+         .then(() => {
+            this.setState({
+               isLoaded: true
+            })
+         })
+         .catch(() => { window.location.replace('/') })
+   }
+
    update = () => {
       this.setState({ isUpdate: true })
    }
@@ -66,6 +79,9 @@ class UpdateGenre extends React.Component {
    }
 
    render() {
+      if (!this.state.isLoaded)
+         return <Loading />
+
       return (
          <div>
             <div>

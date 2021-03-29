@@ -5,6 +5,8 @@ import YouTube from "react-youtube";
 import NoPoster from "./NoPosterUrl"
 import { Multiselect } from 'multiselect-react-dropdown'
 import GenreService from "../../../services/GenreService";
+import Loading from "../../Loading/Loading";
+import AccountService from "../../../services/AccountService";
 
 
 class UpdateMovie extends React.Component {
@@ -15,6 +17,7 @@ class UpdateMovie extends React.Component {
         this.state={
             data : [{ num:'One', id:1 }, { num: 'Two', id:2 }, { num:'Three', id:3 }],
             id: props.match.params.movieId,
+            isLoaded: false,
             genres: [{
                 id:Number,
                 name:String
@@ -96,6 +99,13 @@ class UpdateMovie extends React.Component {
         return hStr+":"+mStr;
     }
     componentDidMount = async()=> {
+        AccountService.isAdmin()
+        .then(() => {
+            this.setState({
+                isLoaded: true
+            })
+        })
+        .catch(() => { window.location.replace('/') })
         await MovieService.getById(this.state.id)
             .then((result) => {
                 this.setState({movie: result, time:this.parseDuration(result.duration)});
@@ -294,6 +304,9 @@ class UpdateMovie extends React.Component {
     };
 
     render() {
+        if (!this.state.isLoaded)
+            return <Loading />
+
         return(
             <div className="login_block">
                 <BackButton backPath={() => this.props.history.goBack()} />
