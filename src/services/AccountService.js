@@ -1,4 +1,3 @@
-import ErrorComponent from "../components/error/ErrorComponent";
 import BaseService from "./BaseService"
 
 class AccountService {
@@ -18,11 +17,8 @@ class AccountService {
                 return response.json();
             })
             .then(res => {
-                localStorage.setItem("userCredentials", JSON.stringify(res))
-                return res
-            })
-            .catch(error => {
-                console.log(error);
+                localStorage.setItem("userCredentials", JSON.stringify(res));
+                return res;
             });
     }
 
@@ -48,7 +44,7 @@ class AccountService {
     static isEmailFree= async(email)=> {
         console.log("UserService.isEmailFree(email):");
         console.log("email: " + email);
-        return fetch(BaseService._baseUrl+'/users/check-'+email)
+        return fetch(BaseService._baseUrl+'/auth/check-'+email)
             .then(response => {
                 if (!response.ok) {
                     BaseService.handleResponseError(response);

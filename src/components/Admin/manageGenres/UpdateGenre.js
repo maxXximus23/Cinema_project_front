@@ -32,7 +32,7 @@ class UpdateGenre extends React.Component {
          console.log(1)
          await GenreService.updateGenre(this.state.id, this.state.updateGenre)
             .then((response) => {
-               if (response.ok) window.location.replace('/admin/all-genres')
+               if (response.ok) window.location.replace('/admin/genres')
                else this.setState({ createFailed: true })
             })
             .catch((error) => {

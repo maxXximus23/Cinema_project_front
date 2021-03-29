@@ -13,7 +13,7 @@ class DeleteGenre extends React.Component {
         event.preventDefault();
         await GenreService.deleteGenre(this.state.id)
             .then((response) => {
-                window.location.replace("/admin/all-genres");
+                window.location.replace("/admin/genres");
             });
     };
     render() {

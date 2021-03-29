@@ -110,13 +110,9 @@ class LoginForm extends React.Component{
         return(
             <div className="login_block">
                 <form className="signin_form__item" onSubmit={this.loginCheck} >
-
-                    <div>
-                        {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-                        {(this.state.loginFailed) && <a style={{color: 'red'}}> Incorrect username or password
-                            <button onClick={this.closeButton} className="btn-close" aria-label="Close"/>
-                        </a>}
-                    </div>
+                    {(this.state.loginFailed) && <div style={{color: 'red'}}> Incorrect username or password
+                        <button onClick={this.closeButton} className="btn-close" aria-label="Close">x</button>
+                    </div>}
                     <h1  id="signin_text__item" className="h3 mb-3 fw-normal">Please sign in</h1>
                     <div>
                         <input onChange={e => this.changeHandler(e)} value={this.email} onBlur={e => this.blurHandler(e)} type="text" name="email" className="form-control" placeholder="Email address"

@@ -49,16 +49,16 @@ class RegistrationForm extends React.Component{
             };
             
             await AccountService.register(newUser)
-                .then(()=>{
-                    window.location.replace("/")
+                .then((response)=>{
+                    if(response.ok)
+                        window.location.replace("/login")
+                    else
+                        this.setState({registrationFailed: true});
                 })
                 .catch(()=>{
                     this.setState({registrationFailed: true});
                 })
         }
-    }
-    #closeButton = () =>{
-        this.setState({loginFailed: false});
     }
     blurHandler = (e) =>{
         // eslint-disable-next-line default-case
@@ -194,12 +194,9 @@ class RegistrationForm extends React.Component{
         return(
             <div className="login_block">
                 <form className="registration_form__item"  onSubmit={this.addNewUser} >
-                    <div>
-                        {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-                        {(this.state.registrationFailed) && <a style={{color: 'red'}}>An unknown error occurred
-                            <button onClick={this.#closeButton} className="btn-close" aria-label="Close"/>
-                        </a>}
-                    </div>
+                    {(this.state.registrationFailed) && <div style={{color: 'red'}}>An unknown error occurred
+                        <button onClick={this.closeButton} className="btn-close" aria-label="Close">x</button>
+                    </div>}
                     <h1  id="registr_text__item" className="h3 mb-3 fw-normal">Registration</h1>
                     <div>
                         <input type="text" name="firstName" value={this.firstName} onChange={e =>this.changeHandler(e)} onBlur={e => this.blurHandler(e)} className="form-control" placeholder="First name"

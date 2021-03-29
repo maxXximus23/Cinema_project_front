@@ -45,7 +45,7 @@ function App() {
             <Route exact path="/admin/sessions/create" component={CreateSession} />
             <Route exact path="/admin/sessions/:sessionId" component={EditSession} />
             <Route exact path="/admin/sessions" component={SessionsMain} />
-            <Route path="/admin/all-genres" component={AllGenres} />
+            <Route path="/admin/genres" component={AllGenres} />
             <Route exact path="/admin/all-movies" component={AllMovies} />
             <Route exact path="/admin/create-movie/" component={CreateMovie} />
             <Route exact path="/admin/update-movie/:movieId" component={UpdateMovie} />
