@@ -7,6 +7,7 @@ import HallService from '../../../services/HallService'
 import ErrorComponent from '../../error/ErrorComponent'
 import moment from 'moment'
 import './CreateEditeSessions.css'
+import AccountService from '../../../services/AccountService'
 
 class CreateSession extends React.Component {
    constructor(props) {
@@ -44,33 +45,38 @@ class CreateSession extends React.Component {
    }
 
    componentDidMount() {
-      HallService.getAll()
-         .then((result) => {
-            this.state.halls = result.sort((e1, e2) => {
-               return e1.rowsAmount * e1.places >= e2.rowsAmount * e2.places
-                  ? 1
-                  : -1
-            })
-            MovieService.getTitles()
-               .then((res) => {
-                  this.setState({
-                     isLoaded: true,
-                     titles: res,
-                  })
-               })
-               .catch((err) => {
-                  this.setState({
-                     isLoaded: true,
-                     error: err,
-                  })
-               })
+      AccountService.isAdmin()
+         .then(() => {
+            HallService.getAll()
+					.then(result => {
+						this.state.halls = result.sort((e1, e2) => {
+							return e1.rowsAmount * e1.places >=
+								e2.rowsAmount * e2.places
+								? 1
+								: -1
+						})
+						MovieService.getTitles()
+							.then(res => {
+								this.setState({
+									isLoaded: true,
+									titles: res,
+								})
+							})
+							.catch(err => {
+								this.setState({
+									isLoaded: true,
+									error: err,
+								})
+							})
+					})
+					.catch(err => {
+						this.setState({
+							isLoaded: true,
+							error: err,
+						})
+					})
          })
-         .catch((err) => {
-            this.setState({
-               isLoaded: true,
-               error: err,
-            })
-         })
+         .catch(() => { window.location.replace('/') })
    }
 
    changeMovie(event) {

@@ -6,6 +6,7 @@ import MovieService from '../../../services/MovieService'
 import HallService from '../../../services/HallService'
 import ErrorComponent from '../../error/ErrorComponent'
 import './CreateEditeSessions.css'
+import AccountService from '../../../services/AccountService'
 
 class EditSession extends React.Component {
    constructor(props) {
@@ -38,45 +39,49 @@ class EditSession extends React.Component {
    }
 
    componentDidMount() {
-      SessionService.getSession(this.state.sessionId)
-         .then((res) => {
-            this.state.session = res
-            this.state.newSession = res
-            HallService.getAll()
-               .then((result) => {
-                  this.state.halls = result.sort((e1, e2) => {
-                     return e1.rowsAmount * e1.places >=
-                        e2.rowsAmount * e2.places
-                        ? 1
-                        : -1
-                  })
-                  MovieService.getTitles()
-                     .then((result) => {
-                        this.setState({
-                           isLoaded: true,
-                           titles: result,
-                        })
-                     })
-                     .catch((err) => {
-                        this.setState({
-                           isLoaded: true,
-                           error: err,
-                        })
-                     })
-               })
-               .catch((err) => {
-                  this.setState({
-                     isLoaded: true,
-                     error: err,
-                  })
-               })
+      AccountService.isAdmin()
+         .then(() => {
+            SessionService.getSession(this.state.sessionId)
+					.then(res => {
+						this.state.session = res
+						this.state.newSession = res
+						HallService.getAll()
+							.then(result => {
+								this.state.halls = result.sort((e1, e2) => {
+									return e1.rowsAmount * e1.places >=
+										e2.rowsAmount * e2.places
+										? 1
+										: -1
+								})
+								MovieService.getTitles()
+									.then(result => {
+										this.setState({
+											isLoaded: true,
+											titles: result,
+										})
+									})
+									.catch(err => {
+										this.setState({
+											isLoaded: true,
+											error: err,
+										})
+									})
+							})
+							.catch(err => {
+								this.setState({
+									isLoaded: true,
+									error: err,
+								})
+							})
+					})
+					.catch(err => {
+						this.setState({
+							isLoaded: true,
+							error: err,
+						})
+					})
          })
-         .catch((err) => {
-            this.setState({
-               isLoaded: true,
-               error: err,
-            })
-         })
+         .catch(() => { window.location.replace('/') })
    }
 
    confirmEdit(event) {
