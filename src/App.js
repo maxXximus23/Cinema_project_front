@@ -29,6 +29,10 @@ import CreateMovie from "./components/Admin/manageMovies/CreateMovie";
 import UpdateMovie from "./components/Admin/manageMovies/UpdateMovie";
 import ReviewsMain from './components/Admin/Reviews/ReviewsMain';
 
+import AllHalls from './components/Admin/manageHalls/AllHalls';
+import CreateHall from './components/Admin/manageHalls/CreateHall';
+import UpdateHall from './components/Admin/manageHalls/UpdateHall';
+
 function App() {
   return (
     <div className="App">
@@ -51,6 +55,9 @@ function App() {
             <Route exact path="/admin/update-movie/:movieId" component={UpdateMovie} />
             <Route exact path="/admin/users" component={UsersMain} />
             <Route exact path="/admin/reviews" component={ReviewsMain} />
+            <Route exact path="/admin/halls" component={AllHalls} />
+            <Route exact path="/admin/create-hall/" component={CreateHall} />
+            <Route exact path="/admin/update-hall/:hallId" component={UpdateHall} />
             <Route exact path='/admin' component={AdminMain} />
 
             <Route component={Error} exact/>
