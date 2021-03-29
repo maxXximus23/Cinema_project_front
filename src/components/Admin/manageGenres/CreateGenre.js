@@ -28,7 +28,7 @@ class CreateGenre extends React.Component {
             await GenreService.addGenre(this.state.newGenre)
                 .then((response) => {
                     if (response.ok)
-                        window.location.replace("/admin/all-genres");
+                        window.location.replace("/admin/genres");
                     else
                         this.setState({createFailed: true});
                 })
