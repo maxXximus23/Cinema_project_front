@@ -40,24 +40,35 @@ function App() {
         <Switch>
             <Route exact path="/" component={Home} />
             <Route exact path="/contacts" component={Contacts} />
-            <Route path='/login' component={LoginForm}/>
-            <Route path='/registration' component={RegistrationForm}/>
+
+            <Route exact path='/login' component={LoginForm}/>
+            <Route exact path='/registration' component={RegistrationForm}/>
+
             <Route exact path="/movies/:movieId" component={Movie} />
             <Route exact path="/movies" component={MoviesListPage} />
-            <Route path="/book/:sessionId" component={Booking} />
-            <Route path="/account" component={Account} />
+
+            <Route exact path="/book/:sessionId" component={Booking} />
+
+            <Route exact path="/account" component={Account} />
+
             <Route exact path="/admin/sessions/create" component={CreateSession} />
             <Route exact path="/admin/sessions/:sessionId" component={EditSession} />
             <Route exact path="/admin/sessions" component={SessionsMain} />
-            <Route path="/admin/genres" component={AllGenres} />
+
+            <Route exact path="/admin/genres" component={AllGenres} />
+            
             <Route exact path="/admin/all-movies" component={AllMovies} />
             <Route exact path="/admin/create-movie/" component={CreateMovie} />
             <Route exact path="/admin/update-movie/:movieId" component={UpdateMovie} />
+
             <Route exact path="/admin/users" component={UsersMain} />
+
             <Route exact path="/admin/reviews" component={ReviewsMain} />
+
             <Route exact path="/admin/halls" component={AllHalls} />
             <Route exact path="/admin/create-hall/" component={CreateHall} />
             <Route exact path="/admin/update-hall/:hallId" component={UpdateHall} />
+
             <Route exact path='/admin' component={AdminMain} />
 
             <Route component={Error} exact/>

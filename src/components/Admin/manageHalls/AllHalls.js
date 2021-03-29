@@ -83,6 +83,9 @@ class AllHalls extends React.Component {
 
 
     render() {
+        if (!this.state.isLoaded)
+            return <Loading />
+            
         const activeHalls = [];
         if(this.state.activeHalls.length > 0) {
             let item = {values: []}
@@ -119,8 +122,6 @@ class AllHalls extends React.Component {
             }
             blockedHalls.push(item)
         }
-        if (!this.state.isLoaded)
-            return <Loading />
 
         return (
             <div className="user_list__item">

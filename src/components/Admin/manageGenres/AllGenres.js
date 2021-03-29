@@ -1,6 +1,7 @@
 import React from "react";
 import AccountService from "../../../services/AccountService";
 import GenreService from "../../../services/GenreService";
+import Loading from "../../Loading/Loading";
 import CreateGenre from "./CreateGenre";
 import DeleteGenre from "./DeleteGenre"
 import UpdateGenre from "./UpdateGenre";
@@ -11,6 +12,7 @@ class AllGenres extends React.Component {
         super(props);
 
         this.state={
+            isLoaded: false,
             genres:{
                 id: Number,
                 name: String
@@ -29,7 +31,7 @@ class AllGenres extends React.Component {
             .then(() => {
                 GenreService.getAll()
                     .then((result) => {
-                        this.setState({genres: result});
+                        this.setState({genres: result, isLoaded: true});
                     });
             })
             .catch(() => {window.location.replace('/')})
@@ -37,6 +39,9 @@ class AllGenres extends React.Component {
     };
 
     render() {
+        if (!this.state.isLoaded)
+            return <Loading />
+
         const genres = [];
         if(this.state.genres.length > 0) {
             let item = {values: []}
