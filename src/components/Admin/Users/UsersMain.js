@@ -118,7 +118,7 @@ class UsersMain extends React.Component {
 	}
 
 	changePerPage(event) {
-		if (!(event.target.value > 100 && event.target.value < 1))
+		if (event.target.value <= 100 && event.target.value >= 1)
 			this.state.perPage = event.target.value
 	}
 
