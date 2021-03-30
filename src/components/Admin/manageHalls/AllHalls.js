@@ -92,6 +92,7 @@ class AllHalls extends React.Component {
             let item = {values: []}
             for (let i = this.state.activeHalls.length-1; i >= 0; i--) {
                 item.values.push(
+
 							<div className='main hall update_block_wrap__item styling__tem'>
 								<div className='update_block_button__item'>
 									<div className='text'>
@@ -118,6 +119,7 @@ class AllHalls extends React.Component {
 								</div>
 							</div>
 						)
+
             }
             activeHalls.push(item)
         }
