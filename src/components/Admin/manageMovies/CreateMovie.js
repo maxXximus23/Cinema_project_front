@@ -204,7 +204,9 @@ class CreateMovie extends React.Component {
             case 'posterPathChecked':
                 if(e.target.checked) {
                     this.setState({posterPathChecked: true});
-                    this.state.newMovie.posterPath="";
+                    this.state.movie.posterPath="";
+                    this.state.posterPathError="";
+                    this.state.posterPathBorderColor="";
                 }
                 else {
                     this.setState({posterPathChecked: false});
@@ -215,6 +217,8 @@ class CreateMovie extends React.Component {
                 if(e.target.checked) {
                     this.setState({trailerPathChecked: true});
                     this.state.movie.trailerPath="";
+                    this.state.trailerPathError="";
+                    this.state.trailerPathBorderColor="";
                 }
                 else {
                     this.setState({trailerPathChecked: false});
