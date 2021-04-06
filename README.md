@@ -16,6 +16,7 @@ Before starting working on the project make sure that the following tools are in
 ```
 # Start the doc viewer application so you can see your local changes in the browser on http://localhost:3000/.
 $ npm start
+```
 
 ## Project structure
 
