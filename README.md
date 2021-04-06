@@ -25,3 +25,5 @@ Cinema_project_front/
 |  └── components/ - directory for components
 |  └── services/ - directory for services
 └── application-specific configuration files
+
+```
