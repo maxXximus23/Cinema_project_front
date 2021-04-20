@@ -59,24 +59,6 @@ class MoviesListPage extends React.Component {
 	}
 
 	updateData(page) {
-		MovieService.getPageAmountForQuery(
-			this.state.perPage,
-			this.state.title,
-			this.state.genres
-		)
-			.then(result => {
-				this.state.pageAmount = result
-				this.setPageData(page)
-			})
-			.catch(err => {
-				this.setState({
-					isLoaded: true,
-					error: err,
-				})
-			})
-	}
-
-	setPageData(page) {
 		MovieService.getMoviesForQuery(
 			page,
 			this.state.perPage,
@@ -86,7 +68,8 @@ class MoviesListPage extends React.Component {
 			.then(result => {
 				this.setState({
 					isLoaded: true,
-					movies: result,
+					movies: result.movies,
+					pageAmount: result.pages
 				})
 			})
 			.catch(err => {
@@ -100,7 +83,7 @@ class MoviesListPage extends React.Component {
 	updatePage(event) {
 		if (this.state.page != event.target.value) {
 			this.state.page = event.target.value
-			this.setPageData(this.state.page)
+			this.updateData(this.state.page)
 		}
 	}
 
